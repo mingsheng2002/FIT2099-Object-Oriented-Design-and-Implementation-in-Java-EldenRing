@@ -1,5 +1,10 @@
 package game;
 
+import game.actors.Player;
+import game.actors.enemies.LoneWolf;
+import game.environments.Dirt;
+import game.environments.Floor;
+import game.environments.Wall;
 import java.util.Arrays;
 import java.util.List;
 

@@ -6,6 +6,8 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actors.enemies.Enemy;
+import game.actors.enemies.PileOfBones;
 
 /**
  * An action executed if an actor is killed.
@@ -32,6 +34,14 @@ public class DeathAction extends Action {
     @Override
     public String execute(Actor target, GameMap map) {
         String result = "";
+
+        if(target.hasCapability(Status.RESPAWNABLE)){
+            PileOfBones pb = new PileOfBones((Enemy) target);
+            pb.addWeaponToInventory(target.getWeaponInventory().get(0));
+
+            map.locationOf(target).addActor(pb);
+            map.removeActor(target);
+        }
 
         ActionList dropActions = new ActionList();
         // drop all items
