@@ -2,14 +2,13 @@ package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.positions.Location;
 
 public class PileOfBones extends HarmlessEnemy{
 
-  private Enemy enemyToBeRevived;
   private int count = 0;
   public static final int MAX_HIT = 3;
 
@@ -18,8 +17,7 @@ public class PileOfBones extends HarmlessEnemy{
    *
    */
   public PileOfBones(Enemy deathEnemy) {
-    super("Pile of Bones", 'X', 0);
-    this.enemyToBeRevived = deathEnemy;
+    super("Pile of Bones", 'X', 1, deathEnemy);
   }
 
   @Override
@@ -28,15 +26,13 @@ public class PileOfBones extends HarmlessEnemy{
     if(count == MAX_HIT){
       this.reviveEnemy(map);
     }
-    return null;
+    return new DoNothingAction();
   }
 
-  public void reviveEnemy(GameMap map){
-    enemyToBeRevived.addWeaponToInventory(this.getWeaponInventory().get(0));
 
-    // enemyToBeRevived.heal(enemyToBeRevived.getMaxHp());
 
-    map.locationOf(this).addActor(enemyToBeRevived);
-    map.removeActor(this);
+  @Override
+  public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
+    return super.allowableActions(otherActor, direction, map);
   }
 }

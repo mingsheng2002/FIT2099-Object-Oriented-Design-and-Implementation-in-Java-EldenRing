@@ -2,7 +2,7 @@ package game.environments;
 
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-import game.RandomNumberGenerator;
+import game.utils.RandomNumberGenerator;
 import game.actors.enemies.HeavySkeletalSwordsman;
 
 public class Graveyard extends Ground {
@@ -22,7 +22,7 @@ public class Graveyard extends Ground {
    * @param location The location of the Ground
    */
   public void tick(Location location) {
-    if(RandomNumberGenerator.getRandomInt(100) <= SPAWN_CHANCE && !location.containsAnActor()){
+    if(RandomNumberGenerator.getRandomInt(100) < SPAWN_CHANCE && !location.containsAnActor()){
       location.addActor(new HeavySkeletalSwordsman());
     }
   }

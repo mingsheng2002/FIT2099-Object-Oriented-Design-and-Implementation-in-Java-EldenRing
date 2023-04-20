@@ -2,18 +2,10 @@ package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-
-import game.AttackAction;
-import game.Behaviour;
-import game.Status;
-import game.WanderBehaviour;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * BEHOLD, DOG!
@@ -25,13 +17,17 @@ import java.util.Map;
  */
 public class LoneWolf extends Enemy {
 
+    private static final int DESPAWN_CHANCE = 10;
+    private static final int HIT_POINTS = 102;
+    private static final int DAMAGE = 97;
+    private static final int HIT_RATE = 95;
+
     /**
      * Constructor.
      *
      */
     public LoneWolf() {
-        super("Lone Wolf", 'h', 102);
-        super.behaviours.put(999, new WanderBehaviour());
+        super("Lone Wolf", 'h', HIT_POINTS, LoneWolf.DESPAWN_CHANCE);
     }
 
     /**
@@ -45,12 +41,7 @@ public class LoneWolf extends Enemy {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        for (Behaviour behaviour : behaviours.values()) {
-            Action action = behaviour.getAction(this, map);
-            if(action != null)
-                return action;
-        }
-        return new DoNothingAction();
+        return super.playTurn(actions, lastAction, map, display);
     }
 
     /**
@@ -63,18 +54,12 @@ public class LoneWolf extends Enemy {
      */
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-        ActionList actions = new ActionList();
-        if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            actions.add(new AttackAction(this, direction));
-            // HINT 1: The AttackAction above allows you to attak the enemy with your intrinsic weapon.
-            // HINT 1: How would you attack the enemy with a weapon?
-        }
-        return actions;
+        return super.allowableActions(otherActor, direction, map);
     }
 
 
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(97, "bites", 95);
+        return new IntrinsicWeapon(DAMAGE, "bites", HIT_RATE);
     }
 }

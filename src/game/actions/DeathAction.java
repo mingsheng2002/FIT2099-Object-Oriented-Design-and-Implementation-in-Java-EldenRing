@@ -1,11 +1,13 @@
-package game;
+package game.actions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.enums.Status;
 import game.actors.enemies.Enemy;
 import game.actors.enemies.PileOfBones;
 
@@ -35,12 +37,12 @@ public class DeathAction extends Action {
     public String execute(Actor target, GameMap map) {
         String result = "";
 
-        if(target.hasCapability(Status.RESPAWNABLE)){
+        if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.RESPAWNABLE)){
             PileOfBones pb = new PileOfBones((Enemy) target);
-            pb.addWeaponToInventory(target.getWeaponInventory().get(0));
-
-            map.locationOf(target).addActor(pb);
+            Location here = map.locationOf(target);
             map.removeActor(target);
+            here.addActor(pb);
+            return result;
         }
 
         ActionList dropActions = new ActionList();
