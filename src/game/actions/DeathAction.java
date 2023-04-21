@@ -7,6 +7,8 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actors.Player;
+import game.controllers.RunesManager;
 import game.enums.Status;
 import game.actors.enemies.Enemy;
 import game.actors.enemies.PileOfBones;
@@ -56,6 +58,12 @@ public class DeathAction extends Action {
         // remove actor
         map.removeActor(target);
         result += System.lineSeparator() + menuDescription(target);
+
+        if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.HOSTILE_TO_ENEMY)){
+            String retVal = RunesManager.getInstance().awardRunes((Enemy) target, (Player) attacker);
+            result += System.lineSeparator() + retVal;
+        }
+
         return result;
     }
 

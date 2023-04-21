@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.utils.RandomNumberGenerator;
 
 /**
  * BEHOLD, DOG!
@@ -21,13 +22,15 @@ public class LoneWolf extends Enemy {
     private static final int HIT_POINTS = 102;
     private static final int DAMAGE = 97;
     private static final int HIT_RATE = 95;
+    private static final int MIN_RUNES_AWARD = 55;
+    private static final int MAX_RUNES_AWARD = 1470;
 
     /**
      * Constructor.
      *
      */
     public LoneWolf() {
-        super("Lone Wolf", 'h', HIT_POINTS, LoneWolf.DESPAWN_CHANCE);
+        super("Lone Wolf", 'h', HIT_POINTS, LoneWolf.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
     }
 
     /**
@@ -62,4 +65,5 @@ public class LoneWolf extends Enemy {
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(DAMAGE, "bites", HIT_RATE);
     }
+
 }

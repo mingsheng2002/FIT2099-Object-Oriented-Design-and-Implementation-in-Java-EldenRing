@@ -1,5 +1,6 @@
-package game;
+package game.controllers;
 
+import game.Resettable;
 import java.util.ArrayList;
 import java.util.List;
 

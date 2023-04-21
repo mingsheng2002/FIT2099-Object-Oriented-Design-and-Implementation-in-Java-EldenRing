@@ -6,19 +6,22 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.enums.Status;
+import game.utils.RandomNumberGenerator;
 import game.weapons.Grossmesser;
 
 public class HeavySkeletalSwordsman extends Enemy{
 
   private static final int DESPAWN_CHANCE = 10;
   private static final int HIT_POINTS = 153;
+  private static final int MIN_RUNES_AWARD = 35;
+  private static final int MAX_RUNES_AWARD = 892;
 
   /**
    * Constructor.
    *
    */
   public HeavySkeletalSwordsman(){
-    super("Heavy Skeletal Swordsman", 'q', HIT_POINTS, HeavySkeletalSwordsman.DESPAWN_CHANCE);
+    super("Heavy Skeletal Swordsman", 'q', HIT_POINTS, HeavySkeletalSwordsman.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
     this.addWeaponToInventory(new Grossmesser());
     this.addCapability(Status.RESPAWNABLE);
   }
@@ -40,5 +43,4 @@ public class HeavySkeletalSwordsman extends Enemy{
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     return super.allowableActions(otherActor, direction, map);
   }
-
 }

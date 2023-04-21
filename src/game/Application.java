@@ -4,6 +4,8 @@ import game.actors.Player;
 import game.actors.enemies.GiantCrab;
 import game.actors.enemies.HeavySkeletalSwordsman;
 import game.actors.enemies.LoneWolf;
+import game.actors.traders.MerchantKale;
+import game.actors.traders.Trader;
 import game.environments.*;
 
 import java.util.Arrays;
@@ -78,6 +80,10 @@ public class Application {
 		gameMap.at(28, 12).addActor(new GiantCrab());
 		gameMap.at(29, 13).addActor(new GiantCrab());
 		gameMap.at(28, 14).addActor(new GiantCrab());
+		gameMap.at(51, 12).addActor(new LoneWolf());
+		gameMap.at(50, 13).addActor(new LoneWolf());
+
+		gameMap.at(41, 11).addActor(new MerchantKale());
 //
 //		gameMap.at(27, 10).addActor(new HeavySkeletalSwordsman());
 //		gameMap.at(26, 10).addActor(new HeavySkeletalSwordsman());

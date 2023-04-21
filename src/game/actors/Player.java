@@ -10,6 +10,8 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.FollowBehaviour;
 import game.actors.enemies.Enemy;
+import game.controllers.RunesManager;
+import game.items.Runes;
 import game.weapons.Club;
 import game.Resettable;
 import game.enums.Status;
@@ -31,6 +33,8 @@ public class Player extends Actor implements Resettable {
 	protected int playerMaxHitPoints;
 	private Action playerLastAction;
 
+	private Runes runes = new Runes();
+
 	/**
 	 * Constructor.
 	 *
@@ -44,6 +48,8 @@ public class Player extends Actor implements Resettable {
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		this.addCapability(Status.RESTING);
 		this.addWeaponToInventory(new Club());
+		this.addItemToInventory(runes);
+		RunesManager.getInstance().incrementAmount(0, runes);
 		//this.addWeaponToInventory(new Grossmesser()); /////////////////////////////////testing
 	}
 
@@ -54,7 +60,7 @@ public class Player extends Actor implements Resettable {
 			return lastAction.getNextAction();
 
 		System.out.println("Player " + this + " current hit points: " + this.hitPoints + "/" + this.maxHitPoints);
-
+		System.out.println("Player " + this + " currently holding " + this.runes.getTotalAmount() + " of runes");
 
 
 		// return/print the console menu
@@ -89,5 +95,9 @@ public class Player extends Actor implements Resettable {
 
 	public Action getPlayerLastAction() {
 		return playerLastAction;
+	}
+
+	public Runes getRunes(){
+		return runes;
 	}
 }

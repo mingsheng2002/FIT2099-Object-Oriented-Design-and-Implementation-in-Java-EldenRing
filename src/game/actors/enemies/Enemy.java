@@ -23,9 +23,12 @@ public abstract class Enemy extends Actor {
 
   private Map<Integer, Behaviour> behaviours = new HashMap<>();
 
-  private int despawn_chance;
+  private int despawnChance;
 
   protected int enemyMaxHitPoints;
+
+  private int minRune;
+  private int maxRune;
 
   /**
    * Constructor.
@@ -34,16 +37,18 @@ public abstract class Enemy extends Actor {
    * @param displayChar the character that will represent the Actor in the display
    * @param hitPoints   the Actor's starting hit points
    */
-  public Enemy(String name, char displayChar, int hitPoints, int despawn_chance) {
+  public Enemy(String name, char displayChar, int hitPoints, int despawnChance, int minRune, int maxRune) {
     super(name, displayChar, hitPoints);
-    this.despawn_chance = despawn_chance;
     this.enemyMaxHitPoints = hitPoints;
+    this.despawnChance = despawnChance;
+    this.minRune = minRune;
+    this.maxRune = maxRune;
     this.addCapability(Status.HOSTILE_TO_ENEMY);
     this.behaviours.put(2, new WanderBehaviour());
   }
 
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-    if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawn_chance) {
+    if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawnChance) {
       System.out.println(this + " has despawned from map");
       return (new DeathAction(this));
     }
@@ -98,5 +103,13 @@ public abstract class Enemy extends Actor {
 
   public Map<Integer, Behaviour> getBehaviours() {
     return behaviours;
+  }
+
+  public int getMinRune(){
+    return minRune;
+  }
+
+  public int getMaxRune(){
+    return maxRune;
   }
 }
