@@ -22,7 +22,7 @@ public class RunesManager {
   public String awardRunes(Enemy target, Player attacker){
     int amount = RandomNumberGenerator.getRandomInt(target.getMinRune(), target.getMaxRune());
     incrementAmount(amount, attacker.getRunes());
-    return attacker + " is rewarded " + amount + " runes.";
+    return attacker + " is rewarded " + amount + " runes";
   };
 
 

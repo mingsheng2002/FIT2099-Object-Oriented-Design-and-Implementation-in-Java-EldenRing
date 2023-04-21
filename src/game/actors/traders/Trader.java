@@ -14,6 +14,7 @@ import game.actions.PurchaseAction;
 import game.actions.SellAction;
 import game.actors.Player;
 import game.controllers.PurchaseManager;
+import game.controllers.SellManager;
 import game.enums.Status;
 import game.weapons.Club;
 import game.weapons.GreatKnife;
@@ -49,13 +50,22 @@ public abstract class Trader extends Actor {
           actions.add(new PurchaseAction((Player) otherActor, purchaseItem));
       }
 
+      // Check what can be sold by player
       for(WeaponItem item : otherActor.getWeaponInventory()){
-        actions.add(new SellAction((Player) otherActor, (Sellable) item));
-//        if(sellables.contains((Sellable) item)){
-//          actions.add(new SellAction((Player) otherActor, (Sellable) item));
-//        }
+        int i = 0;
+        int totalSellables = SellManager.getInstance().getSellables().size();
+        boolean found = false;
+        while (!found && i < totalSellables) {
+          if (SellManager.getInstance().getSellables().get(i).toString().equals(item.toString())) {
+            actions.add(new SellAction((Player) otherActor, (Sellable) item));
+            found = true;
+          }
+          i++;
+        }
       }
     }
+
+
     return actions;
   }
 }

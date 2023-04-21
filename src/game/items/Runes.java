@@ -7,13 +7,13 @@ import game.utils.RandomNumberGenerator;
 
 public class Runes extends Item {
 
-  private int totalAmount;
+  private int totalAmount = 0;
 
   /***
    * Constructor.
    */
   public Runes() {
-    super("Runes", '$', true);
+    super("Runes", '$', false);
   }
 
   public int getTotalAmount(){
@@ -21,6 +21,4 @@ public class Runes extends Item {
   }
 
   public void setTotalAmount(int amount){totalAmount = amount;}
-
-
 }

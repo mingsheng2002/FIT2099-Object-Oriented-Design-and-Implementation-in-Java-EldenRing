@@ -7,6 +7,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actions.AreaAttackAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.FollowBehaviour;
 import game.actors.enemies.Enemy;
@@ -27,12 +29,9 @@ import game.enums.Status;
 public class Player extends Actor implements Resettable {
 
 	private final Menu menu = new Menu();
-	private static final int DAMAGE = 500;  //11
+	private static final int DAMAGE = 11;
 	private static final int HIT_RATE = 100;
-
 	protected int playerMaxHitPoints;
-	private Action playerLastAction;
-
 	private Runes runes = new Runes();
 
 	/**
@@ -49,7 +48,7 @@ public class Player extends Actor implements Resettable {
 		this.addCapability(Status.RESTING);
 		this.addWeaponToInventory(new Club());
 		this.addItemToInventory(runes);
-		RunesManager.getInstance().incrementAmount(0, runes);
+		//RunesManager.getInstance().incrementAmount(0, runes);
 		//this.addWeaponToInventory(new Grossmesser()); /////////////////////////////////testing
 	}
 
@@ -62,6 +61,16 @@ public class Player extends Actor implements Resettable {
 		System.out.println("Player " + this + " current hit points: " + this.hitPoints + "/" + this.maxHitPoints);
 		System.out.println("Player " + this + " currently holding " + this.runes.getTotalAmount() + " of runes");
 
+		boolean found = false;
+		int i = 0;
+		while (!found && i < this.getWeaponInventory().size()) {
+			WeaponItem weaponItem = this.getWeaponInventory().get(i);
+			if (weaponItem.hasCapability(Status.AREA_ATTACK)) {
+				actions.add(new AreaAttackAction(weaponItem));
+				found = true;
+			}
+			i++;
+		}
 
 		// return/print the console menu
 		return menu.showMenu(this, actions, display);
@@ -70,6 +79,7 @@ public class Player extends Actor implements Resettable {
 	@Override
 	public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
 		ActionList actions = new ActionList();
+
 		// If otherActor is not Player, but an Enemy
 		if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY) && !otherActor.hasCapability(Status.RESTING)){
 			((Enemy)otherActor).getBehaviours().put(1, new FollowBehaviour(this));
@@ -92,10 +102,6 @@ public class Player extends Actor implements Resettable {
 
 	@Override
 	public void reset() {}
-
-	public Action getPlayerLastAction() {
-		return playerLastAction;
-	}
 
 	public Runes getRunes(){
 		return runes;

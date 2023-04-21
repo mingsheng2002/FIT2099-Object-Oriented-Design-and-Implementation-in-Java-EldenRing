@@ -30,9 +30,9 @@ public class AttackBehaviour implements Behaviour {
 
         if ((actor.hasCapability(Status.AREA_ATTACK) || (!actor.getWeaponInventory().isEmpty() && actor.getWeaponInventory().get(0).hasCapability(Status.AREA_ATTACK))) && RandomNumberGenerator.getRandomInt(100) < 50) {
             if (weapon == null) {
-                return new AreaAttackAction(this.target);
+                return new AreaAttackAction(actor.getIntrinsicWeapon());
             } else {
-                return new AreaAttackAction(this.target, actor.getWeaponInventory().get(0));
+                return new AreaAttackAction(actor.getWeaponInventory().get(0));
             }
         }
         else {

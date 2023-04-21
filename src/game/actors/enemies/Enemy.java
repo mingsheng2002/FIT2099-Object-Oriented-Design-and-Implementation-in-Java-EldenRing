@@ -70,7 +70,8 @@ public abstract class Enemy extends Actor {
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     ActionList actions = new ActionList();
     // If otherActor is different Enemy type
-    if (!otherActor.equals(this) && !otherActor.hasCapability(Status.RESTING) && otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
+
+    if (!otherActor.toString().equals(this.toString()) && !otherActor.hasCapability(Status.RESTING) && otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
       if (otherActor.getWeaponInventory().isEmpty()) {
         ((Enemy)otherActor).getBehaviours().put(0, new AttackBehaviour(this, direction));
       }
@@ -83,12 +84,8 @@ public abstract class Enemy extends Actor {
       actions.add(new AttackAction(this, direction));
       if (!otherActor.getWeaponInventory().isEmpty()) {
         for (WeaponItem weapon : otherActor.getWeaponInventory()) {
-            actions.add(new AttackAction(this, direction, weapon));
-            if (weapon.hasCapability(Status.AREA_ATTACK)) {
-              actions.add(new AreaAttackAction(this, weapon));
-          }
+          actions.add(new AttackAction(this, direction, weapon));
         }
-        // // check for special skill attack - Area Attack - if holding Grossmesser - only add for once
       }
     }
     return actions;
