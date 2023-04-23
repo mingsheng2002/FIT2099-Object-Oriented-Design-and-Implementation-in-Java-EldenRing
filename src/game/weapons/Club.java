@@ -5,9 +5,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.Purchasable;
 import game.Sellable;
-import game.controllers.PurchaseManager;
-import game.controllers.SellManager;
-import game.enums.Status;
 
 /**
  * A simple weapon that can be used to attack the enemy.
@@ -29,8 +26,6 @@ public class Club extends WeaponItem implements Purchasable, Sellable {
      */
     public Club() {
         super("Club", '!', DAMAGE, "bonks", HIT_RATE);
-        PurchaseManager.getInstance().registerPurchasable(this);
-        SellManager.getInstance().registerSellable(this);
     }
 
     @Override
@@ -44,5 +39,10 @@ public class Club extends WeaponItem implements Purchasable, Sellable {
     @Override
     public int getSellPrice() {
         return SELL_PRICE;
+    }
+
+    @Override
+    public WeaponItem getInstance() {
+        return this;
     }
 }

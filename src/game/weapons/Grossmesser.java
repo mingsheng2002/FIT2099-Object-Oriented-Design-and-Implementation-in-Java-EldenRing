@@ -1,8 +1,7 @@
 package game.weapons;
 
+import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.Sellable;
-import game.controllers.PurchaseManager;
-import game.controllers.SellManager;
 import game.enums.Status;
 
 public class Grossmesser extends CurvedSword implements Sellable {
@@ -18,11 +17,15 @@ public class Grossmesser extends CurvedSword implements Sellable {
   public Grossmesser() {
     super("Grossmesser", '?', DAMAGE, "uses Grossmesser to attack", HIT_RATE);
     this.addCapability(Status.AREA_ATTACK);
-    SellManager.getInstance().registerSellable(this);
   }
 
   @Override
   public int getSellPrice() {
     return SELL_PRICE;
+  }
+
+  @Override
+  public WeaponItem getInstance() {
+    return this;
   }
 }

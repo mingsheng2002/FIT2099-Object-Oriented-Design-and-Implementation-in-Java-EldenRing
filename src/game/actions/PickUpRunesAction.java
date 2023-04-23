@@ -30,7 +30,7 @@ public class PickUpRunesAction extends PickUpAction {
         runes.setHasPickUp(true);
 
         amount =  runes.getTotalAmount();
-        RunesManager.getInstance().incrementAmount(amount,player.getRunes());
+        RunesManager.getInstance().incrementAmount(amount);
         map.locationOf(actor).removeItem(runes);
 
         return menuDescription(actor);

@@ -78,11 +78,9 @@ public class DeathAction extends Action {
         result += System.lineSeparator() + menuDescription(target);
 
         if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            String retVal = RunesManager.getInstance().awardRunes((Enemy) target, (Player) attacker);
+            String retVal = RunesManager.getInstance().awardRunes(target, attacker);
             result += System.lineSeparator() + retVal;
         }
-
-
 
         return result;
     }

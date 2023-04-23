@@ -21,7 +21,7 @@ public class Runes extends Item implements Resettable {
   /***
    * Constructor.
    */
-  public Runes(Player player) {
+  public Runes() {
     super("Runes", '$', false);
     ResetManager.getInstance().registerResettable(this);
     this.hasPickUp = false;

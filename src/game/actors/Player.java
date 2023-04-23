@@ -38,7 +38,7 @@ public class Player extends Actor implements Resettable {
 	private static final int DAMAGE = 11;
 	private static final int HIT_RATE = 100;
 	protected int playerMaxHitPoints;
-	private Runes runes ;
+	private Runes runes = new Runes();
 	private FlaskOfCrimsonTears flaskOfCrimsonTears = new FlaskOfCrimsonTears();
 	//store player last location
 	private Location lastLocation;
@@ -60,7 +60,7 @@ public class Player extends Actor implements Resettable {
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		this.addCapability(Status.RESTING);
 		this.addWeaponToInventory(new Club());
-		runes = new Runes(this);
+		RunesManager.getInstance().registerRunes(runes);
 		this.addItemToInventory(runes);
 		this.addItemToInventory(flaskOfCrimsonTears);
 		this.hasDeath = false;
@@ -150,16 +150,12 @@ public class Player extends Actor implements Resettable {
 			Location location =  visitedSiteOfGrace.get(visitedSiteOfGrace.size()-1);
 			System.out.println("here"+ location.x() +location.y());
 
-			map.moveActor(this,location);
+			//map.moveActor(this,location);
 
 		}
 		System.out.println("Location after: "+map.locationOf(this).x() +" "+ map.locationOf(this).y());
 		this.resetMaxHp(getMaxHp());
 		System.out.println(this+ " revive");
-	}
-
-	public void setRunes(Runes runes) {
-		this.runes = runes;
 	}
 
 	public Runes getRunes(){

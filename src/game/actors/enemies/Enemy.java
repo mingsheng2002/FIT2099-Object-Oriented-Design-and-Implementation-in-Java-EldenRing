@@ -7,19 +7,21 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.RewardRunes;
 import game.actions.AreaAttackAction;
 import game.actions.AttackAction;
 import game.actions.DeathAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
 import game.behaviours.WanderBehaviour;
+import game.controllers.RunesManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Enemy extends Actor {
+public abstract class Enemy extends Actor implements RewardRunes {
 
   private Map<Integer, Behaviour> behaviours = new HashMap<>();
 
@@ -44,6 +46,7 @@ public abstract class Enemy extends Actor {
     this.despawnChance = despawnChance;
     this.minRune = minRune;
     this.maxRune = maxRune;
+    RunesManager.getInstance().registerRewardRunesActor(this);
     this.addCapability(Status.HOSTILE_TO_ENEMY);
     this.behaviours.put(2, new WanderBehaviour());
   }
@@ -104,11 +107,12 @@ public abstract class Enemy extends Actor {
     return behaviours;
   }
 
-  public int getMinRune(){
+  @Override
+  public int getMinRunes(){
     return minRune;
   }
 
-  public int getMaxRune(){
+  public int getMaxRunes(){
     return maxRune;
   }
 
