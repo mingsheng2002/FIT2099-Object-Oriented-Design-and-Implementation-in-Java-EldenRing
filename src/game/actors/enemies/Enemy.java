@@ -29,6 +29,7 @@ public abstract class Enemy extends Actor {
 
   private int minRune;
   private int maxRune;
+  private GameMap map;
 
   /**
    * Constructor.
@@ -48,6 +49,7 @@ public abstract class Enemy extends Actor {
   }
 
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+    this.map = map;
     if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawnChance) {
       System.out.println(this + " has despawned from map");
       return (new DeathAction(this));
@@ -108,5 +110,9 @@ public abstract class Enemy extends Actor {
 
   public int getMaxRune(){
     return maxRune;
+  }
+
+  public GameMap getMap() {
+    return map;
   }
 }

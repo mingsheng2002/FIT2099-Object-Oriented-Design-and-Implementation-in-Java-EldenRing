@@ -1,5 +1,6 @@
 package game.controllers;
 
+import edu.monash.fit2099.engine.positions.Location;
 import game.Resettable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class ResetManager {
     private List<Resettable> resettables;
-    private static ResetManager instance;
+    private static ResetManager instance =null;
 
     /**
      * HINT 1: where have we seen a private constructor before?
@@ -23,9 +24,35 @@ public class ResetManager {
         this.resettables = new ArrayList<>();
     }
 
-    public void run() {}
+    /**
+     * Factory method use to instantiate ResetManager
+     */
+    public static ResetManager getInstance(){
+        if (instance == null){
+            instance  = new ResetManager();
+        }
+        return instance;
+    }
 
-    public void registerResettable(Resettable resettable) {}
+    /**
+     * Reset all the resettable
+     */
+    public void run() {
+        for (Resettable resettable : resettables){
+            resettable.reset();
+        }
 
-    public void removeResettable(Resettable resettable) {}
+    }
+
+    /**
+     * Register resettable (add resettable into list resettables)
+     * @param resettable
+     */
+    public void registerResettable(Resettable resettable) {
+        resettables.add(resettable);
+    }
+
+    public void removeResettable(Resettable resettable) {
+        resettables.remove(resettable);
+    }
 }

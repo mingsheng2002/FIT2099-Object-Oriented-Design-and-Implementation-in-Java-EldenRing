@@ -30,7 +30,8 @@ public class Application {
 
 		World world = new World(new Display());
 
-		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater());
+		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater(), new TheFirstStep());
+
 
 		List<String> map = Arrays.asList(
 				"..............n............................................................",
@@ -51,7 +52,7 @@ public class Application {
 				"...........................................................................",
 				"...........................................................................",
 				"...........................................................................",
-				"..####__##....................................................######..##...",
+				"..####__##...........U........................................######..##...",
 				"..#.....__....................................................#....____....",
 				"..#___..........................................................__.....#...",
 				"..####__###..................................................._.....__.#...",
@@ -73,7 +74,7 @@ public class Application {
 		 */
 
 //		gameMap.at(30, 10).addActor(new LoneWolf());
-//
+
 		gameMap.at(29, 10).addActor(new GiantCrab());
 		gameMap.at(28, 15).addActor(new GiantCrab());
 		gameMap.at(29, 11).addActor(new GiantCrab());
@@ -92,7 +93,7 @@ public class Application {
 //		gameMap.at(50, 9).addActor(new GiantCrab());
 
 		// HINT: what does it mean to prefer composition to inheritance?
-		Player player = new Player("Tarnished", '@', 300);
+		Player player = new Player("Tarnished", '@', 3);
 		world.addPlayer(player, gameMap.at(50, 10));
 
 		world.run();

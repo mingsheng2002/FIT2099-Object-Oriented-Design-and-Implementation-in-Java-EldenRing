@@ -4,12 +4,14 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
+import game.Resettable;
 import game.actions.AttackAction;
 import game.enums.Status;
 
 public abstract class HarmlessEnemy extends Actor {
 
   private Enemy enemyToBeRevived;
+  private GameMap map;
 
   /**
    * Constructor.
@@ -26,6 +28,7 @@ public abstract class HarmlessEnemy extends Actor {
 
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
+    this.map = map;
     ActionList actions = new ActionList();
     if (otherActor.hasCapability(Status.RESTING)) {
       actions.add(new AttackAction(otherActor, direction, otherActor.getWeaponInventory().get(0)));
@@ -39,5 +42,9 @@ public abstract class HarmlessEnemy extends Actor {
     Location here = map.locationOf(this);
     map.removeActor(this);
     here.addActor(enemyToBeRevived);
+  }
+
+  public GameMap getMap() {
+    return map;
   }
 }

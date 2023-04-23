@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actors.Player;
+import game.controllers.ResetManager;
 import game.controllers.RunesManager;
 import game.enums.Status;
 import game.actors.enemies.Enemy;
@@ -38,6 +39,23 @@ public class DeathAction extends Action {
     @Override
     public String execute(Actor target, GameMap map) {
         String result = "";
+        if(target.hasCapability(Status.RESTING)){
+            System.out.println("YOU DIED");
+
+            // pass lastlocation in runes
+            ((Player) target).getRunes().setDropLocation(((Player) target).getLastLocation());
+            ((Player) target).setHasDeath(true);
+            // change it to portable
+            ((Player) target).getRunes().togglePortability();
+
+            target.removeItemFromInventory(((Player) target).getRunes());
+
+            ResetManager.getInstance().run();
+
+            return result;
+
+
+        }
 
         if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.RESPAWNABLE)){
             PileOfBones pb = new PileOfBones((Enemy) target);
@@ -63,6 +81,8 @@ public class DeathAction extends Action {
             String retVal = RunesManager.getInstance().awardRunes((Enemy) target, (Player) attacker);
             result += System.lineSeparator() + retVal;
         }
+
+
 
         return result;
     }

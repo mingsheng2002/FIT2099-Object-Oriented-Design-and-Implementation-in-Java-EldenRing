@@ -6,8 +6,11 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.Resettable;
+import game.actions.DeathAction;
+import game.controllers.ResetManager;
 
-public class PileOfBones extends HarmlessEnemy{
+public class PileOfBones extends HarmlessEnemy implements Resettable {
 
   private int count = 0;
   public static final int MAX_HIT = 3;
@@ -18,6 +21,7 @@ public class PileOfBones extends HarmlessEnemy{
    */
   public PileOfBones(Enemy deathEnemy) {
     super("Pile of Bones", 'X', 1, deathEnemy);
+    ResetManager.getInstance().registerResettable(this);
   }
 
   @Override
@@ -34,5 +38,13 @@ public class PileOfBones extends HarmlessEnemy{
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     return super.allowableActions(otherActor, direction, map);
+  }
+
+  @Override
+  public void reset() {
+    if (this.getMap()!=null){
+      getMap().removeActor(this);
+      System.out.println(this+ " despawn");
+    }
   }
 }

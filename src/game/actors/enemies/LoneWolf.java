@@ -6,6 +6,9 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.Resettable;
+import game.actions.DeathAction;
+import game.controllers.ResetManager;
 import game.utils.RandomNumberGenerator;
 
 /**
@@ -16,7 +19,7 @@ import game.utils.RandomNumberGenerator;
  * Modified by:
  *
  */
-public class LoneWolf extends Enemy {
+public class LoneWolf extends Enemy implements Resettable {
 
     private static final int DESPAWN_CHANCE = 10;
     private static final int HIT_POINTS = 102;
@@ -31,6 +34,7 @@ public class LoneWolf extends Enemy {
      */
     public LoneWolf() {
         super("Lone Wolf", 'h', HIT_POINTS, LoneWolf.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
+        ResetManager.getInstance().registerResettable(this);
     }
 
     /**
@@ -66,4 +70,11 @@ public class LoneWolf extends Enemy {
         return new IntrinsicWeapon(DAMAGE, "bites", HIT_RATE);
     }
 
+    @Override
+    public void reset() {
+        if (this.getMap()!=null){
+            getMap().removeActor(this);
+            System.out.println(this+ " despawn");
+        }
+    }
 }

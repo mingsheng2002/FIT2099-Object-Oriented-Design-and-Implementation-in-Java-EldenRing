@@ -6,10 +6,13 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.Resettable;
+import game.actions.DeathAction;
+import game.controllers.ResetManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
 
-public class GiantCrab extends Enemy{
+public class GiantCrab extends Enemy implements Resettable {
 
   private static final int DESPAWN_CHANCE = 10;
   private static final int HIT_POINTS = 407;
@@ -26,6 +29,7 @@ public class GiantCrab extends Enemy{
   public GiantCrab(){
     super("Giant Crab", 'C', HIT_POINTS, GiantCrab.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
     this.addCapability(Status.AREA_ATTACK);
+    ResetManager.getInstance().registerResettable(this);
   }
 
   @Override
@@ -48,5 +52,13 @@ public class GiantCrab extends Enemy{
 
   public IntrinsicWeapon getIntrinsicWeapon(){
     return new IntrinsicWeapon(DAMAGE, "slams", HIT_RATE);
+  }
+
+  @Override
+  public void reset() {
+    if (this.getMap()!=null){
+      getMap().removeActor(this);
+      System.out.println(this+ " despawn");
+    }
   }
 }

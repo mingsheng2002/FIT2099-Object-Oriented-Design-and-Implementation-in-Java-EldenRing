@@ -5,11 +5,15 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
+import game.Resettable;
+import game.actions.DeathAction;
+import game.controllers.ResetManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
 import game.weapons.Grossmesser;
 
-public class HeavySkeletalSwordsman extends Enemy{
+public class HeavySkeletalSwordsman extends Enemy implements Resettable {
 
   private static final int DESPAWN_CHANCE = 10;
   private static final int HIT_POINTS = 153;
@@ -24,6 +28,7 @@ public class HeavySkeletalSwordsman extends Enemy{
     super("Heavy Skeletal Swordsman", 'q', HIT_POINTS, HeavySkeletalSwordsman.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
     this.addWeaponToInventory(new Grossmesser());
     this.addCapability(Status.RESPAWNABLE);
+    ResetManager.getInstance().registerResettable(this);
   }
 
   @Override
@@ -42,5 +47,13 @@ public class HeavySkeletalSwordsman extends Enemy{
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     return super.allowableActions(otherActor, direction, map);
+  }
+
+  @Override
+  public void reset() {
+    if (this.getMap()!=null){
+      getMap().removeActor(this);
+      System.out.println(this+ " despawn");
+    }
   }
 }
