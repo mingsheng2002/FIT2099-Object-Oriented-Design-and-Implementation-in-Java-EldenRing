@@ -22,12 +22,12 @@ public class AreaAttackAction extends Action {
         String result = "";
         Location here = map.locationOf(actor);
         for (Exit exit : here.getExits()) {
-            if (exit.getDestination().containsAnActor() && exit.getDestination().getActor().hasCapability(Status.HOSTILE_TO_ENEMY)) {
+            if (exit.getDestination().containsAnActor()) {
                 int damage = this.weapon.damage();
                 Actor target = exit.getDestination().getActor();
                 //result = actor + " performs area attack on " + target + " for " + damage + " damage";
                 target.hurt(damage);
-                result += actor + " performs area attack and " + this.weapon.verb() + " " + target + " for " + damage + " damage\n";
+                result += System.lineSeparator() + actor + " performs area attack and " + this.weapon.verb() + " " + target + " for " + damage + " damage";
                 if (!target.isConscious()) {
                     result += new DeathAction(actor).execute(target, map);
                 }

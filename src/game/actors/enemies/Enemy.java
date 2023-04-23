@@ -51,7 +51,6 @@ public abstract class Enemy extends Actor implements RewardRunes {
     this.minRunes = minRunes;
     this.maxRunes = maxRunes;
     RunesManager.getInstance().registerRewardRunesActor(this);
-    this.addCapability(Status.HOSTILE_TO_ENEMY);
     this.behaviours.put(2, new WanderBehaviour());
   }
 
@@ -80,26 +79,13 @@ public abstract class Enemy extends Actor implements RewardRunes {
 
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-
-    if (otherActor.hasCapability(Status.RESTING)){
-      behaviours.put(1, new FollowBehaviour(otherActor));
-      this.addCapability(Status.FOLLOWING);
-    }
-
-    // If adjacent actor can be attacked, add Attack Behaviour to enemy
-    if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY) && !otherActor.toString().equals(this.toString())) {
-      if (this.getWeaponInventory().isEmpty()) {
-        behaviours.put(0, new AttackBehaviour(otherActor, direction));
-      }
-      else {
-        behaviours.put(0, new AttackBehaviour(otherActor, direction, this.getWeaponInventory().get(0)));
-      }
-    }
-
     ActionList actions = new ActionList();
 
-    // If adjacent actor is Player, gives Player an Attack Action
-    if (otherActor.hasCapability(Status.RESTING)) {
+    // If adjacent actor is Player, gives Enemy a Follow Behaviour & gives Player an Attack Action
+    if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
+      System.out.println("check actor : " + otherActor);
+      behaviours.put(1, new FollowBehaviour(otherActor));
+      this.addCapability(Status.FOLLOWING);
       actions.add(new AttackAction(this, direction));
       if (!otherActor.getWeaponInventory().isEmpty()) {
         for (WeaponItem weapon : otherActor.getWeaponInventory()) {
@@ -108,6 +94,10 @@ public abstract class Enemy extends Actor implements RewardRunes {
       }
     }
     return actions;
+  }
+
+  public Map<Integer, Behaviour> getBehaviours() {
+    return behaviours;
   }
 
   @Override

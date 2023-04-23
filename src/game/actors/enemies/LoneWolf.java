@@ -8,7 +8,9 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.Resettable;
 import game.actions.DeathAction;
+import game.behaviours.AttackBehaviour;
 import game.controllers.ResetManager;
+import game.enums.Status;
 import game.utils.RandomNumberGenerator;
 
 /**
@@ -35,6 +37,7 @@ public class LoneWolf extends Enemy implements Resettable {
     public LoneWolf() {
         super("Lone Wolf", 'h', HIT_POINTS, LoneWolf.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
         ResetManager.getInstance().registerResettable(this);
+        this.addCapability(Status.FRIENDLY_TO_CANIS_LUPUS);
     }
 
     /**
@@ -61,6 +64,15 @@ public class LoneWolf extends Enemy implements Resettable {
      */
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
+        // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
+        if (!otherActor.hasCapability(Status.FRIENDLY_TO_CANIS_LUPUS)) { ///////////////
+            if (this.getWeaponInventory().isEmpty()) {
+                this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
+            }
+            else {
+                this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction, this.getWeaponInventory().get(0)));
+            }
+        }
         return super.allowableActions(otherActor, direction, map);
     }
 
@@ -74,7 +86,6 @@ public class LoneWolf extends Enemy implements Resettable {
     public void reset() {
         if (this.getMap()!=null ){
             getMap().removeActor(this);
-            System.out.println(this+ " despawn");
         }
     }
 }

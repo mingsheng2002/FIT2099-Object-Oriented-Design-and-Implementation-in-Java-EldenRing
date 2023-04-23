@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Resettable;
 import game.actions.DeathAction;
+import game.behaviours.AttackBehaviour;
 import game.controllers.ResetManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
@@ -27,6 +28,7 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
   public HeavySkeletalSwordsman(){
     super("Heavy Skeletal Swordsman", 'q', HIT_POINTS, HeavySkeletalSwordsman.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
     this.addWeaponToInventory(new Grossmesser());
+    this.addCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES);
     this.addCapability(Status.REVIVABLE);
     ResetManager.getInstance().registerResettable(this);
   }
@@ -46,6 +48,15 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
    */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
+    // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
+    if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES)) { ///////////////
+      if (this.getWeaponInventory().isEmpty()) {
+        this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
+      }
+      else {
+        this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction, this.getWeaponInventory().get(0)));
+      }
+    }
     return super.allowableActions(otherActor, direction, map);
   }
 
@@ -53,7 +64,6 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
   public void reset() {
     if (this.getMap()!=null ){
       getMap().removeActor(this);
-      System.out.println(this+ " despawn");
     }
   }
 }

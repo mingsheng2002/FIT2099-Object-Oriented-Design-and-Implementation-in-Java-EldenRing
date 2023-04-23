@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.Resettable;
 import game.actions.DeathAction;
+import game.behaviours.AttackBehaviour;
 import game.controllers.ResetManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
@@ -18,7 +19,6 @@ public class GiantCrab extends Enemy implements Resettable {
   private static final int HIT_POINTS = 407;
   private static final int DAMAGE = 208;
   private static final int HIT_RATE = 90;
-  private static final int SKILL_CHANCE = 50;
   private static final int MIN_RUNES_AWARD = 318;
   private static final int MAX_RUNES_AWARD = 4961;
 
@@ -28,6 +28,7 @@ public class GiantCrab extends Enemy implements Resettable {
    */
   public GiantCrab(){
     super("Giant Crab", 'C', HIT_POINTS, GiantCrab.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
+    this.addCapability(Status.FRIENDLY_TO_CRUSTACEANS);
     this.addCapability(Status.AREA_ATTACK);
     ResetManager.getInstance().registerResettable(this);
   }
@@ -47,6 +48,17 @@ public class GiantCrab extends Enemy implements Resettable {
    */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
+
+    // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
+    if (!otherActor.hasCapability(Status.FRIENDLY_TO_CRUSTACEANS)) { ///////////////
+      if (this.getWeaponInventory().isEmpty()) {
+        this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
+      }
+      else {
+        this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction, this.getWeaponInventory().get(0)));
+      }
+    }
+
     return super.allowableActions(otherActor, direction, map);
   }
 
@@ -58,7 +70,6 @@ public class GiantCrab extends Enemy implements Resettable {
   public void reset() {
     if (this.getMap()!=null){
       getMap().removeActor(this);
-      System.out.println(this+ " despawn");
     }
   }
 }

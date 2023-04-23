@@ -42,7 +42,6 @@ public class PileOfBones extends HarmlessEnemy implements Resettable {
   public void reset() {
     if (this.getMap()!=null){
       getMap().removeActor(this);
-      System.out.println(this+ " despawn");
     }
   }
 }

@@ -29,9 +29,10 @@ public class RunesManager {
     int totalEnemies = rewardRunesActor.size();
     boolean found = false;
     while (!found && i < totalEnemies) {
-      if (rewardRunesActor.get(i).toString().equals(target.toString())) {
-        int minAward = rewardRunesActor.get(i).getMinRunes();
-        int maxAward = rewardRunesActor.get(i).getMaxRunes();
+      RewardRunes rewarder = rewardRunesActor.get(i);
+      if (rewarder == target) {
+        int minAward = rewarder.getMinRunes();
+        int maxAward = rewarder.getMaxRunes();
         amount = RandomNumberGenerator.getRandomInt(minAward, maxAward);
         found = true;
       }

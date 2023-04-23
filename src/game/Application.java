@@ -119,7 +119,7 @@ public class Application {
 //		gameMap.at(50, 9).addActor(new GiantCrab());
 
 		// HINT: what does it mean to prefer composition to inheritance?
-		Player player = new Player("Tarnished", '@', 30);
+		Player player = new Player("Tarnished", '@', 300);
 		world.addPlayer(player, gameMap.at(50, 12));
 
 		world.run();

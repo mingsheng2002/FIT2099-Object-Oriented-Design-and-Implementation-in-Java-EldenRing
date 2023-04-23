@@ -13,6 +13,7 @@ import game.controllers.RunesManager;
 import game.enums.Status;
 import game.actors.enemies.Enemy;
 import game.actors.enemies.PileOfBones;
+import game.utils.FancyMessage;
 import jdk.swing.interop.SwingInterOpUtils;
 
 /**
@@ -40,15 +41,12 @@ public class DeathAction extends Action {
     @Override
     public String execute(Actor target, GameMap map) {
         String result = "";
-        if(target.hasCapability(Status.RESTING)){
-            System.out.println("YOU DIED");
-            ResetManager.getInstance().run();
-            System.out.println("Reset Done");
-
-            return result;
+        if(target.hasCapability(Status.HOSTILE_TO_ENEMY)){
+            System.out.println(FancyMessage.YOU_DIED);
+            return new ResetAction().execute(target, map);
         }
 
-        if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.REVIVABLE)){
+        if (this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY) && target.hasCapability(Status.REVIVABLE)){
             PileOfBones pob = new PileOfBones(target);
             Location here = map.locationOf(target);
             map.removeActor(target);
@@ -57,7 +55,7 @@ public class DeathAction extends Action {
         }
 
         // only drop items if defeated by player
-        if (this.attacker.hasCapability(Status.RESTING)) {
+        if (this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY)) {
             ActionList dropActions = new ActionList();
             // drop all items
             for (Item item : target.getItemInventory())
@@ -71,7 +69,7 @@ public class DeathAction extends Action {
         map.removeActor(target);
         result += System.lineSeparator() + menuDescription(target);
 
-        if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.HOSTILE_TO_ENEMY)){
+        if(this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY)){
             String retVal = RunesManager.getInstance().awardRunes(target, attacker);
             result += System.lineSeparator() + retVal;
         }

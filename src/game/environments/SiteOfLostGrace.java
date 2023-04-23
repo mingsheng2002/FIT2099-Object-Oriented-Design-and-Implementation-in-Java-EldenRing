@@ -1,7 +1,10 @@
 package game.environments;
 
+import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
+import edu.monash.fit2099.engine.positions.Location;
+import game.actions.ResetAction;
 import game.enums.Status;
 
 public abstract class SiteOfLostGrace extends Ground {
@@ -13,6 +16,14 @@ public abstract class SiteOfLostGrace extends Ground {
 
     @Override
     public boolean canActorEnter(Actor actor) {
-        return actor.hasCapability(Status.RESTING);
+        return actor.hasCapability(Status.HOSTILE_TO_ENEMY);
+    }
+
+    public ActionList allowableActions(Actor actor, Location location, String direction) {
+        ActionList actions = new ActionList();
+        if (location.containsAnActor()) {
+            actions.add(new ResetAction());
+        }
+        return actions;
     }
 }

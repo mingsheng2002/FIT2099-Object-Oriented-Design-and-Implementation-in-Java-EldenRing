@@ -11,7 +11,7 @@ public class ConsumeAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (actor.hasCapability(Status.RESTING)){
+        if (actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actor.heal(250);
             // increase the usage by one TBC
             for (Item item : actor.getItemInventory()){

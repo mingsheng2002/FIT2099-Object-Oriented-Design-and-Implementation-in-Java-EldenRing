@@ -3,6 +3,7 @@ package game.actions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.Sellable;
 import game.controllers.RunesManager;
 
@@ -23,8 +24,9 @@ public class SellAction extends Action {
     int totalWeapon = player.getWeaponInventory().size();
     boolean found = false;
     while (!found && i < totalWeapon) {
-      if (player.getWeaponInventory().get(i).toString().equals(item.toString())) {
-        player.removeWeaponFromInventory(player.getWeaponInventory().get(i));
+      WeaponItem weaponItem = player.getWeaponInventory().get(i);
+      if (weaponItem.toString().equals(item.toString())) {
+        player.removeWeaponFromInventory(weaponItem);
         found = true;
       }
       i++;

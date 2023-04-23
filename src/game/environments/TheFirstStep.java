@@ -10,11 +10,5 @@ public class TheFirstStep extends SiteOfLostGrace{
     public TheFirstStep() {
         super('U');
     }
-    public void tick(Location location){
-        if (location.containsAnActor()) {
-            // ResetManager perform reset
-            ResetManager.getInstance().run();
-        }
-    }
 
 }

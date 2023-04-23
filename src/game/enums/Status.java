@@ -8,8 +8,11 @@ package game.enums;
 public enum Status {
     HOSTILE_TO_ENEMY,
     REVIVABLE,
-    RESTING,
     FOLLOWING,
+    RESTING,
     AREA_ATTACK,
-    HEALING
+    HEALING,
+    FRIENDLY_TO_CANIS_LUPUS,
+    FRIENDLY_TO_CRUSTACEANS,
+    FRIENDLY_TO_SKELETAL_SPECIES
 }

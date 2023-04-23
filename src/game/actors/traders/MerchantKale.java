@@ -51,7 +51,7 @@ public class MerchantKale extends Trader{
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     ActionList actions = new ActionList();
 
-    if(otherActor.hasCapability(Status.RESTING)) {
+    if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
       // Check what can be purchased by player (what trader can sell)
       for (Purchasable purchaseItem : purchasables) {
         actions.add(new PurchaseAction(otherActor, purchaseItem));

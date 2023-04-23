@@ -31,7 +31,7 @@ public abstract class HarmlessEnemy extends Actor {
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     this.map = map;
     ActionList actions = new ActionList();
-    if (otherActor.hasCapability(Status.RESTING)) {
+    if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
       actions.add(new AttackAction(otherActor, direction, otherActor.getWeaponInventory().get(0)));
     }
     return actions;
