@@ -2,6 +2,7 @@ package game.actions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actors.Player;
 import game.enums.Status;
@@ -13,7 +14,13 @@ public class ConsumeAction extends Action {
         if (actor.hasCapability(Status.RESTING)){
             actor.heal(250);
             // increase the usage by one TBC
-            ((Player) actor).getFlaskOfCrimsonTears().incrementNumOfUsage();
+            for (Item item : actor.getItemInventory()){
+                if (item.hasCapability(Status.HEALING)){
+                    item.tick(map.locationOf(actor));
+                }
+
+            }
+
 
         }
         return menuDescription(actor);

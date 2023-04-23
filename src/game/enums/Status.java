@@ -10,5 +10,6 @@ public enum Status {
     REVIVABLE,
     RESTING,
     FOLLOWING,
-    AREA_ATTACK
+    AREA_ATTACK,
+    HEALING
 }

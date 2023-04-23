@@ -13,6 +13,7 @@ import game.controllers.RunesManager;
 import game.enums.Status;
 import game.actors.enemies.Enemy;
 import game.actors.enemies.PileOfBones;
+import jdk.swing.interop.SwingInterOpUtils;
 
 /**
  * An action executed if an actor is killed.
@@ -41,16 +42,8 @@ public class DeathAction extends Action {
         String result = "";
         if(target.hasCapability(Status.RESTING)){
             System.out.println("YOU DIED");
-
-            // pass lastlocation in runes
-            ((Player) target).getRunes().setDropLocation(((Player) target).getLastLocation());
-            ((Player) target).setHasDeath(true);
-            // change it to portable
-            ((Player) target).getRunes().togglePortability();
-
-            target.removeItemFromInventory(((Player) target).getRunes());
-
             ResetManager.getInstance().run();
+            System.out.println("Reset Done");
 
             return result;
         }

@@ -6,7 +6,10 @@ import game.controllers.ResetManager;
 
 public class TheFirstStep extends SiteOfLostGrace{
 
-    // should i just write it in parent class??
+
+    public TheFirstStep() {
+        super('U');
+    }
     public void tick(Location location){
         if (location.containsAnActor()) {
             // ResetManager perform reset

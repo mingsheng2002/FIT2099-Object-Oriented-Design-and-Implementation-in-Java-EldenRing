@@ -14,8 +14,8 @@ public class Runes extends Item implements Resettable {
   private int totalAmount = 0;
   private Location dropLocation = null;
   private boolean hasPickUp ;
-  private boolean hasDrop ;
-  //private Player player;
+
+
 
 
   /***
@@ -25,8 +25,7 @@ public class Runes extends Item implements Resettable {
     super("Runes", '$', false);
     ResetManager.getInstance().registerResettable(this);
     this.hasPickUp = false;
-    this.hasDrop = false;
-    //this.player = player;
+
   }
 
   public int getTotalAmount(){
@@ -47,9 +46,7 @@ public class Runes extends Item implements Resettable {
     this.hasPickUp = hasPickUp;
   }
 
-  public void setHasDrop(boolean hasDrop) {
-    this.hasDrop = hasDrop;
-  }
+
 
 
   /**
@@ -57,19 +54,12 @@ public class Runes extends Item implements Resettable {
    *
    */
   public void reset(){
-
     if (this.portable){
-      if(!hasDrop){
-        //this.getDropAction(player).execute(player,player.getMap());
-        getDropLocation().addItem(this);
-
-        System.out.println("The values of the runes dropped is "+this.getTotalAmount() +" at "+getDropLocation().x()+getDropLocation().y());
-      }
-      else if (!hasPickUp){
+      if(!hasPickUp) {
         getDropLocation().removeItem(this);
+        System.out.println("player death again runes remove ");
+
       }
-    }else{
-      System.out.println("Runes do reset nothing now");
     }
   }
 

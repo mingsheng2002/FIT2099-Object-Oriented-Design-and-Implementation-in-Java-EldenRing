@@ -38,7 +38,7 @@ public class ResetManager {
      * Reset all the resettable
      */
     public void run() {
-        for (Resettable resettable : resettables){
+        for (Resettable resettable : new ArrayList<Resettable>(resettables)){
             resettable.reset();
         }
 

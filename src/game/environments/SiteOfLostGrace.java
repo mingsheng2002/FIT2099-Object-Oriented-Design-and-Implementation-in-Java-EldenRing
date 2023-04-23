@@ -7,8 +7,8 @@ import game.enums.Status;
 public abstract class SiteOfLostGrace extends Ground {
 
 
-    public SiteOfLostGrace() {
-        super('U');
+    public SiteOfLostGrace(char displayChar) {
+        super(displayChar);
     }
 
     @Override

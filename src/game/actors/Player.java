@@ -42,9 +42,9 @@ public class Player extends Actor implements Resettable {
 	private FlaskOfCrimsonTears flaskOfCrimsonTears = new FlaskOfCrimsonTears();
 	//store player last location
 	private Location lastLocation;
-	private boolean hasDeath;
-	private List<Location> visitedSiteOfGrace = new ArrayList<>();
+	private Location visitedSiteOfLostGrace;
 	private GameMap map;
+	private boolean hasTheFirstStepLocation = false;
 
 
 	/**
@@ -63,7 +63,6 @@ public class Player extends Actor implements Resettable {
 		RunesManager.getInstance().registerRunes(runes);
 		this.addItemToInventory(runes);
 		this.addItemToInventory(flaskOfCrimsonTears);
-		this.hasDeath = false;
 		ResetManager.getInstance().registerResettable(this);
 
 
@@ -75,21 +74,30 @@ public class Player extends Actor implements Resettable {
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 		this.map = map;
-		//TBC how to get the first site of lost grace location?
-		visitedSiteOfGrace.add(new Location(map,21,19));
-		if (map.locationOf(this).getGround().getDisplayChar()=='U'){
-			visitedSiteOfGrace.add(map.locationOf(this));
 
+
+		System.out.println("location of player: "+ map.locationOf(this).x() +" , "+ map.locationOf(this).y());
+
+		if (!getHasTheFirstStepLocation()){
+			getTheFirstStep(map);
 		}
+		if  (map.locationOf(this).getGround().getDisplayChar()=='U'){
+			setVisitedSiteOfLostGrace(map.locationOf(this));
+		}
+		// set last location of player
+		setLastLocation(map.locationOf(this));
+
+
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 
-		String hotKey = lastAction.hotkey();
-		//set player last location
-		if (hotKey != null) {
-			setLastLocation(calcLastLocation(hotKey, map.locationOf(this), map));
-		}
+
+//		String hotKey = lastAction.hotkey();
+//		//set player last location
+//		if (hotKey != null) {
+//			setLastLocation(calcLastLocation(hotKey, map.locationOf(this), map));
+//		}
 		System.out.println("Player " + this + " current hit points: " + this.hitPoints + "/" + this.maxHitPoints);
 		System.out.println("Player " + this + " currently holding " + this.runes.getTotalAmount() + " of runes");
 		System.out.println("Player " + this + " left  " + this.flaskOfCrimsonTears.getNumOfUsageLeft() + " usage of Flask Of Crimson Tears");
@@ -131,30 +139,86 @@ public class Player extends Actor implements Resettable {
 
 	@Override
 	public void reset() {
-		if (hasDeath ){
-			System.out.println("Location before: "+map.locationOf(this).x() +" "+ map.locationOf(this).y());
-			Location location =  visitedSiteOfGrace.get(visitedSiteOfGrace.size()-1);
-			System.out.println("here"+ location.x() +location.y());
+		// true only when reset is caused by player death
+		if (!this.isConscious()){
+			// create a new runes drop at last location
+			Runes runes = new Runes();
+			runes.setTotalAmount(RunesManager.getInstance().getRunes().getTotalAmount());
+			getLastLocation().addItem(runes);
+			System.out.println("Last location display character: "+getLastLocation().getDisplayChar());
+			//change the runes to portable
+			runes.togglePortability();
+			//set last location to runes
+			runes.setDropLocation(getLastLocation());
 
-			//map.moveActor(this,location);
+			// set the player inventory amount to 0
+			RunesManager.getInstance().decrementAmount(getRunes().getTotalAmount());
+
+			System.out.println("The values of the runes dropped is "+runes.getTotalAmount() +" at location "+getLastLocation().x()+" , "+getLastLocation().y());
+			map.moveActor(this,getVisitedSiteOfLostGrace());
+
+
 
 		}
-		System.out.println("Location after: "+map.locationOf(this).x() +" "+ map.locationOf(this).y());
+
 		this.resetMaxHp(getMaxHp());
 		System.out.println(this+ " revive");
 	}
 
+
+	private void  getTheFirstStep(GameMap map){
+		int width =map.getXRange().max()-map.getXRange().min();
+		int height = map.getYRange().max() - map.getYRange().min();
+		System.out.println(width);
+		System.out.println(height);
+
+
+//		int y = rowMin;
+//		int x = colMin;
+//		System.out.println(x);
+//		System.out.println(y);
+//		System.out.println(colMax);
+//		System.out.println(rowMax);
+//		System.out.println(getHasTheFirstStepLocation());
+
+//		while ( y<rowMax+1 && !getHasTheFirstStepLocation()){
+//			while (x<colMax+1 && !getHasTheFirstStepLocation()){
+//				System.out.println(map.at(x,y).getGround().getDisplayChar()=='U');
+//				if (map.at(x,y).getGround().getDisplayChar()=='U'){
+//					setVisitedSiteOfLostGrace(map.at(x,y));
+//					setHasTheFirstStepLocation(true);
+//					System.out.println(x);
+//					System.out.println(y);
+//				}
+//				x++;
+//			}
+//			y++;
+//		}
+		for ( int y= 0;y<height+1;y++){
+			for ( int x = 0; x<width+1 ;x++){
+
+				if (map.at(x,y).getGround().getDisplayChar()=='U'){
+					setVisitedSiteOfLostGrace(map.at(x,y));
+					System.out.println("heree le");
+					setHasTheFirstStepLocation(true);
+					System.out.println(x);
+					System.out.println(y);
+//
+			}
+		}
+		//System.out.println("The First Step location: "+getVisitedSiteOfLostGrace().x()+" , "+getVisitedSiteOfLostGrace().y());
+	}}
+	public Location getVisitedSiteOfLostGrace() {
+		return visitedSiteOfLostGrace;
+	}
+
+	public void setVisitedSiteOfLostGrace(Location visitedSiteOfLostGraceGrace) {
+		this.visitedSiteOfLostGrace = visitedSiteOfLostGraceGrace;
+	}
 	public Runes getRunes(){
 		return runes;
 	}
 
-	public boolean isHasDeath() {
-		return hasDeath;
-	}
-
-	public void setHasDeath(boolean hasDeath) {
-		this.hasDeath = hasDeath;
-	}
 
 	public FlaskOfCrimsonTears getFlaskOfCrimsonTears() {
 		return flaskOfCrimsonTears;
@@ -163,55 +227,66 @@ public class Player extends Actor implements Resettable {
 	public GameMap getMap() {
 		return map;
 	}
-
-	private Location calcLastLocation (String hotkey, Location currentLocation, GameMap map){
-
-		int x = currentLocation.x();
-		int y = currentLocation.y();
-
-		switch (hotkey) {
-			case "1":
-				x+=1;
-				y-=1;
-				break;
-
-			case "2":
-				y-=1;
-				break;
-
-			case "3":
-				x-=1;
-				y-=1;
-				break;
-
-			case "4":
-				x+=1;
-				break;
-
-			case "6":
-				x-=1;
-				break;
-
-			case "7":
-				x+=1;
-				y+=1;
-				break;
-
-			case "8":
-				y+=1;
-				break;
-
-			case "9":
-				x-=1;
-				y+=1;
-				break;
-
-			case "5":
-				break;
-		}
-		return new Location(map,x,y);
-
-
-
+	public void setMap(GameMap map) {
+		this.map = map;
 	}
+
+	public boolean getHasTheFirstStepLocation() {
+		return hasTheFirstStepLocation;
+	}
+
+	public void setHasTheFirstStepLocation(boolean hasTheFirstStepLocation) {
+		this.hasTheFirstStepLocation = hasTheFirstStepLocation;
+	}
+
+//	private Location calcLastLocation (String hotkey, Location currentLocation, GameMap map){
+//
+//		int x = currentLocation.x();
+//		int y = currentLocation.y();
+//
+//		switch (hotkey) {
+//			case "1":
+//				x+=1;
+//				y-=1;
+//				break;
+//
+//			case "2":
+//				y-=1;
+//				break;
+//
+//			case "3":
+//				x-=1;
+//				y-=1;
+//				break;
+//
+//			case "4":
+//				x+=1;
+//				break;
+//
+//			case "6":
+//				x-=1;
+//				break;
+//
+//			case "7":
+//				x+=1;
+//				y+=1;
+//				break;
+//
+//			case "8":
+//				y+=1;
+//				break;
+//
+//			case "9":
+//				x-=1;
+//				y+=1;
+//				break;
+//
+//			case "5":
+//				break;
+//		}
+//		return new Location(map,x,y);
+//
+//
+//
+//	}
 }

@@ -72,7 +72,7 @@ public class LoneWolf extends Enemy implements Resettable {
 
     @Override
     public void reset() {
-        if (this.getMap()!=null){
+        if (this.getMap()!=null ){
             getMap().removeActor(this);
             System.out.println(this+ " despawn");
         }
