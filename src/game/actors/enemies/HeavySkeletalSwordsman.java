@@ -27,7 +27,7 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
   public HeavySkeletalSwordsman(){
     super("Heavy Skeletal Swordsman", 'q', HIT_POINTS, HeavySkeletalSwordsman.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
     this.addWeaponToInventory(new Grossmesser());
-    this.addCapability(Status.RESPAWNABLE);
+    this.addCapability(Status.REVIVABLE);
     ResetManager.getInstance().registerResettable(this);
   }
 

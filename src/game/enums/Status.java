@@ -7,7 +7,7 @@ package game.enums;
  */
 public enum Status {
     HOSTILE_TO_ENEMY,
-    RESPAWNABLE,
+    REVIVABLE,
     RESTING,
     FOLLOWING,
     AREA_ATTACK

@@ -5,14 +5,18 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.RewardRunes;
 import game.actions.AreaAttackAction;
 import game.actions.AttackAction;
 import game.actions.DeathAction;
+import game.actions.DespawnAction;
 import game.behaviours.AttackBehaviour;
 import game.behaviours.Behaviour;
+import game.behaviours.FollowBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.controllers.RunesManager;
 import game.enums.Status;
@@ -29,8 +33,8 @@ public abstract class Enemy extends Actor implements RewardRunes {
 
   protected int enemyMaxHitPoints;
 
-  private int minRune;
-  private int maxRune;
+  private int minRunes;
+  private int maxRunes;
   private GameMap map;
 
   /**
@@ -40,12 +44,12 @@ public abstract class Enemy extends Actor implements RewardRunes {
    * @param displayChar the character that will represent the Actor in the display
    * @param hitPoints   the Actor's starting hit points
    */
-  public Enemy(String name, char displayChar, int hitPoints, int despawnChance, int minRune, int maxRune) {
+  public Enemy(String name, char displayChar, int hitPoints, int despawnChance, int minRunes, int maxRunes) {
     super(name, displayChar, hitPoints);
     this.enemyMaxHitPoints = hitPoints;
     this.despawnChance = despawnChance;
-    this.minRune = minRune;
-    this.maxRune = maxRune;
+    this.minRunes = minRunes;
+    this.maxRunes = maxRunes;
     RunesManager.getInstance().registerRewardRunesActor(this);
     this.addCapability(Status.HOSTILE_TO_ENEMY);
     this.behaviours.put(2, new WanderBehaviour());
@@ -53,16 +57,19 @@ public abstract class Enemy extends Actor implements RewardRunes {
 
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
     this.map = map;
+
     if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawnChance) {
-      System.out.println(this + " has despawned from map");
-      return (new DeathAction(this));
+      return (new DespawnAction());
     }
 
-    System.out.println(this + ": " + behaviours.values());
-    for (Behaviour behaviour : behaviours.values()) {
+    System.out.println(this + ": " + behaviours.values());  /////////////////////////////////////////////
+
+    for (int key : behaviours.keySet()) {
+      Behaviour behaviour = behaviours.get(key);
       Action action = behaviour.getAction(this, map);
       if (action != null) {
-        if (action instanceof AttackAction || action instanceof AreaAttackAction) {
+        // If it is an Attack Action
+        if (key == 0) {
           behaviours.remove(0);
         }
         return action;
@@ -73,19 +80,26 @@ public abstract class Enemy extends Actor implements RewardRunes {
 
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-    ActionList actions = new ActionList();
-    // If otherActor is different Enemy type
 
-    if (!otherActor.toString().equals(this.toString()) && !otherActor.hasCapability(Status.RESTING) && otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-      if (otherActor.getWeaponInventory().isEmpty()) {
-        ((Enemy)otherActor).getBehaviours().put(0, new AttackBehaviour(this, direction));
+    if (otherActor.hasCapability(Status.RESTING)){
+      behaviours.put(1, new FollowBehaviour(otherActor));
+      this.addCapability(Status.FOLLOWING);
+    }
+
+    // If adjacent actor can be attacked, add Attack Behaviour to enemy
+    if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY) && !otherActor.toString().equals(this.toString())) {
+      if (this.getWeaponInventory().isEmpty()) {
+        behaviours.put(0, new AttackBehaviour(otherActor, direction));
       }
       else {
-        ((Enemy)otherActor).getBehaviours().put(0, new AttackBehaviour(this, direction, otherActor.getWeaponInventory().get(0)));
+        behaviours.put(0, new AttackBehaviour(otherActor, direction, this.getWeaponInventory().get(0)));
       }
     }
-    // if otherActor is Player
-    else if (otherActor.hasCapability(Status.RESTING)) {
+
+    ActionList actions = new ActionList();
+
+    // If adjacent actor is Player, gives Player an Attack Action
+    if (otherActor.hasCapability(Status.RESTING)) {
       actions.add(new AttackAction(this, direction));
       if (!otherActor.getWeaponInventory().isEmpty()) {
         for (WeaponItem weapon : otherActor.getWeaponInventory()) {
@@ -96,24 +110,13 @@ public abstract class Enemy extends Actor implements RewardRunes {
     return actions;
   }
 
-  public void passWeapon(HarmlessEnemy harmlessEnemy) {
-    System.out.println(this.getWeaponInventory().get(0));
-    WeaponItem weapon =  this.getWeaponInventory().get(0);
-    harmlessEnemy.addWeaponToInventory(weapon);
-    this.removeWeaponFromInventory(weapon);
-  }
-
-  public Map<Integer, Behaviour> getBehaviours() {
-    return behaviours;
-  }
-
   @Override
   public int getMinRunes(){
-    return minRune;
+    return minRunes;
   }
 
   public int getMaxRunes(){
-    return maxRune;
+    return maxRunes;
   }
 
   public GameMap getMap() {

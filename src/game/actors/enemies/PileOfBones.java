@@ -19,8 +19,8 @@ public class PileOfBones extends HarmlessEnemy implements Resettable {
    * Constructor.
    *
    */
-  public PileOfBones(Enemy deathEnemy) {
-    super("Pile of Bones", 'X', 1, deathEnemy);
+  public PileOfBones(Actor actorToBeRevived) {
+    super("Pile of Bones", 'X', 1, actorToBeRevived);
     ResetManager.getInstance().registerResettable(this);
   }
 
@@ -28,12 +28,10 @@ public class PileOfBones extends HarmlessEnemy implements Resettable {
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
     count += 1;
     if(count == MAX_HIT){
-      this.reviveEnemy(map);
+      this.reviveActor(map);
     }
     return new DoNothingAction();
   }
-
-
 
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {

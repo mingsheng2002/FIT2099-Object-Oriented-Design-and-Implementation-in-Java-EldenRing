@@ -53,26 +53,27 @@ public class DeathAction extends Action {
             ResetManager.getInstance().run();
 
             return result;
-
-
         }
 
-        if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.RESPAWNABLE)){
-            PileOfBones pb = new PileOfBones((Enemy) target);
+        if(this.attacker.hasCapability(Status.RESTING) && target.hasCapability(Status.REVIVABLE)){
+            PileOfBones pob = new PileOfBones(target);
             Location here = map.locationOf(target);
             map.removeActor(target);
-            here.addActor(pb);
+            here.addActor(pob);
             return result;
         }
 
-        ActionList dropActions = new ActionList();
-        // drop all items
-        for (Item item : target.getItemInventory())
-            dropActions.add(item.getDropAction(target));
-        for (WeaponItem weapon : target.getWeaponInventory())
-            dropActions.add(weapon.getDropAction(target));
-        for (Action drop : dropActions)
-            drop.execute(target, map);
+        // only drop items if defeated by player
+        if (this.attacker.hasCapability(Status.RESTING)) {
+            ActionList dropActions = new ActionList();
+            // drop all items
+            for (Item item : target.getItemInventory())
+                dropActions.add(item.getDropAction(target));
+            for (WeaponItem weapon : target.getWeaponInventory())
+                dropActions.add(weapon.getDropAction(target));
+            for (Action drop : dropActions)
+                drop.execute(target, map);
+        }
         // remove actor
         map.removeActor(target);
         result += System.lineSeparator() + menuDescription(target);

@@ -112,22 +112,8 @@ public class Player extends Actor implements Resettable {
 
 	@Override
 	public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-		ActionList actions = new ActionList();
-
-		// If otherActor is not Player, but an Enemy
-		if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY) && !otherActor.hasCapability(Status.RESTING)){
-			((Enemy)otherActor).getBehaviours().put(1, new FollowBehaviour(this));
-			otherActor.addCapability(Status.FOLLOWING);
-			if (!otherActor.getWeaponInventory().isEmpty()) {
-				((Enemy)otherActor).getBehaviours().put(0, new AttackBehaviour(this, direction, otherActor.getWeaponInventory().get(0)));
-			}
-			else {
-				((Enemy)otherActor).getBehaviours().put(0, new AttackBehaviour(this, direction));
-			}
-			// HINT 1: The AttackAction above allows you to attak the enemy with your intrinsic weapon.
-			// HINT 1: How would you attack the enemy with a weapon?
-		}
-		return actions;
+		// actions are only meant for player, so in this case, otherActor == Enemy won't have actions
+		return super.allowableActions(otherActor, direction, map);
 	}
 
 	public IntrinsicWeapon getIntrinsicWeapon(){
