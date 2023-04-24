@@ -1,8 +1,16 @@
 package game.weapons;
 
+import edu.monash.fit2099.engine.actions.Action;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.Purchasable;
 import game.Sellable;
+import game.actions.AttackAction;
+import game.actions.UnsheatheAction;
+import game.enums.Status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Uchigatana extends WeaponItem implements Purchasable, Sellable {
 
@@ -17,6 +25,8 @@ public class Uchigatana extends WeaponItem implements Purchasable, Sellable {
   /////////////////////////////////////////// XY - not sure about the verb /////////////
   public Uchigatana() {
     super("Uchigatana", ')', DAMAGE, "hit", HIT_RATE);
+
+    this.addCapability(Status.SPECIAL_SKILL);
   }
 
   @Override
@@ -33,4 +43,13 @@ public class Uchigatana extends WeaponItem implements Purchasable, Sellable {
   public WeaponItem getInstance() {
     return this;
   }
+//
+  @Override
+  public Action getSkill(Actor target, String direction) {
+
+      return new UnsheatheAction(target, direction,this);
+
+  }
+
+
 }

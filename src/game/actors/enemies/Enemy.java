@@ -86,11 +86,17 @@ public abstract class Enemy extends Actor implements RewardRunes {
       System.out.println("check actor : " + otherActor);
       behaviours.put(1, new FollowBehaviour(otherActor));
       this.addCapability(Status.FOLLOWING);
-      actions.add(new AttackAction(this, direction));
+
       if (!otherActor.getWeaponInventory().isEmpty()) {
         for (WeaponItem weapon : otherActor.getWeaponInventory()) {
           actions.add(new AttackAction(this, direction, weapon));
+          if(weapon.hasCapability(Status.SPECIAL_SKILL)){
+            System.out.println("herr");
+            actions.add(weapon.getSkill(this,direction));
+          }
         }
+      }else{
+        actions.add(new AttackAction(this,direction));
       }
     }
     return actions;

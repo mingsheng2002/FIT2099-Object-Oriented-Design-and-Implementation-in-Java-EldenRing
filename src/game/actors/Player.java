@@ -59,7 +59,7 @@ public class Player extends Actor implements Resettable {
 		super(name, displayChar, hitPoints);
 		this.playerMaxHitPoints = hitPoints;
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
-		this.addWeaponToInventory(new Club());
+		//this.addWeaponToInventory(new Club());
 		RunesManager.getInstance().registerRunes(runes);
 		this.addItemToInventory(runes);
 		this.addItemToInventory(flaskOfCrimsonTears);
@@ -131,19 +131,23 @@ public class Player extends Actor implements Resettable {
 		// true only when reset is caused by player death
 		if (!this.isConscious()){
 			// create a new runes drop at last location
-			Runes runes = new Runes();
-			runes.setTotalAmount(RunesManager.getInstance().getRunes().getTotalAmount());
-			getLastLocation().addItem(runes);
-			System.out.println("Last location display character: "+getLastLocation().getDisplayChar());
-			//change the runes to portable
-			runes.togglePortability();
-			//set last location to runes
-			runes.setDropLocation(getLastLocation());
+			if (RunesManager.getInstance().getRunes().getTotalAmount()!=0) {
+				Runes runes = new Runes();
+				runes.setTotalAmount(RunesManager.getInstance().getRunes().getTotalAmount());
+				getLastLocation().addItem(runes);
+				//change the runes to portable
+				runes.togglePortability();
+				runes.setHasDrop(true);
+				//set last location to runes
+				runes.setDropLocation(getLastLocation());
 
-			// set the player inventory amount to 0
-			RunesManager.getInstance().decrementAmount(getRunes().getTotalAmount());
+				// set the player inventory amount to 0
+				RunesManager.getInstance().decrementAmount(RunesManager.getInstance().getRunes().getTotalAmount());
 
-			System.out.println("The values of the runes dropped is "+runes.getTotalAmount() +" at location "+getLastLocation().x()+" , "+getLastLocation().y());
+				System.out.println("The values of the runes dropped is " + runes.getTotalAmount() + " at location " + getLastLocation().x() + " , " + getLastLocation().y());
+			}else{
+				System.out.println(this+" no runes to drop");
+			}
 			map.moveActor(this,getVisitedSiteOfLostGrace());
 		}
 		this.resetMaxHp(getMaxHp());

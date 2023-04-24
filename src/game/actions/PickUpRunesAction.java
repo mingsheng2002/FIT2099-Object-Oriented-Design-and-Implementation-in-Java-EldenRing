@@ -38,6 +38,6 @@ public class PickUpRunesAction extends PickUpAction {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " retreive Runes (value: "+ getAmount() + ")";
+        return actor + " retrieve Runes (value: "+ RunesManager.getInstance().getRunes().getTotalAmount() + ")";
     }
 }

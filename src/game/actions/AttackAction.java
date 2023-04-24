@@ -98,4 +98,36 @@ public class AttackAction extends Action {
 	public String menuDescription(Actor actor) {
 		return actor + " attacks " + target + " at " + direction + " with " + (weapon != null ? weapon : "Intrinsic Weapon");
 	}
+
+	public Actor getTarget() {
+		return target;
+	}
+
+	public void setTarget(Actor target) {
+		this.target = target;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public Random getRand() {
+		return rand;
+	}
+
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
 }
