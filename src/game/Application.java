@@ -1,20 +1,15 @@
 package game;
 
-import game.actors.Player;
-import game.actors.enemies.GiantCrab;
-import game.actors.enemies.HeavySkeletalSwordsman;
-import game.actors.enemies.LoneWolf;
-import game.actors.players.Bandit;
-import game.actors.players.Samurai;
-import game.actors.players.Wretch;
+import game.actors.playerclasses.Player;
+import game.actors.enemies.crustaceansenemies.GiantCrab;
+import game.actors.enemies.skeletalspeciesenemies.HeavySkeletalSwordsman;
+import game.actors.enemies.canislupusenemies.LoneWolf;
 import game.actors.traders.MerchantKale;
-import game.actors.traders.Trader;
 import game.controllers.MenuManager;
 import game.environments.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
 
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;

@@ -7,14 +7,11 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.actors.Player;
-import game.controllers.ResetManager;
+import game.actions.playeractions.ResetAction;
 import game.controllers.RunesManager;
 import game.enums.Status;
-import game.actors.enemies.Enemy;
-import game.actors.enemies.PileOfBones;
+import game.actors.enemies.skeletalspeciesenemies.PileOfBones;
 import game.utils.FancyMessage;
-import jdk.swing.interop.SwingInterOpUtils;
 
 /**
  * An action executed if an actor is killed.
@@ -46,7 +43,7 @@ public class DeathAction extends Action {
             return new ResetAction().execute(target, map);
         }
 
-        if (this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY) && target.hasCapability(Status.REVIVABLE)){
+        if (target.hasCapability(Status.REVIVABLE)){
             PileOfBones pob = new PileOfBones(target);
             Location here = map.locationOf(target);
             map.removeActor(target);
@@ -70,7 +67,7 @@ public class DeathAction extends Action {
         result += System.lineSeparator() + menuDescription(target);
 
         if(this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            String retVal = RunesManager.getInstance().awardRunes(target, attacker);
+            String retVal = RunesManager.getInstance().rewardRunes(target, attacker);
             result += System.lineSeparator() + retVal;
         }
 

@@ -3,16 +3,11 @@ package game.weapons;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.Purchasable;
-import game.Sellable;
-import game.actions.AttackAction;
-import game.actions.UnsheatheAction;
+import game.actions.weaponspecialskillactions.UnsheatheAction;
 import game.enums.Status;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class Uchigatana extends WeaponItem implements Purchasable, Sellable {
+public class Uchigatana extends Katana implements Purchasable, Sellable {
 
   private static final int DAMAGE = 115;
   private static final int HIT_RATE = 80;
@@ -46,9 +41,7 @@ public class Uchigatana extends WeaponItem implements Purchasable, Sellable {
 //
   @Override
   public Action getSkill(Actor target, String direction) {
-
       return new UnsheatheAction(target, direction,this);
-
   }
 
 

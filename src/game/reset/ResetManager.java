@@ -1,7 +1,5 @@
-package game.controllers;
+package game.reset;
 
-import edu.monash.fit2099.engine.positions.Location;
-import game.Resettable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +39,6 @@ public class ResetManager {
         for (Resettable resettable : new ArrayList<Resettable>(resettables)){
             resettable.reset();
         }
-
     }
 
     /**

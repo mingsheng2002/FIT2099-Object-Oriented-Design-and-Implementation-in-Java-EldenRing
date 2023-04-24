@@ -27,7 +27,7 @@ public class AreaAttackAction extends Action {
                 Actor target = exit.getDestination().getActor();
                 //result = actor + " performs area attack on " + target + " for " + damage + " damage";
                 target.hurt(damage);
-                result += System.lineSeparator() + actor + " performs area attack and " + this.weapon.verb() + " " + target + " for " + damage + " damage";
+                result += System.lineSeparator() + actor + " performs area attack and " + this.weapon.verb() + " " + target + " for " + damage + " damage.";
                 if (!target.isConscious()) {
                     result += new DeathAction(actor).execute(target, map);
                 }
@@ -38,6 +38,6 @@ public class AreaAttackAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " performs Area Attack";
+        return actor + " performs Area Attack.";
     }
 }

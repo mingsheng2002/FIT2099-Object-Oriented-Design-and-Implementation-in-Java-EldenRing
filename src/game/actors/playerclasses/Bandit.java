@@ -1,8 +1,6 @@
-package game.actors.players;
+package game.actors.playerclasses;
 
-import game.actors.Player;
 import game.weapons.GreatKnife;
-import game.weapons.Uchigatana;
 
 public class Bandit extends Player {
     public static final int HIT_POINT = 414;

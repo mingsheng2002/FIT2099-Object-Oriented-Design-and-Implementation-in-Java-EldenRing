@@ -1,4 +1,4 @@
-package game.actors.enemies;
+package game.actors.enemies.canislupusenemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -6,12 +6,11 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.Resettable;
-import game.actions.DeathAction;
+import game.reset.Resettable;
+import game.actors.enemies.Enemy;
 import game.behaviours.AttackBehaviour;
-import game.controllers.ResetManager;
+import game.reset.ResetManager;
 import game.enums.Status;
-import game.utils.RandomNumberGenerator;
 
 /**
  * BEHOLD, DOG!
@@ -36,8 +35,8 @@ public class LoneWolf extends Enemy implements Resettable {
      */
     public LoneWolf() {
         super("Lone Wolf", 'h', HIT_POINTS, LoneWolf.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
+        this.addCapability(Status.FRIENDLY_TO_CANIS_LUPUS_ENEMY);
         ResetManager.getInstance().registerResettable(this);
-        this.addCapability(Status.FRIENDLY_TO_CANIS_LUPUS);
     }
 
     /**
@@ -65,7 +64,7 @@ public class LoneWolf extends Enemy implements Resettable {
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
-        if (!otherActor.hasCapability(Status.FRIENDLY_TO_CANIS_LUPUS)) { ///////////////
+        if (!otherActor.hasCapability(Status.FRIENDLY_TO_CANIS_LUPUS_ENEMY)) { ///////////////
             if (this.getWeaponInventory().isEmpty()) {
                 this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
             }
@@ -76,7 +75,6 @@ public class LoneWolf extends Enemy implements Resettable {
         return super.allowableActions(otherActor, direction, map);
     }
 
-
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(DAMAGE, "bites", HIT_RATE);
@@ -84,7 +82,7 @@ public class LoneWolf extends Enemy implements Resettable {
 
     @Override
     public void reset() {
-        if (this.getMap()!=null ){
+        if (this.getMap() != null ){
             getMap().removeActor(this);
         }
     }

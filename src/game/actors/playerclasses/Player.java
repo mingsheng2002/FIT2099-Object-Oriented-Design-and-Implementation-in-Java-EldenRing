@@ -1,4 +1,4 @@
-package game.actors;
+package game.actors.playerclasses;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -10,20 +10,12 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AreaAttackAction;
-import game.actions.ResetAction;
-import game.behaviours.AttackBehaviour;
-import game.behaviours.FollowBehaviour;
-import game.actors.enemies.Enemy;
-import game.controllers.ResetManager;
+import game.reset.ResetManager;
 import game.controllers.RunesManager;
 import game.items.FlaskOfCrimsonTears;
 import game.items.Runes;
-import game.weapons.Club;
-import game.Resettable;
+import game.reset.Resettable;
 import game.enums.Status;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class representing the Player. It implements the Resettable interface.
@@ -33,14 +25,14 @@ import java.util.List;
  * Modified by:
  *
  */
-public class Player extends Actor implements Resettable {
+public abstract class Player extends Actor implements Resettable {
 
 	private final Menu menu = new Menu();
 	private static final int DAMAGE = 11;
 	private static final int HIT_RATE = 100;
 	protected int playerMaxHitPoints;
 	private Runes runes = new Runes();
-	private FlaskOfCrimsonTears flaskOfCrimsonTears = new FlaskOfCrimsonTears();
+	private FlaskOfCrimsonTears flaskOfCrimsonTears;
 	//store player last location
 	private Location lastLocation;
 	private Location visitedSiteOfLostGrace;
@@ -62,8 +54,10 @@ public class Player extends Actor implements Resettable {
 		//this.addWeaponToInventory(new Club());
 		RunesManager.getInstance().registerRunes(runes);
 		this.addItemToInventory(runes);
+		flaskOfCrimsonTears = new FlaskOfCrimsonTears();
 		this.addItemToInventory(flaskOfCrimsonTears);
 		ResetManager.getInstance().registerResettable(this);
+
 	}
 
 	@Override
@@ -118,13 +112,6 @@ public class Player extends Actor implements Resettable {
 	}
 
 
-	public Location getLastLocation() {
-		return lastLocation;
-	}
-
-	public void setLastLocation(Location lastLocation) {
-		this.lastLocation = lastLocation;
-	}
 
 	@Override
 	public void reset() {
@@ -154,15 +141,14 @@ public class Player extends Actor implements Resettable {
 		System.out.println(this+ " revive");
 	}
 
-
 	private void getTheFirstStep(GameMap map){
-		int width =map.getXRange().max()-map.getXRange().min();
+		int width = map.getXRange().max() - map.getXRange().min();
 		int height = map.getYRange().max() - map.getYRange().min();
 		System.out.println(width);
 		System.out.println(height);
 
-		for ( int y= 0;y<height+1;y++){
-			for ( int x = 0; x<width+1 ;x++){
+		for (int y = 0; y<height+1; y++){
+			for (int x = 0; x<width+1; x++){
 
 				if (map.at(x,y).getGround().getDisplayChar()=='U'){
 					setVisitedSiteOfLostGrace(map.at(x,y));
@@ -174,6 +160,7 @@ public class Player extends Actor implements Resettable {
 			}
 		}
 	}
+
 	public Location getVisitedSiteOfLostGrace() {
 		return visitedSiteOfLostGrace;
 	}
@@ -188,6 +175,7 @@ public class Player extends Actor implements Resettable {
 	public GameMap getMap() {
 		return map;
 	}
+
 	public void setMap(GameMap map) {
 		this.map = map;
 	}
@@ -198,5 +186,13 @@ public class Player extends Actor implements Resettable {
 
 	public void setHasTheFirstStepLocation(boolean hasTheFirstStepLocation) {
 		this.hasTheFirstStepLocation = hasTheFirstStepLocation;
+	}
+
+	public Location getLastLocation() {
+		return lastLocation;
+	}
+
+	public void setLastLocation(Location lastLocation) {
+		this.lastLocation = lastLocation;
 	}
 }

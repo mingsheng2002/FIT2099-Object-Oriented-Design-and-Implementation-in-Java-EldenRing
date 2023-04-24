@@ -1,9 +1,9 @@
 package game.controllers;
 
-import game.actors.Player;
-import game.actors.players.Bandit;
-import game.actors.players.Samurai;
-import game.actors.players.Wretch;
+import game.actors.playerclasses.Player;
+import game.actors.playerclasses.Bandit;
+import game.actors.playerclasses.Samurai;
+import game.actors.playerclasses.Wretch;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

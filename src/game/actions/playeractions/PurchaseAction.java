@@ -1,9 +1,9 @@
-package game.actions;
+package game.actions.playeractions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.Purchasable;
+import game.weapons.Purchasable;
 import game.controllers.RunesManager;
 
 public class PurchaseAction extends Action {
@@ -24,7 +24,7 @@ public class PurchaseAction extends Action {
 
     // check if player has enough runes to purchase
     if(playerRunes < itemPrice){
-      return player + " has not enough runes to purchase " + item;
+      return player + " has not enough runes to purchase " + item + ".";
     }
 
     // add the purchase item into player's inventory
@@ -38,6 +38,6 @@ public class PurchaseAction extends Action {
 
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " purchases " + item + " from Trader";
+    return actor + " purchases " + item + " from Trader.";
   }
 }

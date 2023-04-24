@@ -1,6 +1,5 @@
-package game.actors.players;
+package game.actors.playerclasses;
 
-import game.actors.Player;
 import game.weapons.Club;
 
 public class Wretch extends Player {

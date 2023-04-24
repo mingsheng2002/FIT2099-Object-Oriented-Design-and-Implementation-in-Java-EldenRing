@@ -3,9 +3,9 @@ package game.items;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
-import game.Resettable;
-import game.actions.ConsumeAction;
-import game.controllers.ResetManager;
+import game.reset.Resettable;
+import game.actions.playeractions.ConsumeAction;
+import game.reset.ResetManager;
 import game.enums.Status;
 
 import java.util.ArrayList;

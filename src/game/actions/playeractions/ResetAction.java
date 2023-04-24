@@ -1,11 +1,9 @@
-package game.actions;
+package game.actions.playeractions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.controllers.ResetManager;
-import game.enums.Status;
-import game.utils.FancyMessage;
+import game.reset.ResetManager;
 
 public class ResetAction extends Action {
     @Override

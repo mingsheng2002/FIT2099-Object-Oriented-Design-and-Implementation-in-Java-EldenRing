@@ -1,10 +1,10 @@
-package game.actions;
+package game.actions.playeractions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.Sellable;
+import game.weapons.Sellable;
 import game.controllers.RunesManager;
 
 public class SellAction extends Action {
@@ -38,6 +38,6 @@ public class SellAction extends Action {
 
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " sell " + item + " to Trader";
+    return actor + " sell " + item + " to Trader.";
   }
 }

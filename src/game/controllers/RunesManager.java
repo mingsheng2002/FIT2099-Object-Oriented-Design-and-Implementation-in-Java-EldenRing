@@ -1,7 +1,7 @@
 package game.controllers;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import game.RewardRunes;
+import game.actors.enemies.RunesRewarder;
 import game.items.Runes;
 import game.utils.RandomNumberGenerator;
 import java.util.ArrayList;
@@ -10,10 +10,11 @@ import java.util.List;
 public class RunesManager {
 
   private Runes runes;
-  private List<RewardRunes> rewardRunesActor = new ArrayList<>();
+  private List<RunesRewarder> runesRewarderActor;
   private static RunesManager runesInstance = null;
 
   private RunesManager(){
+    runesRewarderActor = new ArrayList<>();
   }
 
   public static RunesManager getInstance(){
@@ -23,13 +24,13 @@ public class RunesManager {
     return runesInstance;
   }
 
-  public String awardRunes(Actor target, Actor attacker){
+  public String rewardRunes(Actor target, Actor attacker){
     int amount = 0;
     int i = 0;
-    int totalEnemies = rewardRunesActor.size();
+    int totalEnemies = runesRewarderActor.size();
     boolean found = false;
     while (!found && i < totalEnemies) {
-      RewardRunes rewarder = rewardRunesActor.get(i);
+      RunesRewarder rewarder = runesRewarderActor.get(i);
       if (rewarder == target) {
         int minAward = rewarder.getMinRunes();
         int maxAward = rewarder.getMaxRunes();
@@ -61,8 +62,8 @@ public class RunesManager {
     this.runes = runes;
   }
 
-  public void registerRewardRunesActor(RewardRunes actor){
-    rewardRunesActor.add(actor);
+  public void registerRewardRunesActor(RunesRewarder actor){
+    runesRewarderActor.add(actor);
   }
 
 }

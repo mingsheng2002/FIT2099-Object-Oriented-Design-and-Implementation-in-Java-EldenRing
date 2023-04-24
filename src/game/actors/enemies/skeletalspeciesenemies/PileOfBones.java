@@ -1,4 +1,4 @@
-package game.actors.enemies;
+package game.actors.enemies.skeletalspeciesenemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -6,9 +6,10 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.Resettable;
-import game.actions.DeathAction;
-import game.controllers.ResetManager;
+import game.enums.Status;
+import game.reset.Resettable;
+import game.actors.enemies.HarmlessEnemy;
+import game.reset.ResetManager;
 
 public class PileOfBones extends HarmlessEnemy implements Resettable {
 
@@ -21,6 +22,7 @@ public class PileOfBones extends HarmlessEnemy implements Resettable {
    */
   public PileOfBones(Actor actorToBeRevived) {
     super("Pile of Bones", 'X', 1, actorToBeRevived);
+    this.addCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY);
     ResetManager.getInstance().registerResettable(this);
   }
 
@@ -28,7 +30,7 @@ public class PileOfBones extends HarmlessEnemy implements Resettable {
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
     count += 1;
     if(count == MAX_HIT){
-      this.reviveActor(map);
+      super.reviveActor(map);
     }
     return new DoNothingAction();
   }
@@ -40,7 +42,7 @@ public class PileOfBones extends HarmlessEnemy implements Resettable {
 
   @Override
   public void reset() {
-    if (this.getMap()!=null){
+    if (this.getMap() != null){
       getMap().removeActor(this);
     }
   }

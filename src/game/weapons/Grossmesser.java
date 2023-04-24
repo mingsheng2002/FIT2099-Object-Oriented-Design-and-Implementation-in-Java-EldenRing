@@ -1,7 +1,6 @@
 package game.weapons;
 
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.Sellable;
 import game.enums.Status;
 
 public class Grossmesser extends CurvedSword implements Sellable {

@@ -5,16 +5,10 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
-import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.RewardRunes;
-import game.actions.AreaAttackAction;
 import game.actions.AttackAction;
-import game.actions.DeathAction;
-import game.actions.DespawnAction;
-import game.behaviours.AttackBehaviour;
+import game.actions.enemyactions.DespawnAction;
 import game.behaviours.Behaviour;
 import game.behaviours.FollowBehaviour;
 import game.behaviours.WanderBehaviour;
@@ -25,7 +19,7 @@ import game.utils.RandomNumberGenerator;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Enemy extends Actor implements RewardRunes {
+public abstract class Enemy extends Actor implements RunesRewarder {
 
   private Map<Integer, Behaviour> behaviours = new HashMap<>();
 

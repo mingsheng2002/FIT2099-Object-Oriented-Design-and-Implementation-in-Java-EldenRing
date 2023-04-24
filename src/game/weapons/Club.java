@@ -3,8 +3,6 @@ package game.weapons;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.Purchasable;
-import game.Sellable;
 
 /**
  * A simple weapon that can be used to attack the enemy.
@@ -14,7 +12,7 @@ import game.Sellable;
  * Modified by:
  *
  */
-public class Club extends WeaponItem implements Purchasable, Sellable {
+public class Club extends Hammer implements Purchasable, Sellable {
 
     private static final int DAMAGE = 103;
     private static final int HIT_RATE = 80;

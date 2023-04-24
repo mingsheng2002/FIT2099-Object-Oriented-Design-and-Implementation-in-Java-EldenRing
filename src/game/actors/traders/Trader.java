@@ -1,8 +1,8 @@
 package game.actors.traders;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import game.Purchasable;
-import game.Sellable;
+import game.weapons.Purchasable;
+import game.weapons.Sellable;
 
 public abstract class Trader extends Actor {
 

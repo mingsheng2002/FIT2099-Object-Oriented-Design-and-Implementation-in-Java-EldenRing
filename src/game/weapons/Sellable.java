@@ -1,10 +1,10 @@
-package game;
+package game.weapons;
 
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 
-public interface Purchasable {
+public interface Sellable {
 
-  int getPurchasePrice();
+  int getSellPrice();
 
   WeaponItem getInstance();
 }

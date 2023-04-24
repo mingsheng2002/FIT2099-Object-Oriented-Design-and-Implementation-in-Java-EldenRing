@@ -4,10 +4,10 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.items.PickUpAction;
 import edu.monash.fit2099.engine.positions.Location;
-import game.Resettable;
-import game.actions.PickUpRunesAction;
-import game.actors.Player;
-import game.controllers.ResetManager;
+import game.reset.Resettable;
+import game.actions.playeractions.PickUpRunesAction;
+import game.actors.playerclasses.Player;
+import game.reset.ResetManager;
 
 public class Runes extends Item implements Resettable {
 

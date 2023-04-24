@@ -1,6 +1,5 @@
-package game.actors.players;
+package game.actors.playerclasses;
 
-import game.actors.Player;
 import game.weapons.Uchigatana;
 
 public class Samurai extends Player {

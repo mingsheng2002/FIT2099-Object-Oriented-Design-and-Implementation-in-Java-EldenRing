@@ -3,13 +3,10 @@ package game.weapons;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.Purchasable;
-import game.Sellable;
-import game.actions.QuickStepAction;
-import game.actions.UnsheatheAction;
+import game.actions.weaponspecialskillactions.QuickStepAction;
 import game.enums.Status;
 
-public class GreatKnife extends WeaponItem implements Purchasable, Sellable {
+public class GreatKnife extends Dagger implements Purchasable, Sellable {
 
   private static final int DAMAGE = 75;
   private static final int HIT_RATE = 70;

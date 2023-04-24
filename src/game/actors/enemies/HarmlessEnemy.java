@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.Resettable;
 import game.actions.AttackAction;
 import game.enums.Status;
 
@@ -24,7 +23,9 @@ public abstract class HarmlessEnemy extends Actor {
   public HarmlessEnemy(String name, char displayChar, int hitPoints, Actor actorToBeRevived) {
     super(name, displayChar, hitPoints);
     this.actorToBeRevived = actorToBeRevived;
-    this.receiveWeaponFrom(actorToBeRevived);
+    if(!actorToBeRevived.getWeaponInventory().isEmpty()){
+      this.receiveWeaponFrom(actorToBeRevived);
+    }
   }
 
   @Override
@@ -32,10 +33,13 @@ public abstract class HarmlessEnemy extends Actor {
     this.map = map;
     ActionList actions = new ActionList();
     if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-      actions.add(new AttackAction(otherActor, direction, otherActor.getWeaponInventory().get(0)));
+      actions.add(new AttackAction(this, direction));
+      if (!otherActor.getWeaponInventory().isEmpty()) {
+        actions.add(new AttackAction(this, direction, otherActor.getWeaponInventory().get(0)));
+      }
     }
     return actions;
-  }
+}
 
   public void reviveActor(GameMap map){
     actorToBeRevived.addWeaponToInventory(this.getWeaponInventory().get(0));

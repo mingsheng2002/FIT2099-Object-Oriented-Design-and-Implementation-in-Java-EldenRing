@@ -1,23 +1,21 @@
-package game.actors.enemies;
+package game.actors.enemies.skeletalspeciesenemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.positions.Location;
-import game.Resettable;
-import game.actions.DeathAction;
+import game.reset.Resettable;
+import game.actors.enemies.Enemy;
 import game.behaviours.AttackBehaviour;
-import game.controllers.ResetManager;
+import game.reset.ResetManager;
 import game.enums.Status;
-import game.utils.RandomNumberGenerator;
-import game.weapons.Grossmesser;
+import game.weapons.Scimitar;
 
-public class HeavySkeletalSwordsman extends Enemy implements Resettable {
+public class SkeletalBandit extends Enemy implements Resettable {
 
   private static final int DESPAWN_CHANCE = 10;
-  private static final int HIT_POINTS = 153;
+  private static final int HIT_POINTS = 184;
   private static final int MIN_RUNES_AWARD = 35;
   private static final int MAX_RUNES_AWARD = 892;
 
@@ -25,10 +23,10 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
    * Constructor.
    *
    */
-  public HeavySkeletalSwordsman(){
-    super("Heavy Skeletal Swordsman", 'q', HIT_POINTS, HeavySkeletalSwordsman.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
-    this.addWeaponToInventory(new Grossmesser());
-    this.addCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES);
+  public SkeletalBandit() {
+    super("Skeletal Bandit", 'b', HIT_POINTS, DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
+    this.addWeaponToInventory(new Scimitar());
+    this.addCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY);
     this.addCapability(Status.REVIVABLE);
     ResetManager.getInstance().registerResettable(this);
   }
@@ -38,18 +36,10 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
     return super.playTurn(actions, lastAction, map, display);
   }
 
-  /**
-   * The lone wolf can be attacked by any actor that has the HOSTILE_TO_ENEMY capability
-   *
-   * @param otherActor the Actor that might be performing attack
-   * @param direction  String representing the direction of the other Actor
-   * @param map        current GameMap
-   * @return
-   */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
-    if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES)) { ///////////////
+    if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY)) { ///////////////
       if (this.getWeaponInventory().isEmpty()) {
         this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
       }
@@ -62,7 +52,7 @@ public class HeavySkeletalSwordsman extends Enemy implements Resettable {
 
   @Override
   public void reset() {
-    if (this.getMap()!=null ){
+    if (this.getMap() != null){
       getMap().removeActor(this);
     }
   }

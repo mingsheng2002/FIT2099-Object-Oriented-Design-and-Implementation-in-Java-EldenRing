@@ -1,14 +1,16 @@
-package game.actions;
+package game.actions.weaponspecialskillactions;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.actions.AttackAction;
+import game.actions.DeathAction;
 import game.utils.RandomNumberGenerator;
 
 import java.util.Random;
 
-public class QuickStepAction extends AttackAction{
+public class QuickStepAction extends AttackAction {
 
     public QuickStepAction(Actor target, String direction, Weapon weapon) {
         super(target, direction, weapon);
@@ -42,7 +44,7 @@ public class QuickStepAction extends AttackAction{
             if (!map.at(x,y).containsAnActor()){
                 map.moveActor(actor,map.at(x,y));
                 hasMove=true;
-                System.out.println(actor+ " moves away to ("+x+" , "+y+" )" );
+                System.out.println(actor + " moves away to (" + x + "," + y + ").");
             }
         }
 
@@ -50,7 +52,6 @@ public class QuickStepAction extends AttackAction{
     }
     @Override
     public String menuDescription(Actor actor) {
-
-        return actor + " attack "+getTarget() +" and moves away";
+        return actor + " attack " + getTarget() + " and moves away.";
     }
 }
