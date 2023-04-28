@@ -77,20 +77,17 @@ public abstract class Enemy extends Actor implements RunesRewarder {
 
     // If adjacent actor is Player, gives Enemy a Follow Behaviour & gives Player an Attack Action
     if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-      System.out.println("check actor : " + otherActor);
       behaviours.put(1, new FollowBehaviour(otherActor));
       this.addCapability(Status.FOLLOWING);
 
+      actions.add(new AttackAction(this, direction));
       if (!otherActor.getWeaponInventory().isEmpty()) {
         for (WeaponItem weapon : otherActor.getWeaponInventory()) {
           actions.add(new AttackAction(this, direction, weapon));
           if(weapon.hasCapability(Status.SPECIAL_SKILL)){
-            System.out.println("herr");
             actions.add(weapon.getSkill(this,direction));
           }
         }
-      }else{
-        actions.add(new AttackAction(this,direction));
       }
     }
     return actions;
@@ -111,5 +108,13 @@ public abstract class Enemy extends Actor implements RunesRewarder {
 
   public GameMap getMap() {
     return map;
+  }
+
+  public void increaseMaxHp(int points) {
+    // remove Follow Behaviour before reviving
+    if (this.behaviours.get(1) != null) {
+      this.behaviours.remove(1);
+    }
+    super.increaseMaxHp(points);
   }
 }

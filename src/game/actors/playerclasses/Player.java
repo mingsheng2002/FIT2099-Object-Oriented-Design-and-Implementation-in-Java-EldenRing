@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.positions.Location;
@@ -64,6 +65,11 @@ public abstract class Player extends Actor implements Resettable {
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 		this.map = map;
 
+		// PROTECTED if Quickstep Action is executed by Player, remove this capability at start of every round
+		if (this.hasCapability(Status.PROTECTED)){
+			this.removeCapability(Status.PROTECTED);
+		}
+
 		System.out.println("location of player: "+ map.locationOf(this).x() +" , "+ map.locationOf(this).y());
 
 		if (!getHasTheFirstStepLocation()){
@@ -85,17 +91,20 @@ public abstract class Player extends Actor implements Resettable {
 		System.out.println("Player " + this + " currently holding " + this.runes.getTotalAmount() + " of runes");
 		System.out.println("Player " + this + " is left with " + this.flaskOfCrimsonTears.getNumOfUsageLeft() + " usage of Flask Of Crimson Tears");
 
-		boolean found = false;
-		int i = 0;
-		while (!found && i < this.getWeaponInventory().size()) {
-			WeaponItem weaponItem = this.getWeaponInventory().get(i);
-			if (weaponItem.hasCapability(Status.AREA_ATTACK)) {
-				actions.add(new AreaAttackAction(weaponItem));
-				found = true;
+		// add Area Attack action to player if surrounding has at least one actor that can be attacked by player
+		Location actorLocation = map.locationOf(this);
+		if (surroundingHasAttackableActor(actorLocation)){
+			boolean found = false;
+			int i = 0;
+			while (!found && i < this.getWeaponInventory().size()) {
+				WeaponItem weaponItem = this.getWeaponInventory().get(i);
+				if (weaponItem.hasCapability(Status.AREA_ATTACK)) {
+					actions.add(new AreaAttackAction(weaponItem));
+					found = true;
+				}
+				i++;
 			}
-			i++;
 		}
-
 		// return/print the console menu
 		return menu.showMenu(this, actions, display);
 	}
@@ -151,8 +160,6 @@ public abstract class Player extends Actor implements Resettable {
 	private void getTheFirstStep(GameMap map){
 		int width = map.getXRange().max() - map.getXRange().min();
 		int height = map.getYRange().max() - map.getYRange().min();
-		System.out.println(width);
-		System.out.println(height);
 
 		for ( int y = 0; y < height+1; y++){
 			for ( int x = 0; x < width+1; x++){
@@ -198,5 +205,14 @@ public abstract class Player extends Actor implements Resettable {
 
 	public void setLastLocation(Location lastLocation) {
 		this.lastLocation = lastLocation;
+	}
+
+	public boolean surroundingHasAttackableActor(Location actorLocation){
+		for (Exit exit : actorLocation.getExits()){
+			if (exit.getDestination().containsAnActor() && !exit.getDestination().getActor().hasCapability(Status.PROTECTED)){
+				return true;
+			}
+		}
+		return false;
 	}
 }

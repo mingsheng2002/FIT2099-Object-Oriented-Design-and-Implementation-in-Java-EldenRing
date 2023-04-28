@@ -38,8 +38,9 @@ public class SkeletalBandit extends Enemy implements Resettable {
 
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-    // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
-    if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY)) { ///////////////
+    // If adjacent actor can be attacked (not the same type), AND
+    // If adjacent actor (player) is not performing Quickstep action, add Attack Behaviour to this enemy
+    if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY) && !otherActor.hasCapability(Status.PROTECTED)) {
       if (this.getWeaponInventory().isEmpty()) {
         this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
       }

@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.utils.RandomNumberGenerator;
 
 /**
  * An Action to attack another Actor.
@@ -36,6 +37,8 @@ public class AttackAction extends Action {
 	 * Weapon used for the attack
 	 */
 	private Weapon weapon;
+
+	private boolean doubleAttackDamage = false;
 
 	/**
 	 * Constructor.
@@ -71,27 +74,20 @@ public class AttackAction extends Action {
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
-		// if target is not yet defeated by other enemies AND
-		// if target is not despawning from map in this round
-		if(target.isConscious() && !target.hasCapability(Status.DESPAWNING)) {
-			if (weapon == null) {
-				weapon = actor.getIntrinsicWeapon();
-			}
-
-			if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
-				return actor + " misses " + target + ".";
-			}
-
-			int damage = weapon.damage();
-			String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
-			target.hurt(damage);
-			if (!target.isConscious()) {
-				result += new DeathAction(actor).execute(target, map);
-			}
-
-			return result;
+		if (weapon == null) {
+			weapon = actor.getIntrinsicWeapon();
 		}
-		return "";
+		// not meeting the chance
+		if (RandomNumberGenerator.getRandomInt(100) >= weapon.chanceToHit()){
+			return actor + " misses " + target;
+		}
+		int damage = doubleAttackDamage ? (weapon.damage() * 2) : weapon.damage();
+		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage";
+		target.hurt(damage);
+		if (!target.isConscious()) {
+			result += new DeathAction(actor).execute(target, map);
+		}
+		return result;
 	}
 
 	/**
@@ -102,7 +98,11 @@ public class AttackAction extends Action {
 	 */
 	@Override
 	public String menuDescription(Actor actor) {
-		return actor + " attacks " + target + " at " + direction + " with " + (weapon != null ? weapon : "Intrinsic Weapon") + ".";
+		return actor + " attacks " + target + " at " + direction + " with " + (weapon != null ? weapon : "Intrinsic Weapon");
+	}
+
+	public void activateDoubleAttackDamage() {
+		this.doubleAttackDamage = true;
 	}
 
 	public Actor getTarget() {

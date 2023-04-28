@@ -35,8 +35,7 @@ public class MenuManager {
             System.out.println("1) Samurai");
             System.out.println("2) Bandit");
             System.out.println("3) Wretch");
-            System.out.print("Select one class of player: ");
-
+            System.out.print("Choose your starting class: ");
 
             choice = Integer.parseInt(sel.nextLine());
             System.out.println("Your choice: " + choice);
@@ -44,14 +43,10 @@ public class MenuManager {
             if (!(choice>0 && choice<4) ){
                 throw new InputMismatchException();
             }
-        } catch (NumberFormatException ex) {
-            System.out.println("Your choice must be an integer.");
-        } catch (InputMismatchException ex) {
-            System.out.println("Your choice must be an integer between 1 and 3.");
+        } catch (Exception ex) {
+            System.out.println("Enter either 1,2 or 3 to start the game");
         }
-
         return choice;
-
     }
 
     public Player createPlayer(int choice){

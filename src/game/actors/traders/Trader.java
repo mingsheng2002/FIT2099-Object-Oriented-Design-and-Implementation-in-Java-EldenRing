@@ -1,6 +1,7 @@
 package game.actors.traders;
 
 import edu.monash.fit2099.engine.actors.Actor;
+import game.enums.Status;
 import game.weapons.Purchasable;
 import game.weapons.Sellable;
 
@@ -15,6 +16,7 @@ public abstract class Trader extends Actor {
    */
   public Trader(String name, char displayChar, int hitPoints) {
     super(name, displayChar, hitPoints);
+    this.addCapability(Status.PROTECTED); // cannot be attacked
   }
 
   public abstract void addNewPurchasable(Purchasable purchasable);

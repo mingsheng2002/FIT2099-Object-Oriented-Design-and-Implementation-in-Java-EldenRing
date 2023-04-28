@@ -17,7 +17,7 @@ public class GiantCrab extends Enemy implements Resettable {
   private static final int DESPAWN_CHANCE = 10;
   private static final int HIT_POINTS = 407;
   private static final int DAMAGE = 208;
-  private static final int HIT_RATE = 90;
+  public static final int HIT_RATE = 90;
   private static final int MIN_RUNES_AWARD = 318;
   private static final int MAX_RUNES_AWARD = 4961;
 
@@ -47,9 +47,9 @@ public class GiantCrab extends Enemy implements Resettable {
    */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-
-    // If adjacent actor can be attacked (not the same type), add Attack Behaviour to this enemy
-    if (!otherActor.hasCapability(Status.FRIENDLY_TO_CRUSTACEANS_ENEMY)) { ///////////////
+    // If adjacent actor can be attacked (not the same type), AND
+    // If adjacent actor (player) is not performing Quickstep action, add Attack Behaviour to this enemy
+    if (!otherActor.hasCapability(Status.FRIENDLY_TO_CRUSTACEANS_ENEMY) && !otherActor.hasCapability(Status.PROTECTED)) {
       if (this.getWeaponInventory().isEmpty()) {
         this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
       }

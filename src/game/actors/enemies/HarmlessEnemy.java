@@ -42,7 +42,9 @@ public abstract class HarmlessEnemy extends Actor {
 }
 
   public void reviveActor(GameMap map){
-    actorToBeRevived.addWeaponToInventory(this.getWeaponInventory().get(0));
+    if (!this.getWeaponInventory().isEmpty()) {
+      actorToBeRevived.addWeaponToInventory(this.getWeaponInventory().get(0));
+    }
     actorToBeRevived.increaseMaxHp(0);
     Location here = map.locationOf(this);
     map.removeActor(this);

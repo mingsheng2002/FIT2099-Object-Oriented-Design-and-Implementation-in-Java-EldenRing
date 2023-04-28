@@ -28,7 +28,7 @@ public class PickUpRunesAction extends PickUpAction {
     @Override
     public String execute(Actor actor, GameMap map) {
 
-        Runes droppedRunes = RunesManager.getInstance().getDroppedRunes();;
+        Runes droppedRunes = RunesManager.getInstance().getDroppedRunes();
         RunesManager.getInstance().incrementPlayerRunes(droppedRunes.getTotalAmount());
         playerRunes.pickedUp();
         return super.execute(actor, map);
