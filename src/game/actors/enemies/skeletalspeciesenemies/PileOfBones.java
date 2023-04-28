@@ -7,9 +7,9 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.enums.Status;
-import game.reset.Resettable;
+import game.resets.Resettable;
 import game.actors.enemies.HarmlessEnemy;
-import game.reset.ResetManager;
+import game.resets.ResetManager;
 
 public class PileOfBones extends HarmlessEnemy implements Resettable {
 

@@ -10,18 +10,20 @@ import java.util.List;
 public class RunesManager {
 
   private Runes playerRunes;
+  private Runes droppedRunes;
   private List<RunesRewarder> runesRewarderActor;
-  private static RunesManager runesInstance = null;
+  private static RunesManager runesManager = null;
+
 
   private RunesManager(){
     runesRewarderActor = new ArrayList<>();
   }
 
   public static RunesManager getInstance(){
-    if(runesInstance == null){
-      runesInstance = new RunesManager();
+    if(runesManager == null){
+      runesManager = new RunesManager();
     }
-    return runesInstance;
+    return runesManager;
   }
 
   public String rewardRunes(Actor target, Actor attacker){
@@ -45,7 +47,6 @@ public class RunesManager {
     return attacker + " is rewarded " + amount + " runes.";
   };
 
-
   public void incrementPlayerRunes(int amount){
     playerRunes.setTotalAmount(playerRunes.getTotalAmount() + amount);
   }
@@ -64,6 +65,22 @@ public class RunesManager {
 
   public void registerRewardRunesActor(RunesRewarder actor){
     runesRewarderActor.add(actor);
+  }
+
+  public Runes getDroppedRunes() {
+    return droppedRunes;
+  }
+
+  public void registerDroppedRunes(Runes runes) {
+    this.droppedRunes = runes;
+  }
+
+  public void removeDroppedRunes() {
+    this.droppedRunes = null;
+  }
+
+  public void clearPlayerRunes() {
+    playerRunes.setTotalAmount(0);
   }
 
 }

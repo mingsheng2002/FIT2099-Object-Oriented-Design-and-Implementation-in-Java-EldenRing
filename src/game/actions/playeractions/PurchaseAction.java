@@ -24,7 +24,7 @@ public class PurchaseAction extends Action {
 
     // check if player has enough runes to purchase
     if(playerRunes < itemPrice){
-      return player + " has not enough runes to purchase " + item + ".";
+      return player + " has not enough runes to purchase " + item;
     }
 
     // add the purchase item into player's inventory
@@ -38,6 +38,6 @@ public class PurchaseAction extends Action {
 
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " purchases " + item + " from Trader.";
+    return actor + " purchases " + item + " from Trader";
   }
 }

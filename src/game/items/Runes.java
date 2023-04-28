@@ -4,20 +4,17 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.items.PickUpAction;
 import edu.monash.fit2099.engine.positions.Location;
-import game.reset.Resettable;
+import game.controllers.RunesManager;
+import game.enums.Status;
+import game.resets.Resettable;
 import game.actions.playeractions.PickUpRunesAction;
-import game.actors.playerclasses.Player;
-import game.reset.ResetManager;
+import game.resets.ResetManager;
 
 public class Runes extends Item implements Resettable {
 
   private int totalAmount = 0;
   private Location dropLocation = null;
-  private boolean hasPickUp ;
-  private boolean hasDrop ;
-
-
-
+  private boolean hasDropped;
 
   /***
    * Constructor.
@@ -25,9 +22,7 @@ public class Runes extends Item implements Resettable {
   public Runes() {
     super("Runes", '$', false);
     ResetManager.getInstance().registerResettable(this);
-    this.hasPickUp = false;
-    this.hasDrop = false;
-
+    this.hasDropped = false;
   }
 
   public int getTotalAmount(){
@@ -46,49 +41,44 @@ public class Runes extends Item implements Resettable {
     this.dropLocation = dropLocation;
   }
 
-  public void setHasPickUp(boolean hasPickUp) {
-    this.hasPickUp = hasPickUp;
-  }
-
-
-
-
   /**
    * If portable ==T , reset caused by player death
    *
    */
 
   public void reset(){
-    if (this.portable){
-      if(hasDrop && !hasPickUp) {
-        getDropLocation().removeItem(this);
-        System.out.println("player death again runes remove ");
+    Runes dropppedRunes = RunesManager.getInstance().getDroppedRunes();
+    Runes playerRunes = RunesManager.getInstance().getPlayerRunes();
 
-      }
+    if (!playerRunes.hasCapability(Status.TEMPORARILY_UNDROPPABLE) && dropppedRunes != null) {
+      dropppedRunes.getDropLocation().removeItem(dropppedRunes);
+      RunesManager.getInstance().removeDroppedRunes();
+      System.out.println("Player dies again. Runes is removed from map");
     }
   }
+  public void pickedUp() {
+    RunesManager.getInstance().getPlayerRunes().hasDropped = false;
+  }
 
-  @Override
-  public PickUpAction getPickUpAction(Actor actor) {
-    if (portable)
-      return new PickUpRunesAction(this,(Player) actor);
-    return null;
+  public void dropped() {
+    RunesManager.getInstance().getPlayerRunes().hasDropped = true;
+  }
+
+  public boolean hasDropped() {
+    return hasDropped;
   }
 
   public void dropAtLastLocation(Location location){
     location.addItem(this);
+    dropped();
   }
 
-  public boolean isHasDrop() {
-    return hasDrop;
-  }
-
-  public void setHasDrop(boolean hasDrop) {
-    this.hasDrop = hasDrop;
+  public PickUpAction getPickUpAction(Actor actor) {
+    return new PickUpRunesAction(actor);
   }
 
   @Override
-  public void togglePortability() {
-    super.togglePortability();
+  public String toString() {
+    return "Runes (value: " + this.getTotalAmount() + ")";
   }
 }

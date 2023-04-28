@@ -9,14 +9,16 @@ import game.items.Runes;
 
 public class PickUpRunesAction extends PickUpAction {
 
-    private final Runes runes;
+    private final Runes playerRunes;
+    private final Runes droppedRunes;
     private int amount;
-    private Player player;
+    private Actor player;
 
-    public PickUpRunesAction(Runes runes,Player player) {
-        super(runes);
-        this.runes = runes;
-        this.player = player;
+    public PickUpRunesAction(Actor actor) {
+        super(RunesManager.getInstance().getDroppedRunes());
+        this.playerRunes = RunesManager.getInstance().getPlayerRunes();
+        this.droppedRunes = RunesManager.getInstance().getDroppedRunes();
+        this.player = actor;
     }
 
     public int getAmount() {
@@ -25,23 +27,14 @@ public class PickUpRunesAction extends PickUpAction {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        // change back to not portable
-        runes.togglePortability();
-        runes.setHasPickUp(true);
 
-        amount = runes.getTotalAmount();
-        RunesManager.getInstance().incrementPlayerRunes(amount);
-        map.locationOf(actor).removeItem(runes);
-
-        return menuDescription(actor);
+        Runes droppedRunes = RunesManager.getInstance().getDroppedRunes();;
+        RunesManager.getInstance().incrementPlayerRunes(droppedRunes.getTotalAmount());
+        playerRunes.pickedUp();
+        return super.execute(actor, map);
     }
 
-    @Override
-//    public String menuDescription(Actor actor) {
-//        return actor + " retrieve Runes (value: "+ RunesManager.getInstance().getRunes().getTotalAmount() + ").";
-//    }
-
     public String menuDescription(Actor actor) {
-        return actor + " retrieve Runes (value: " + amount + ").";
+        return actor + " retrieves " + droppedRunes;
     }
 }

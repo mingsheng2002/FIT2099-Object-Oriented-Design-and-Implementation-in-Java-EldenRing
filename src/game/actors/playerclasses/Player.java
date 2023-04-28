@@ -10,11 +10,11 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AreaAttackAction;
-import game.reset.ResetManager;
+import game.resets.ResetManager;
 import game.controllers.RunesManager;
 import game.items.FlaskOfCrimsonTears;
 import game.items.Runes;
-import game.reset.Resettable;
+import game.resets.Resettable;
 import game.enums.Status;
 
 /**
@@ -115,30 +115,37 @@ public abstract class Player extends Actor implements Resettable {
 
 	@Override
 	public void reset() {
+		Runes playerRunes = RunesManager.getInstance().getPlayerRunes();
+
+		// has dropped (player has died before) and not picked up, remove the runes from map
+		if (playerRunes.hasDropped() && !this.isConscious()){
+			playerRunes.reset();
+		}
+
 		// true only when reset is caused by player death
+		// enter this block if player has not dropped runes before / has picked up their dropped runes
 		if (!this.isConscious()){
-			// create a new runes drop at last location
-			if (RunesManager.getInstance().getPlayerRunes().getTotalAmount()!=0) {
-				Runes runes = new Runes();
-				runes.setTotalAmount(RunesManager.getInstance().getPlayerRunes().getTotalAmount());
-				getLastLocation().addItem(runes);
-				//change the runes to portable
-				runes.togglePortability();
-				runes.setHasDrop(true);
-				//set last location to runes
-				runes.setDropLocation(getLastLocation());
+			// create a new runes drop at player's last location
+			if (playerRunes.getTotalAmount() != 0) {
+				Runes droppedRunes = new Runes();
+				droppedRunes.setTotalAmount(playerRunes.getTotalAmount());
+				//register dropped runes
+				RunesManager.getInstance().registerDroppedRunes(droppedRunes);
+				//drop at player's last location
+				droppedRunes.dropAtLastLocation(this.getLastLocation());
+				//set drop location to runes
+				droppedRunes.setDropLocation(this.getLastLocation());
+				// clear the player's runes amount
+				RunesManager.getInstance().clearPlayerRunes();
 
-				// set the player inventory amount to 0
-				RunesManager.getInstance().decrementPlayerRunes(RunesManager.getInstance().getPlayerRunes().getTotalAmount());
-
-				System.out.println("The values of the runes dropped is " + runes.getTotalAmount() + " at location " + getLastLocation().x() + " , " + getLastLocation().y());
+				System.out.println(droppedRunes + " is dropped at location (" + getLastLocation().x() + "," + getLastLocation().y() + ")");
 			}else{
-				System.out.println(this+" no runes to drop");
+				System.out.println(this + " has no runes to drop");
 			}
 			map.moveActor(this,getVisitedSiteOfLostGrace());
 		}
 		this.resetMaxHp(getMaxHp());
-		System.out.println(this+ " revive");
+		System.out.println(this+ " revives");
 	}
 
 	private void getTheFirstStep(GameMap map){
@@ -147,15 +154,12 @@ public abstract class Player extends Actor implements Resettable {
 		System.out.println(width);
 		System.out.println(height);
 
-		for (int y = 0; y<height+1; y++){
-			for (int x = 0; x<width+1; x++){
+		for ( int y = 0; y < height+1; y++){
+			for ( int x = 0; x < width+1; x++){
 
-				if (map.at(x,y).getGround().getDisplayChar()=='U'){
+				if (map.at(x,y).getGround().getDisplayChar() == 'U'){
 					setVisitedSiteOfLostGrace(map.at(x,y));
-					System.out.println("heree le");
 					setHasTheFirstStepLocation(true);
-					System.out.println(x);
-					System.out.println(y);
 				}
 			}
 		}

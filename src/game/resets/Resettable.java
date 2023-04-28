@@ -1,4 +1,4 @@
-package game.reset;
+package game.resets;
 
 /**
  * A resettable interface
