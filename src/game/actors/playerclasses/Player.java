@@ -52,7 +52,7 @@ public abstract class Player extends Actor implements Resettable {
 		this.playerMaxHitPoints = hitPoints;
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
 		//this.addWeaponToInventory(new Club());
-		RunesManager.getInstance().registerRunes(runes);
+		RunesManager.getInstance().registerPlayerRunes(runes);
 		this.addItemToInventory(runes);
 		flaskOfCrimsonTears = new FlaskOfCrimsonTears();
 		this.addItemToInventory(flaskOfCrimsonTears);
@@ -118,9 +118,9 @@ public abstract class Player extends Actor implements Resettable {
 		// true only when reset is caused by player death
 		if (!this.isConscious()){
 			// create a new runes drop at last location
-			if (RunesManager.getInstance().getRunes().getTotalAmount()!=0) {
+			if (RunesManager.getInstance().getPlayerRunes().getTotalAmount()!=0) {
 				Runes runes = new Runes();
-				runes.setTotalAmount(RunesManager.getInstance().getRunes().getTotalAmount());
+				runes.setTotalAmount(RunesManager.getInstance().getPlayerRunes().getTotalAmount());
 				getLastLocation().addItem(runes);
 				//change the runes to portable
 				runes.togglePortability();
@@ -129,7 +129,7 @@ public abstract class Player extends Actor implements Resettable {
 				runes.setDropLocation(getLastLocation());
 
 				// set the player inventory amount to 0
-				RunesManager.getInstance().decrementAmount(RunesManager.getInstance().getRunes().getTotalAmount());
+				RunesManager.getInstance().decrementPlayerRunes(RunesManager.getInstance().getPlayerRunes().getTotalAmount());
 
 				System.out.println("The values of the runes dropped is " + runes.getTotalAmount() + " at location " + getLastLocation().x() + " , " + getLastLocation().y());
 			}else{

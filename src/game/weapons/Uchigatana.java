@@ -17,9 +17,8 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
   /**
    * Constructor.
    */
-  /////////////////////////////////////////// XY - not sure about the verb /////////////
   public Uchigatana() {
-    super("Uchigatana", ')', DAMAGE, "hit", HIT_RATE);
+    super("Uchigatana", ')', DAMAGE, "hits", HIT_RATE);
 
     this.addCapability(Status.SPECIAL_SKILL);
   }

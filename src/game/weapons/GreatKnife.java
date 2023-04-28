@@ -17,9 +17,8 @@ public class GreatKnife extends Dagger implements Purchasable, Sellable {
    * Constructor.
    *
    */
-  //////////////////////////////////////////// XY - not sure about the verb /////////////
   public GreatKnife() {
-    super("Great Knife", '/', DAMAGE, "hit", HIT_RATE);
+    super("Great Knife", '/', DAMAGE, "hits", HIT_RATE);
     this.addCapability(Status.SPECIAL_SKILL);
   }
 

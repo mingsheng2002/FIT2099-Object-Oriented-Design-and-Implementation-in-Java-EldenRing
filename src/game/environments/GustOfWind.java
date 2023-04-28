@@ -8,8 +8,8 @@ import game.actors.enemies.canislupusenemies.LoneWolf;
 
 public class GustOfWind extends Ground {
 
-  public static final int LONE_WOLF_SPAWN_CHANCE = 90; //33;
-  public static final int GIANT_DOG_SPAWN_CHANCE = 90; //4;
+  public static final int LONE_WOLF_SPAWN_CHANCE = 33;
+  public static final int GIANT_DOG_SPAWN_CHANCE = 4;
 
   /**
    * Constructor.

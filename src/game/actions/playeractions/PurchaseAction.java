@@ -19,7 +19,7 @@ public class PurchaseAction extends Action {
   @Override
   public String execute(Actor actor, GameMap map) {
 
-    int playerRunes = RunesManager.getInstance().getRunes().getTotalAmount();
+    int playerRunes = RunesManager.getInstance().getPlayerRunes().getTotalAmount();
     int itemPrice = item.getPurchasePrice();
 
     // check if player has enough runes to purchase
@@ -31,7 +31,7 @@ public class PurchaseAction extends Action {
     // deduct player's runes
     else{
       player.addWeaponToInventory(item.getInstance());
-      RunesManager.getInstance().decrementAmount(itemPrice);
+      RunesManager.getInstance().decrementPlayerRunes(itemPrice);
       return menuDescription(player);
     }
   }

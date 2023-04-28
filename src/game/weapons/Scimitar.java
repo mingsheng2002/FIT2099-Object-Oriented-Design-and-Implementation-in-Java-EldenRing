@@ -15,7 +15,7 @@ public class Scimitar extends CurvedSword implements Purchasable, Sellable {
    *
    */
   public Scimitar() {
-    super("Scimitar", 's', DAMAGE, "uses Scimitar to attack", HIT_RATE);
+    super("Scimitar", 's', DAMAGE, "hits", HIT_RATE);
     this.addCapability(Status.AREA_ATTACK);
   }
 

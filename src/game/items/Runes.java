@@ -34,7 +34,9 @@ public class Runes extends Item implements Resettable {
     return this.totalAmount;
   }
 
-  public void setTotalAmount(int amount){totalAmount = amount;}
+  public void setTotalAmount(int amount){
+    totalAmount = amount;
+  }
 
   public Location getDropLocation() {
     return dropLocation;

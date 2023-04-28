@@ -31,7 +31,7 @@ public class SellAction extends Action {
       }
       i++;
     }
-    RunesManager.getInstance().incrementAmount(item.getSellPrice());
+    RunesManager.getInstance().incrementPlayerRunes(item.getSellPrice());
 
     return menuDescription(player);
   }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RunesManager {
 
-  private Runes runes;
+  private Runes playerRunes;
   private List<RunesRewarder> runesRewarderActor;
   private static RunesManager runesInstance = null;
 
@@ -40,26 +40,26 @@ public class RunesManager {
       i++;
     }
 
-    incrementAmount(amount);
+    incrementPlayerRunes(amount);
 
     return attacker + " is rewarded " + amount + " runes.";
   };
 
 
-  public void incrementAmount(int amount){
-    runes.setTotalAmount(runes.getTotalAmount() + amount);
+  public void incrementPlayerRunes(int amount){
+    playerRunes.setTotalAmount(playerRunes.getTotalAmount() + amount);
   }
 
-  public void decrementAmount(int amount){
-    runes.setTotalAmount(runes.getTotalAmount() - amount);
+  public void decrementPlayerRunes(int amount){
+    playerRunes.setTotalAmount(playerRunes.getTotalAmount() - amount);
   }
 
-  public Runes getRunes() {
-    return runes;
+  public Runes getPlayerRunes() {
+    return playerRunes;
   }
 
-  public void registerRunes(Runes runes) {
-    this.runes = runes;
+  public void registerPlayerRunes(Runes runes) {
+    this.playerRunes = runes;
   }
 
   public void registerRewardRunesActor(RunesRewarder actor){

@@ -38,17 +38,25 @@ public class DeathAction extends Action {
     @Override
     public String execute(Actor target, GameMap map) {
         String result = "";
+
+        // if player dies, reset whole game
         if(target.hasCapability(Status.HOSTILE_TO_ENEMY)){
             System.out.println(FancyMessage.YOU_DIED);
             return new ResetAction().execute(target, map);
         }
 
+        // if enemy is defeated by player
+        if(this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY)){
+            String retVal = RunesManager.getInstance().rewardRunes(target, attacker);
+            result += System.lineSeparator() + retVal;
+        }
+
         if (target.hasCapability(Status.REVIVABLE)){
-            PileOfBones pob = new PileOfBones(target);
+            PileOfBones pileOfBones = new PileOfBones(target);
             Location here = map.locationOf(target);
             map.removeActor(target);
-            here.addActor(pob);
-            return result;
+            here.addActor(pileOfBones);
+            return System.lineSeparator() + target + " is killed and turns into " + pileOfBones;
         }
 
         // only drop items if defeated by player
@@ -66,16 +74,11 @@ public class DeathAction extends Action {
         map.removeActor(target);
         result += System.lineSeparator() + menuDescription(target);
 
-        if(this.attacker.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            String retVal = RunesManager.getInstance().rewardRunes(target, attacker);
-            result += System.lineSeparator() + retVal;
-        }
-
         return result;
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " is killed.";
+        return actor + " is killed";
     }
 }

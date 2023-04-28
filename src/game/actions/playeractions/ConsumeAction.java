@@ -24,6 +24,6 @@ public class ConsumeAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " consumes Flask Of Crimson Tears.";
+        return actor + " consumes Flask Of Crimson Tears";
     }
 }

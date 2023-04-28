@@ -8,8 +8,8 @@ import game.actors.enemies.crustaceansenemies.GiantCrab;
 
 public class PuddleOfWater extends Ground {
 
-  private final static int GIANT_CRAB_SPAWN_CHANCE = 90;//2;
-  private final static int GIANT_CRAYFISH_SPAWN_CHANCE = 90;//1;
+  private final static int GIANT_CRAB_SPAWN_CHANCE = 2;
+  private final static int GIANT_CRAYFISH_SPAWN_CHANCE = 1;
 
   /**
    * Constructor.

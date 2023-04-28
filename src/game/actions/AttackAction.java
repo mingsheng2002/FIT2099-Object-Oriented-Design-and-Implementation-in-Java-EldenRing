@@ -1,5 +1,6 @@
 package game.actions;
 
+import game.enums.Status;
 import java.util.Random;
 
 import edu.monash.fit2099.engine.actions.Action;
@@ -70,22 +71,27 @@ public class AttackAction extends Action {
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
-		if (weapon == null) {
-			weapon = actor.getIntrinsicWeapon();
-		}
+		// if target is not yet defeated by other enemies AND
+		// if target is not despawning from map in this round
+		if(target.isConscious() && !target.hasCapability(Status.DESPAWNING)) {
+			if (weapon == null) {
+				weapon = actor.getIntrinsicWeapon();
+			}
 
-		if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
-			return actor + " misses " + target + ".";
-		}
+			if (!(rand.nextInt(100) <= weapon.chanceToHit())) {
+				return actor + " misses " + target + ".";
+			}
 
-		int damage = weapon.damage();
-		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
-		target.hurt(damage);
-		if (!target.isConscious()) {
-			result += new DeathAction(actor).execute(target, map);
-		}
+			int damage = weapon.damage();
+			String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
+			target.hurt(damage);
+			if (!target.isConscious()) {
+				result += new DeathAction(actor).execute(target, map);
+			}
 
-		return result;
+			return result;
+		}
+		return "";
 	}
 
 	/**

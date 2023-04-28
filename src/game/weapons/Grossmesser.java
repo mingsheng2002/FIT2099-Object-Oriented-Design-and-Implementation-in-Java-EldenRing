@@ -14,7 +14,7 @@ public class Grossmesser extends CurvedSword implements Sellable {
    *
    */
   public Grossmesser() {
-    super("Grossmesser", '?', DAMAGE, "uses Grossmesser to attack", HIT_RATE);
+    super("Grossmesser", '?', DAMAGE, "hits", HIT_RATE);
     this.addCapability(Status.AREA_ATTACK);
   }
 

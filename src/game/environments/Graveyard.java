@@ -8,7 +8,8 @@ import game.actors.enemies.skeletalspeciesenemies.HeavySkeletalSwordsman;
 
 public class Graveyard extends Ground {
 
-  public static final int SPAWN_CHANCE = 90; //27;
+  public static final int HEAVY_SKELETAL_SWORDSMAN_SPAWN_CHANCE = 27;
+  public static final int SKELETAL_BANDIT_SPAWN_CHANCE = 27;
 
   /**
    * Constructor.
@@ -27,12 +28,12 @@ public class Graveyard extends Ground {
     int currLocation = location.x();
 
     if(currLocation <= x/2){
-      if(RandomNumberGenerator.getRandomInt(100) < SPAWN_CHANCE && !location.containsAnActor()){
+      if(RandomNumberGenerator.getRandomInt(100) < HEAVY_SKELETAL_SWORDSMAN_SPAWN_CHANCE && !location.containsAnActor()){
         location.addActor(new HeavySkeletalSwordsman());
       }
     }
     else{
-      if(RandomNumberGenerator.getRandomInt(100) < SPAWN_CHANCE && !location.containsAnActor()){
+      if(RandomNumberGenerator.getRandomInt(100) < SKELETAL_BANDIT_SPAWN_CHANCE && !location.containsAnActor()){
         location.addActor(new SkeletalBandit());
       }
     }
