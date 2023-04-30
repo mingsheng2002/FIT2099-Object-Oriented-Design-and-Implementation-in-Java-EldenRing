@@ -1,6 +1,7 @@
 package game.items;
 
 import edu.monash.fit2099.engine.actions.Action;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.resets.Resettable;
@@ -11,7 +12,7 @@ import game.enums.Status;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlaskOfCrimsonTears extends Item implements Resettable {
+public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable {
 
 
     private static final int MAX_USAGE = 2 ;
@@ -22,7 +23,6 @@ public class FlaskOfCrimsonTears extends Item implements Resettable {
     public FlaskOfCrimsonTears() {
         super("Flask of Crimson Tears", '.', false);
         this.numOfUsage = 0;
-        this.addCapability(Status.HEALING);
         ResetManager.getInstance().registerResettable(this);
     }
 
@@ -30,18 +30,13 @@ public class FlaskOfCrimsonTears extends Item implements Resettable {
         List<Action> actions = new ArrayList<>();
         // if flask usage is not Max yet add consumeAction
         if (getNumOfUsage() < MAX_USAGE) {
-            actions.add(new ConsumeAction());
+            actions.add(new ConsumeAction(this));
         }
         return actions;
     }
 
     public int getNumOfUsage() {
         return numOfUsage;
-    }
-
-    @Override
-    public void tick(Location currentLocation) {
-        this.numOfUsage = numOfUsage + 1;
     }
 
     public int getNumOfUsageLeft(){
@@ -51,8 +46,13 @@ public class FlaskOfCrimsonTears extends Item implements Resettable {
     @Override
     public void reset() {
         this.numOfUsage = 0;
-        System.out.println("Flask of Crimson Tears reset");
-        System.out.println("Number of usage left: "+ getNumOfUsageLeft());
+        System.out.println("Number of uses the " + this + " has left: " + getNumOfUsageLeft());
+    }
 
+    @Override
+    public void consumedBy(Actor actor) {
+        // increase player's hitpoints by 250
+        actor.heal(250);
+        this.numOfUsage = numOfUsage + 1;
     }
 }

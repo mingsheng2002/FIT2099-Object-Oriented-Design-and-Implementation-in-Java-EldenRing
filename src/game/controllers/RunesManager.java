@@ -11,41 +11,51 @@ public class RunesManager {
 
   private Runes playerRunes;
   private Runes droppedRunes;
-  private List<RunesRewarder> runesRewarderActor;
-  private static RunesManager runesManager = null;
+  private Runes droppingRunes;
+  private List<RunesRewarder> runesRewarders;
+  private static RunesManager instance = null;
 
 
   private RunesManager(){
-    runesRewarderActor = new ArrayList<>();
+    runesRewarders = new ArrayList<>();
   }
 
   public static RunesManager getInstance(){
-    if(runesManager == null){
-      runesManager = new RunesManager();
+    if(instance == null){
+      instance = new RunesManager();
     }
-    return runesManager;
+    return instance;
   }
 
   public String rewardRunes(Actor target, Actor attacker){
-    int amount = 0;
+    int[] targetMinMaxRewardRunes = getMinMaxRunesOf(target);
+    int minReward = targetMinMaxRewardRunes[0];
+    int maxReward = targetMinMaxRewardRunes[1];
+    int rewardRunesAmount = RandomNumberGenerator.getRandomInt(minReward, maxReward);
+    incrementPlayerRunes(rewardRunesAmount);
+    return attacker + " is rewarded " + rewardRunesAmount + " runes";
+  }
+
+  public int[] getMinMaxRunesOf(Actor target) {
+    int[] retArr = new int[2];
+    int minRewardRunes;
+    int maxRewardRunes;
     int i = 0;
-    int totalEnemies = runesRewarderActor.size();
+    int totalRunesRewarders = runesRewarders.size();
     boolean found = false;
-    while (!found && i < totalEnemies) {
-      RunesRewarder rewarder = runesRewarderActor.get(i);
-      if (rewarder == target) {
-        int minAward = rewarder.getMinRunes();
-        int maxAward = rewarder.getMaxRunes();
-        amount = RandomNumberGenerator.getRandomInt(minAward, maxAward);
+    while (!found && i < totalRunesRewarders) {
+      RunesRewarder runesRewarder = runesRewarders.get(i);
+      if (runesRewarder == target) {
+        minRewardRunes = runesRewarder.getMinRewardRunes();
+        maxRewardRunes = runesRewarder.getMaxRewardRunes();
+        retArr[0] = minRewardRunes;
+        retArr[1] = maxRewardRunes;
         found = true;
       }
       i++;
     }
-
-    incrementPlayerRunes(amount);
-
-    return attacker + " is rewarded " + amount + " runes.";
-  };
+    return retArr;
+  }
 
   public void incrementPlayerRunes(int amount){
     playerRunes.setTotalAmount(playerRunes.getTotalAmount() + amount);
@@ -63,8 +73,8 @@ public class RunesManager {
     this.playerRunes = runes;
   }
 
-  public void registerRewardRunesActor(RunesRewarder actor){
-    runesRewarderActor.add(actor);
+  public void registerRewardOwner(RunesRewarder actor){
+    runesRewarders.add(actor);
   }
 
   public Runes getDroppedRunes() {
@@ -83,4 +93,11 @@ public class RunesManager {
     playerRunes.setTotalAmount(0);
   }
 
+  public void registerDroppingRunes(Runes runes) {
+    this.droppingRunes = runes;
+  }
+
+  public Runes getDroppingRunes() {
+    return droppingRunes;
+  }
 }

@@ -9,10 +9,13 @@ import game.enums.Status;
 
 public class DespawnAction extends Action {
 
+    public DespawnAction(Actor target) {
+        target.addCapability(Status.DESPAWNING);
+    }
+
     @Override
     public String execute(Actor actor, GameMap map) {
         // actor is currently despawning from map in this round
-        actor.addCapability(Status.DESPAWNING);
         map.removeActor(actor);
         return menuDescription(actor);
     }

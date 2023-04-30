@@ -23,14 +23,14 @@ public class PurchaseAction extends Action {
     int itemPrice = item.getPurchasePrice();
 
     // check if player has enough runes to purchase
-    if(playerRunes < itemPrice){
+    if (playerRunes < itemPrice){
       return player + " has not enough runes to purchase " + item;
     }
 
     // add the purchase item into player's inventory
     // deduct player's runes
-    else{
-      player.addWeaponToInventory(item.getInstance());
+    else {
+      player.addWeaponToInventory(item.getPurchasableInstance());
       RunesManager.getInstance().decrementPlayerRunes(itemPrice);
       return menuDescription(player);
     }

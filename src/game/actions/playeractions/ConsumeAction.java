@@ -5,25 +5,24 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.enums.Status;
+import game.items.Consumable;
 
 public class ConsumeAction extends Action {
 
+    Consumable consumable;
+
+    public ConsumeAction(Consumable consumable) {
+        this.consumable = consumable;
+    }
+
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            actor.heal(250);
-            // increase the usage by one TBC
-            for (Item item : actor.getItemInventory()){
-                if (item.hasCapability(Status.HEALING)){
-                    item.tick(map.locationOf(actor));
-                }
-            }
-        }
+        consumable.consumedBy(actor);
         return menuDescription(actor);
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " consumes Flask Of Crimson Tears";
+        return actor + " consumes " + this.consumable;
     }
 }

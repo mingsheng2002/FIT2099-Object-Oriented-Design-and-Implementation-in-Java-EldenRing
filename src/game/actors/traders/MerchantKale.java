@@ -9,13 +9,9 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.weapons.Purchasable;
 import game.weapons.Sellable;
-import game.actions.playeractions.PurchaseAction;
-import game.actions.playeractions.SellAction;
 import game.enums.Status;
-import game.weapons.Club;
-import game.weapons.GreatKnife;
-import game.weapons.Grossmesser;
-import game.weapons.Uchigatana;
+import game.weapons.portableweapons.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +31,12 @@ public class MerchantKale extends Trader{
     this.addNewPurchasable(new GreatKnife());
     this.addNewPurchasable(new Uchigatana());
     this.addNewPurchasable(new Club());
+    this.addNewPurchasable(new Scimitar());
     this.addNewSellable(new Grossmesser());
     this.addNewSellable(new GreatKnife());
     this.addNewSellable(new Uchigatana());
     this.addNewSellable(new Club());
-
+    this.addNewSellable(new Scimitar());
   }
 
   @Override
@@ -54,7 +51,7 @@ public class MerchantKale extends Trader{
     if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
       // Check what can be purchased by player (what trader can sell)
       for (Purchasable purchaseItem : purchasables) {
-        actions.add(new PurchaseAction(otherActor, purchaseItem));
+        actions.add(purchaseItem.getPurchaseAction(otherActor, purchaseItem));
       }
 
       // Check what can be sold by player
@@ -64,7 +61,7 @@ public class MerchantKale extends Trader{
         boolean found = false;
         while (!found && i < totalSellables) {
           if (sellables.get(i).toString().equals(item.toString())) {
-            actions.add(new SellAction(otherActor, sellables.get(i)));
+            actions.add(sellables.get(i).getSellAction(otherActor, sellables.get(i)));
             found = true;
           }
           i++;

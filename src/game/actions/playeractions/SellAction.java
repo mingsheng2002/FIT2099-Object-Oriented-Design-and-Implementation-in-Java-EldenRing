@@ -38,6 +38,6 @@ public class SellAction extends Action {
 
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " sell " + item + " to Trader";
+    return actor + " sells " + item + " to Trader";
   }
 }

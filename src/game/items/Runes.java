@@ -41,31 +41,26 @@ public class Runes extends Item implements Resettable {
     this.dropLocation = dropLocation;
   }
 
-  /**
-   * If portable ==T , reset caused by player death
-   *
-   */
-
-  public void reset(){
+  public void reset() {
     Runes dropppedRunes = RunesManager.getInstance().getDroppedRunes();
     Runes playerRunes = RunesManager.getInstance().getPlayerRunes();
+    Runes droppingRunes = RunesManager.getInstance().getDroppingRunes();
 
-    if (!playerRunes.hasCapability(Status.TEMPORARILY_UNDROPPABLE) && dropppedRunes != null) {
+    // player is not resting, but dying AND there is runes dropped on ground - drop the runes
+    if (!playerRunes.hasCapability(Status.RESTING) && dropppedRunes != null) {
       dropppedRunes.getDropLocation().removeItem(dropppedRunes);
       RunesManager.getInstance().removeDroppedRunes();
       System.out.println("Player dies again. Runes is removed from map");
+      RunesManager.getInstance().registerDroppedRunes(droppingRunes);
     }
   }
+
   public void pickedUp() {
     RunesManager.getInstance().getPlayerRunes().hasDropped = false;
   }
 
   public void dropped() {
     RunesManager.getInstance().getPlayerRunes().hasDropped = true;
-  }
-
-  public boolean hasDropped() {
-    return hasDropped;
   }
 
   public void dropAtLastLocation(Location location){

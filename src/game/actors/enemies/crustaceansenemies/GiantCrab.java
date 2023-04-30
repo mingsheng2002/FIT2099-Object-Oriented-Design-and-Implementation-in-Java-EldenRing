@@ -5,19 +5,18 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.resets.Resettable;
 import game.actors.enemies.Enemy;
 import game.behaviours.AttackBehaviour;
 import game.resets.ResetManager;
 import game.enums.Status;
+import game.weapons.unportableweapons.GiantCrabPincer;
 
-public class GiantCrab extends Enemy implements Resettable {
+public class GiantCrab extends Crustacean implements Resettable {
 
+  private final static int SPAWN_CHANCE = 2;
   private static final int DESPAWN_CHANCE = 10;
   private static final int HIT_POINTS = 407;
-  private static final int DAMAGE = 208;
-  public static final int HIT_RATE = 90;
   private static final int MIN_RUNES_AWARD = 318;
   private static final int MAX_RUNES_AWARD = 4961;
 
@@ -26,43 +25,9 @@ public class GiantCrab extends Enemy implements Resettable {
    *
    */
   public GiantCrab(){
-    super("Giant Crab", 'C', HIT_POINTS, GiantCrab.DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
-    this.addCapability(Status.FRIENDLY_TO_CRUSTACEANS_ENEMY);
-    this.addCapability(Status.AREA_ATTACK);
+    super("Giant Crab", 'C', HIT_POINTS, SPAWN_CHANCE, DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
+    this.addWeaponToInventory(new GiantCrabPincer());
     ResetManager.getInstance().registerResettable(this);
-  }
-
-  @Override
-  public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-    return super.playTurn(actions, lastAction, map, display);
-  }
-
-  /**
-   * The lone wolf can be attacked by any actor that has the HOSTILE_TO_ENEMY capability
-   *
-   * @param otherActor the Actor that might be performing attack
-   * @param direction  String representing the direction of the other Actor
-   * @param map        current GameMap
-   * @return
-   */
-  @Override
-  public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-    // If adjacent actor can be attacked (not the same type), AND
-    // If adjacent actor (player) is not performing Quickstep action, add Attack Behaviour to this enemy
-    if (!otherActor.hasCapability(Status.FRIENDLY_TO_CRUSTACEANS_ENEMY) && !otherActor.hasCapability(Status.PROTECTED)) {
-      if (this.getWeaponInventory().isEmpty()) {
-        this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
-      }
-      else {
-        this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction, this.getWeaponInventory().get(0)));
-      }
-    }
-
-    return super.allowableActions(otherActor, direction, map);
-  }
-
-  public IntrinsicWeapon getIntrinsicWeapon(){
-    return new IntrinsicWeapon(DAMAGE, "slams", HIT_RATE);
   }
 
   @Override

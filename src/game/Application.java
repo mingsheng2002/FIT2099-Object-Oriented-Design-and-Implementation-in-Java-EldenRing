@@ -1,11 +1,12 @@
 package game;
 
-import game.actors.playerclasses.Player;
+import game.actors.playerarchetypes.Archetype;
+import game.actors.playerarchetypes.Player;
 import game.actors.enemies.crustaceansenemies.GiantCrab;
-import game.actors.enemies.skeletalspeciesenemies.HeavySkeletalSwordsman;
+import game.actors.enemies.skeletalenemies.HeavySkeletalSwordsman;
 import game.actors.enemies.canislupusenemies.LoneWolf;
 import game.actors.traders.MerchantKale;
-import game.controllers.MenuManager;
+import game.controllers.ArchetypeManager;
 import game.environments.*;
 
 import java.util.Arrays;
@@ -15,6 +16,10 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
+import game.environments.restinggrounds.TheFirstStep;
+import game.environments.spawninggrounds.Graveyard;
+import game.environments.spawninggrounds.GustOfWind;
+import game.environments.spawninggrounds.PuddleOfWater;
 
 /**
  * The main class to start the game.
@@ -33,17 +38,17 @@ public class Application {
 
 
 		List<String> map = Arrays.asList(
-				"..............n............................................................",
-				"...~..................#####....######...........&.....................&....",
+				"..............n............................................~...............",
+				"...~....&.............#####....######...........&.....................&....",
 				"......................#..___....____#......................................",
 				"..............~...................__#..................&...................",
-				".......~..............._____........#........n........................n....",
-				"......................#............_#......................................",
-				"......................#...........###......................................",
-				"...........................................................................",
+				".......~...........n..._____........#........n........................n....",
+				".n....................#............_#......................................",
+				"......................#...........###......................~...............",
+				"......&....................................................................",
 				"...........................................................................",
 				"..................................###___###................................",
-				"..................................________#................................",
+				"..................................________#..U.............................",
 				"..................................#________................................",
 				"..................................#_______#................................",
 				"..................................###___###................................",
@@ -51,7 +56,7 @@ public class Application {
 				"...........................................................................",
 				"...........................................................................",
 				"...........................................................................",
-				"..####__##...........U........................................######..##...",
+				"..####__##....................................................######..##...",
 				"..#.....__....................................................#....____....",
 				"..#___..........................................................__.....#...",
 				"..####__###..................................................._.....__.#...",
@@ -106,6 +111,7 @@ public class Application {
 //		gameMap.at(28, 14).addActor(new GiantCrab());
 		gameMap.at(51, 12).addActor(new LoneWolf());
 		gameMap.at(52, 13).addActor(new HeavySkeletalSwordsman());
+		gameMap.at(45, 13).addActor(new HeavySkeletalSwordsman());
 		gameMap.at(53, 13).addActor(new GiantCrab());
 		gameMap.at(54, 13).addActor(new LoneWolf());
 
@@ -120,9 +126,9 @@ public class Application {
 		// HINT: what does it mean to prefer composition to inheritance?
 //		Player player = new Player("Tarnished", '@', 300);
 //		world.addPlayer(player, gameMap.at(50, 12));
-		Player player = MenuManager.getInstance().run();
-		world.addPlayer(player, gameMap.at(50, 12));
-
+		Archetype archetype = ArchetypeManager.getInstance().run();
+		Player player = new Player("Tarnished", '@', archetype);
+		world.addPlayer(player, gameMap.at(45, 12));
 
 		world.run();
 	}

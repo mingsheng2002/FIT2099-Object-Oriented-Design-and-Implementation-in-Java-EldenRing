@@ -22,11 +22,9 @@ import java.util.Map;
 public abstract class Enemy extends Actor implements RunesRewarder {
 
   private Map<Integer, Behaviour> behaviours = new HashMap<>();
-
+  private int spawnChance;
   private int despawnChance;
-
   protected int enemyMaxHitPoints;
-
   private int minRunes;
   private int maxRunes;
   private GameMap map;
@@ -38,24 +36,24 @@ public abstract class Enemy extends Actor implements RunesRewarder {
    * @param displayChar the character that will represent the Actor in the display
    * @param hitPoints   the Actor's starting hit points
    */
-  public Enemy(String name, char displayChar, int hitPoints, int despawnChance, int minRunes, int maxRunes) {
+  public Enemy(String name, char displayChar, int hitPoints, int spawnChance, int despawnChance, int minRunes, int maxRunes) {
     super(name, displayChar, hitPoints);
     this.enemyMaxHitPoints = hitPoints;
+    this.spawnChance = spawnChance;
     this.despawnChance = despawnChance;
     this.minRunes = minRunes;
     this.maxRunes = maxRunes;
-    RunesManager.getInstance().registerRewardRunesActor(this);
     this.behaviours.put(2, new WanderBehaviour());
+    // if dies, then reward player with runes
+    RunesManager.getInstance().registerRewardOwner(this);
   }
 
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
     this.map = map;
 
     if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawnChance) {
-      return (new DespawnAction());
+      return (new DespawnAction(this));
     }
-
-    System.out.println(this + ": " + behaviours.values());  /////////////////////////////////////////////
 
     for (int key : behaviours.keySet()) {
       Behaviour behaviour = behaviours.get(key);
@@ -97,15 +95,6 @@ public abstract class Enemy extends Actor implements RunesRewarder {
     return behaviours;
   }
 
-  @Override
-  public int getMinRunes(){
-    return minRunes;
-  }
-
-  public int getMaxRunes(){
-    return maxRunes;
-  }
-
   public GameMap getMap() {
     return map;
   }
@@ -116,5 +105,19 @@ public abstract class Enemy extends Actor implements RunesRewarder {
       this.behaviours.remove(1);
     }
     super.increaseMaxHp(points);
+  }
+
+  @Override
+  public int getMinRewardRunes(){
+    return minRunes;
+  }
+
+  @Override
+  public int getMaxRewardRunes(){
+    return maxRunes;
+  }
+
+  public int getSpawnChance() {
+    return spawnChance;
   }
 }

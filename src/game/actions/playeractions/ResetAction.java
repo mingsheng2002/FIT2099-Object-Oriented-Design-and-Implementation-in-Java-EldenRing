@@ -10,20 +10,14 @@ import game.resets.ResetManager;
 public class ResetAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
-        // player choose to reset, not dying
-        if (actor.isConscious()) {
-            RunesManager.getInstance().getPlayerRunes().addCapability(Status.TEMPORARILY_UNDROPPABLE);
-        }
+
         ResetManager.getInstance().run();
-        // player choose to reset, not dying
-        if (actor.isConscious()) {
-            RunesManager.getInstance().getPlayerRunes().removeCapability(Status.TEMPORARILY_UNDROPPABLE);
-        }
-        return "Game has successfully been reset";
+
+        return "\nGame has successfully been reset\n";
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " resets the game";
+        return actor + " dies and the game is reset";
     }
 }

@@ -3,7 +3,6 @@ package game.actions.playeractions;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.PickUpAction;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.actors.playerclasses.Player;
 import game.controllers.RunesManager;
 import game.items.Runes;
 

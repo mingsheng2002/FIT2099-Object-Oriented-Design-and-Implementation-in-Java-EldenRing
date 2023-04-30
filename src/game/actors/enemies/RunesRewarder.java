@@ -2,7 +2,7 @@ package game.actors.enemies;
 
 public interface RunesRewarder {
 
-  int getMinRunes();
+  int getMinRewardRunes();
 
-  int getMaxRunes();
+  int getMaxRewardRunes();
 }

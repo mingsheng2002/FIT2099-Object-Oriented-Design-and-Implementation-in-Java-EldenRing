@@ -74,18 +74,29 @@ public class AttackAction extends Action {
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
-		if (weapon == null) {
-			weapon = actor.getIntrinsicWeapon();
-		}
-		// not meeting the chance
-		if (RandomNumberGenerator.getRandomInt(100) >= weapon.chanceToHit()){
-			return actor + " misses " + target;
-		}
-		int damage = doubleAttackDamage ? (weapon.damage() * 2) : weapon.damage();
-		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage";
-		target.hurt(damage);
-		if (!target.isConscious()) {
-			result += new DeathAction(actor).execute(target, map);
+		String result = "";
+
+		// if target is not yet defeated by other enemies AND
+		// if target is not despawning from map in this round AND
+		// if target is not performing Quickstep action in this round
+		if (target.isConscious() && !target.hasCapability(Status.DESPAWNING) && !target.hasCapability(Status.PROTECTED)) {
+			if (weapon == null) {
+				weapon = actor.getIntrinsicWeapon();
+			}
+
+			// not meeting the chance
+			if (RandomNumberGenerator.getRandomInt(100) >= weapon.chanceToHit()) {
+				return actor + " misses " + target;
+			}
+
+			int damage = doubleAttackDamage ? (weapon.damage() * 2) : weapon.damage();
+
+				result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage";
+			target.hurt(damage);
+
+			if (!target.isConscious()) {
+				result += new DeathAction(actor).execute(target, map);
+			}
 		}
 		return result;
 	}
@@ -119,14 +130,6 @@ public class AttackAction extends Action {
 
 	public void setDirection(String direction) {
 		this.direction = direction;
-	}
-
-	public Random getRand() {
-		return rand;
-	}
-
-	public void setRand(Random rand) {
-		this.rand = rand;
 	}
 
 	public Weapon getWeapon() {

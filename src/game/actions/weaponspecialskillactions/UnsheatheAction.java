@@ -11,7 +11,6 @@ import game.utils.RandomNumberGenerator;
 
 public class  UnsheatheAction extends AttackAction {
 
-
     public UnsheatheAction(Actor target, String direction, Weapon weapon) {
         super(target, direction, weapon);
         activateDoubleAttackDamage();
@@ -24,6 +23,6 @@ public class  UnsheatheAction extends AttackAction {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " performs \"unsheathe\" on " +getTarget();
+        return actor + " performs \"Unsheathe\" on " + getTarget();
     }
 }
