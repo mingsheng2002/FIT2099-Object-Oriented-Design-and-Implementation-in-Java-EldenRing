@@ -54,5 +54,4 @@ public abstract class SpawningGround extends Ground {
     public abstract Enemy getEastEnemy();
 
     public abstract Enemy getWestEnemy();
-
 }

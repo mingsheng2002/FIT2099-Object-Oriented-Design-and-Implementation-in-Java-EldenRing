@@ -3,8 +3,6 @@ package game.actions.playeractions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.controllers.RunesManager;
-import game.enums.Status;
 import game.resets.ResetManager;
 
 public class ResetAction extends Action {

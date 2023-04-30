@@ -15,7 +15,6 @@ public class RunesManager {
   private List<RunesRewarder> runesRewarders;
   private static RunesManager instance = null;
 
-
   private RunesManager(){
     runesRewarders = new ArrayList<>();
   }
@@ -29,11 +28,13 @@ public class RunesManager {
 
   public String rewardRunes(Actor target, Actor attacker){
     int[] targetMinMaxRewardRunes = getMinMaxRunesOf(target);
-    int minReward = targetMinMaxRewardRunes[0];
-    int maxReward = targetMinMaxRewardRunes[1];
-    int rewardRunesAmount = RandomNumberGenerator.getRandomInt(minReward, maxReward);
+    int rewardRunesAmount = generateAmount(targetMinMaxRewardRunes[0], targetMinMaxRewardRunes[1]);
     incrementPlayerRunes(rewardRunesAmount);
     return attacker + " is rewarded " + rewardRunesAmount + " runes";
+  }
+
+  public int generateAmount(int minReward, int maxReward){
+    return RandomNumberGenerator.getRandomInt(minReward, maxReward);
   }
 
   public int[] getMinMaxRunesOf(Actor target) {

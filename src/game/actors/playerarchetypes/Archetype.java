@@ -4,8 +4,6 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 public abstract class Archetype {
 
-    private String name;
-    private char displayChar;
     private int hitPoints;
     private WeaponItem weaponItem;
 
@@ -16,14 +14,6 @@ public abstract class Archetype {
     public Archetype(int hitPoints, WeaponItem weaponItem) {
         this.hitPoints = hitPoints;
         this.weaponItem = weaponItem;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public char getDisplayChar() {
-        return displayChar;
     }
 
     public int getHitPoints() {

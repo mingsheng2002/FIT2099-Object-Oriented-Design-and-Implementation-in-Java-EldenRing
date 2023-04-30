@@ -1,15 +1,7 @@
-package game.actors.enemies.crustaceansenemies;
+package game.actors.enemies.crustaceans;
 
-import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
-import edu.monash.fit2099.engine.positions.GameMap;
 import game.resets.Resettable;
-import game.actors.enemies.Enemy;
-import game.behaviours.AttackBehaviour;
 import game.resets.ResetManager;
-import game.enums.Status;
 import game.weapons.unportableweapons.GiantCrayfishPincer;
 
 public class GiantCrayfish extends Crustacean implements Resettable {
@@ -19,7 +11,6 @@ public class GiantCrayfish extends Crustacean implements Resettable {
   private static final int HIT_POINTS = 4803;
   private static final int MIN_RUNES_AWARD = 500;
   private static final int MAX_RUNES_AWARD = 2374;
-
 
   /**
    * Constructor.

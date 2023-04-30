@@ -10,7 +10,6 @@ public class PickUpRunesAction extends PickUpAction {
 
     private final Runes playerRunes;
     private final Runes droppedRunes;
-    private int amount;
     private Actor player;
 
     public PickUpRunesAction(Actor actor) {
@@ -18,10 +17,6 @@ public class PickUpRunesAction extends PickUpAction {
         this.playerRunes = RunesManager.getInstance().getPlayerRunes();
         this.droppedRunes = RunesManager.getInstance().getDroppedRunes();
         this.player = actor;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 
     @Override

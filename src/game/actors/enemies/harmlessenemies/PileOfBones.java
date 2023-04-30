@@ -27,7 +27,7 @@ public class PileOfBones extends HarmlessEnemy implements Resettable, RunesRewar
     super("Pile of Bones", 'X', 1, actorToBeRevived);
     this.minRunes = minRewardRunes;
     this.maxRunes = maxRewardRunes;
-    this.addCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY);
+    this.addCapability(Status.FRIENDLY_TO_SKELETON);
     ResetManager.getInstance().registerResettable(this);
     // if dies, then reward player with runes
     RunesManager.getInstance().registerRewardOwner(this);

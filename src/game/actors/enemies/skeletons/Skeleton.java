@@ -1,15 +1,13 @@
-package game.actors.enemies.skeletalenemies;
+package game.actors.enemies.skeletons;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actors.enemies.Enemy;
 import game.behaviours.AttackBehaviour;
 import game.enums.Status;
 
-public abstract class Skeletal extends Enemy {
+public abstract class Skeleton extends Enemy {
     /**
      * Constructor.
      *
@@ -20,16 +18,16 @@ public abstract class Skeletal extends Enemy {
      * @param minRunes
      * @param maxRunes
      */
-    public Skeletal(String name, char displayChar, int hitPoints, int spawnChance, int despawnChance, int minRunes, int maxRunes) {
+    public Skeleton(String name, char displayChar, int hitPoints, int spawnChance, int despawnChance, int minRunes, int maxRunes) {
         super(name, displayChar, hitPoints, spawnChance, despawnChance, minRunes, maxRunes);
-        this.addCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY);
+        this.addCapability(Status.FRIENDLY_TO_SKELETON);
         this.addCapability(Status.REVIVABLE);
     }
 
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         // If adjacent actor can be attacked (not the same type) AND is not the trader
-        if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETAL_SPECIES_ENEMY) && !otherActor.hasCapability(Status.PROTECTED)) {
+        if (!otherActor.hasCapability(Status.FRIENDLY_TO_SKELETON) && !otherActor.hasCapability(Status.PROTECTED)) {
             if (this.getWeaponInventory().isEmpty()) {
                 this.getBehaviours().put(0, new AttackBehaviour(otherActor, direction));
             }

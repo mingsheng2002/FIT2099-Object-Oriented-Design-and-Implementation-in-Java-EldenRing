@@ -2,9 +2,9 @@ package game;
 
 import game.actors.playerarchetypes.Archetype;
 import game.actors.playerarchetypes.Player;
-import game.actors.enemies.crustaceansenemies.GiantCrab;
-import game.actors.enemies.skeletalenemies.HeavySkeletalSwordsman;
-import game.actors.enemies.canislupusenemies.LoneWolf;
+import game.actors.enemies.crustaceans.GiantCrab;
+import game.actors.enemies.skeletons.HeavySkeletalSwordsman;
+import game.actors.enemies.canislupus.LoneWolf;
 import game.actors.traders.MerchantKale;
 import game.controllers.ArchetypeManager;
 import game.environments.*;

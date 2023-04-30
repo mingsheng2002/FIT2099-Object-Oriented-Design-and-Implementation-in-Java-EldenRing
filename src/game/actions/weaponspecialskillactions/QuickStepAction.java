@@ -6,11 +6,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.AttackAction;
-import game.actions.DeathAction;
 import game.enums.Status;
-import game.utils.RandomNumberGenerator;
-
-import java.util.Random;
 
 public class QuickStepAction extends AttackAction {
 

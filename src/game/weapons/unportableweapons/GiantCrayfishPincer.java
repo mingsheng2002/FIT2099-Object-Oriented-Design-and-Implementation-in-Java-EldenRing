@@ -7,6 +7,7 @@ public class GiantCrayfishPincer extends WeaponItem {
 
     private static final int DAMAGE = 527;
     private static final int HIT_RATE = 100;
+
     /**
      * Constructor.
      */

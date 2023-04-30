@@ -7,6 +7,7 @@ public class GiantCrabPincer extends WeaponItem {
 
     private static final int DAMAGE = 208;
     private static final int HIT_RATE = 90;
+
     /**
      * Constructor.
      */

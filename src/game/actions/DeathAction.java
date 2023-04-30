@@ -75,8 +75,7 @@ public class DeathAction extends Action {
         // remove actor
         map.removeActor(target);
         result += System.lineSeparator() + menuDescription(target);
-
-    return result;
+        return result;
     }
 
     @Override

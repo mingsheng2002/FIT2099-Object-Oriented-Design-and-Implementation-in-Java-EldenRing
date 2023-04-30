@@ -11,7 +11,6 @@ import game.weapons.Purchasable;
 import game.weapons.Sellable;
 import game.weapons.weapontypes.Katana;
 
-
 public class Uchigatana extends Katana implements Purchasable, Sellable {
 
   private static final int DAMAGE = 115;
@@ -55,5 +54,4 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
   public Action getSkill(Actor target, String direction) {
       return new UnsheatheAction(target, direction,this);
   }
-
 }

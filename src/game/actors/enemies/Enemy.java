@@ -15,7 +15,6 @@ import game.behaviours.WanderBehaviour;
 import game.controllers.RunesManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
-
 import java.util.HashMap;
 import java.util.Map;
 

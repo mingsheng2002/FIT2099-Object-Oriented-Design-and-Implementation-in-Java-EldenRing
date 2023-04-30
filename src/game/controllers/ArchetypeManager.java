@@ -1,14 +1,12 @@
 package game.controllers;
 
 import game.actors.playerarchetypes.*;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ArchetypeManager {
 
     private static ArchetypeManager instance =null;
-    private Player player;
 
     private ArchetypeManager(){}
 
@@ -68,7 +66,6 @@ public class ArchetypeManager {
                 archetype = new Wretch();
                 break;
         }
-
         return archetype;
     }
 }

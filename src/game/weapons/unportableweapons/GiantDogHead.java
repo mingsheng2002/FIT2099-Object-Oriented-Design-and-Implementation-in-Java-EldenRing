@@ -7,9 +7,9 @@ public class GiantDogHead extends WeaponItem {
 
     private static final int DAMAGE = 314;
     private static final int HIT_RATE = 90;
+
     /**
      * Constructor.
-     *
      */
     public GiantDogHead() {
         super("Giant Dog Head", 'g', DAMAGE, "slams", HIT_RATE);

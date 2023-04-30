@@ -106,7 +106,6 @@ public class Player extends Actor implements Resettable {
 		return menu.showMenu(this, actions, display);
 	}
 
-
 	@Override
 	public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
 		// actions are only meant for player, so in this case, otherActor == Enemy won't have actions
@@ -116,7 +115,6 @@ public class Player extends Actor implements Resettable {
 	public IntrinsicWeapon getIntrinsicWeapon(){
 		return new IntrinsicWeapon(DAMAGE, "punches", HIT_RATE);
 	}
-
 
 
 	@Override

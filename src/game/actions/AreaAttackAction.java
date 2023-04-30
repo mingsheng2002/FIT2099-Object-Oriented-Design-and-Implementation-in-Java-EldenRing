@@ -1,15 +1,13 @@
 package game.actions;
+
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
-import game.actors.enemies.crustaceansenemies.GiantCrab;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
-
-import java.awt.geom.Area;
 
 public class AreaAttackAction extends Action {
 

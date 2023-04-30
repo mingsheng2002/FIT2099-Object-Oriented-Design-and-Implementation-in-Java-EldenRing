@@ -3,20 +3,18 @@ package game.items;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
-import edu.monash.fit2099.engine.positions.Location;
 import game.resets.Resettable;
 import game.actions.playeractions.ConsumeAction;
 import game.resets.ResetManager;
-import game.enums.Status;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable {
 
-
     private static final int MAX_USAGE = 2 ;
     private int numOfUsage;
+
     /***
      * Constructor.
      */

@@ -1,16 +1,8 @@
-package game.actors.enemies.canislupusenemies;
+package game.actors.enemies.canislupus;
 
-import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
-import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.resets.Resettable;
-import game.actors.enemies.Enemy;
-import game.behaviours.AttackBehaviour;
 import game.resets.ResetManager;
-import game.enums.Status;
 
 /**
  * BEHOLD, DOG!

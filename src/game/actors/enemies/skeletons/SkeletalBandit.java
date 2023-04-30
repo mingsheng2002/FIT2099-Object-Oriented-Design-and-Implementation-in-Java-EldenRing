@@ -1,15 +1,10 @@
-package game.actors.enemies.skeletalenemies;
+package game.actors.enemies.skeletons;
 
-import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
-import edu.monash.fit2099.engine.positions.GameMap;
 import game.resets.Resettable;
 import game.resets.ResetManager;
 import game.weapons.portableweapons.Scimitar;
 
-public class SkeletalBandit extends Skeletal implements Resettable {
+public class SkeletalBandit extends Skeleton implements Resettable {
 
   private static final int SPAWN_CHANCE = 27;
   private static final int DESPAWN_CHANCE = 10;
