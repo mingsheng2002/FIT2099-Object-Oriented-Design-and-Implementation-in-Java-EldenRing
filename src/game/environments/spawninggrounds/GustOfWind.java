@@ -1,8 +1,6 @@
 package game.environments.spawninggrounds;
 
-import game.actors.enemies.Enemy;
-import game.actors.enemies.canislupus.GiantDog;
-import game.actors.enemies.canislupus.LoneWolf;
+import game.enums.Status;
 
 public class GustOfWind extends SpawningGround {
 
@@ -12,16 +10,6 @@ public class GustOfWind extends SpawningGround {
    */
   public GustOfWind() {
     super('&');
+    this.addCapability(Status.SPAWN_CANIS_LUPUS);
   }
-
-  @Override
-  public Enemy getEastEnemy() {
-    return new GiantDog();
-  }
-
-  @Override
-  public Enemy getWestEnemy() {
-    return new LoneWolf();
-  }
-
 }

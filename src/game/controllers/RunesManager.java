@@ -30,7 +30,7 @@ public class RunesManager {
     int[] targetMinMaxRewardRunes = getMinMaxRunesOf(target);
     int rewardRunesAmount = generateAmount(targetMinMaxRewardRunes[0], targetMinMaxRewardRunes[1]);
     incrementPlayerRunes(rewardRunesAmount);
-    return attacker + " is rewarded " + rewardRunesAmount + " runes";
+    return target + " has dropped " + rewardRunesAmount + " runes and is rewarded to " + attacker;
   }
 
   public int generateAmount(int minReward, int maxReward){

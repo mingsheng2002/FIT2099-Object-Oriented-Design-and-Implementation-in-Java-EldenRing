@@ -1,8 +1,6 @@
 package game.environments.spawninggrounds;
 
-import game.actors.enemies.Enemy;
-import game.actors.enemies.crustaceans.GiantCrayfish;
-import game.actors.enemies.crustaceans.GiantCrab;
+import game.enums.Status;
 
 public class PuddleOfWater extends SpawningGround {
 
@@ -12,16 +10,6 @@ public class PuddleOfWater extends SpawningGround {
    */
   public PuddleOfWater() {
     super('~');
+    this.addCapability(Status.SPAWN_CRUSTACEAN);
   }
-
-  @Override
-  public Enemy getEastEnemy() {
-    return new GiantCrayfish();
-  }
-
-  @Override
-  public Enemy getWestEnemy() {
-    return new GiantCrab();
-  }
-
 }

@@ -1,8 +1,6 @@
 package game.environments.spawninggrounds;
 
-import game.actors.enemies.Enemy;
-import game.actors.enemies.skeletons.SkeletalBandit;
-import game.actors.enemies.skeletons.HeavySkeletalSwordsman;
+import game.enums.Status;
 
 public class Graveyard extends SpawningGround {
 
@@ -12,16 +10,6 @@ public class Graveyard extends SpawningGround {
    */
   public Graveyard() {
     super('n');
+    this.addCapability(Status.SPAWN_SKELETON);
   }
-
-  @Override
-  public Enemy getEastEnemy() {
-    return new SkeletalBandit();
-  }
-
-  @Override
-  public Enemy getWestEnemy() {
-    return new HeavySkeletalSwordsman();
-  }
-
 }
