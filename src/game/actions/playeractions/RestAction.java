@@ -18,7 +18,7 @@ public class RestAction extends Action {
         // remove the RESTING after everything has been reset
         RunesManager.getInstance().getPlayerRunes().removeCapability(Status.RESTING);
 
-        return "\nGame has successfully been reset\n";
+        return menuDescription(actor);
     }
 
     @Override

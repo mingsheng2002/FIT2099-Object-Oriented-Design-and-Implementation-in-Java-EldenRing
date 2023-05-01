@@ -11,7 +11,7 @@ public class ResetAction extends Action {
 
         ResetManager.getInstance().run();
 
-        return "\nGame has successfully been reset\n";
+        return menuDescription(actor);
     }
 
     @Override

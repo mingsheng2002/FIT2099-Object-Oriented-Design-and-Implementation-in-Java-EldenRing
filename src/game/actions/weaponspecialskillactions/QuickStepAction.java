@@ -35,6 +35,6 @@ public class QuickStepAction extends AttackAction {
             }
         }
         // If every location in surrounding contains an actor, stand still
-        return map.locationOf(actor);
+        return here;
     }
 }
