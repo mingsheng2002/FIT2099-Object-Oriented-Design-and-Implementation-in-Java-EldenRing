@@ -50,7 +50,7 @@ public class Runes extends Item implements Resettable {
     if (!playerRunes.hasCapability(Status.RESTING) && dropppedRunes != null) {
       dropppedRunes.getDropLocation().removeItem(dropppedRunes);
       RunesManager.getInstance().removeDroppedRunes();
-      System.out.println("Player dies again. Runes is removed from map");
+      System.out.println("\nPlayer dies again. " + dropppedRunes + " is removed from map");
       RunesManager.getInstance().registerDroppedRunes(droppingRunes);
     }
   }

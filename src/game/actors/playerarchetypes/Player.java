@@ -24,26 +24,64 @@ import game.enums.Status;
  * Created by:
  * @author Adrian Kristanto
  * Modified by:
- *
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Actor
+ * @see Resettable
  */
 public class Player extends Actor implements Resettable {
 
+	/**
+	 * Menu item used for printing out the meaningful descriptions in the console I/O.
+	 */
 	private final Menu menu = new Menu();
+	/**
+	 * Damage dealt by the player's intrinsic weapon.
+	 */
 	private static final int DAMAGE = 11;
+	/**
+	 * Attack accuracy of the player's intrinsic weapon.
+	 */
 	private static final int HIT_RATE = 100;
-	protected int playerMaxHitPoints;
+	/**
+	 * Money currency object held by the player.
+	 */
 	private Runes runes = new Runes();
+	/**
+	 * Special item that can heal player's hitpoints, with a maximum usage of 2.
+	 */
 	private FlaskOfCrimsonTears flaskOfCrimsonTears;
-	//store player last location
+	/**
+	 * Keep track of player's last location on the game map.
+	 */
 	private Location lastLocation;
+	/**
+	 * Keep track of the location of the Site Of Lost Grace that is last visited by the player.
+	 */
 	private Location visitedSiteOfLostGrace;
+	/**
+	 * The Game Map that the player is currently on.
+	 */
 	private GameMap map;
+	/**
+	 * True if we have already store the location of The First Step on the game map.
+	 */
 	private boolean hasTheFirstStepLocation = false;
+	/**
+	 * The archetype that the player is currently playing with.
+	 */
 	private Archetype archetype;
 
 	/**
-	 * Constructor.
-	 *
+	 * Constructor for Player.
+	 * @see Status#HOSTILE_TO_ENEMY
+	 * @see RunesManager#getInstance()
+	 * @see RunesManager#registerPlayerRunes(Runes)
+	 * @see FlaskOfCrimsonTears
+	 * @see ResetManager#getInstance()
+	 * @see ResetManager#registerResettable(Resettable)
 	 */
 	public Player(String name, char displayChar, Archetype archetype) {
 		super(name, displayChar, archetype.getHitPoints());
@@ -60,6 +98,20 @@ public class Player extends Actor implements Resettable {
 		ResetManager.getInstance().registerResettable(this);
 	}
 
+	/**
+	 * Select and return an action for the Player to perform on the current turn.
+	 * Print out some descriptive messages in the console I/O showing the player's current hitpoints, runes amount,
+	 * and remaining usage of Flask Of Crimson Tears.
+	 *
+	 * @param actions    collection of possible Actions for this Actor
+	 * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+	 * @param map        the map containing the Actor
+	 * @param display    the I/O object to which messages may be written
+	 * @return the Action to be performed
+	 * @see Status#PROTECTED
+	 * @see Status#AREA_ATTACK
+	 * @see AreaAttackAction
+	 */
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 		this.map = map;
@@ -69,7 +121,8 @@ public class Player extends Actor implements Resettable {
 			this.removeCapability(Status.PROTECTED);
 		}
 
-		if (!getHasTheFirstStepLocation()){
+		// set the location of the Site Of Lost Grace during the first round of game
+		if (!hasTheFirstStepLocation){
 			getTheFirstStep(map);
 		}
 		if (map.locationOf(this).getGround().getDisplayChar()=='U'){
@@ -77,8 +130,7 @@ public class Player extends Actor implements Resettable {
 			//return new ResetAction();
 		}
 		// set last location of player
-		setLastLocation(map.locationOf(this));
-
+		this.lastLocation = map.locationOf(this);
 
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
@@ -106,17 +158,35 @@ public class Player extends Actor implements Resettable {
 		return menu.showMenu(this, actions, display);
 	}
 
-	@Override
-	public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-		// actions are only meant for player, so in this case, otherActor == Enemy won't have actions
-		return super.allowableActions(otherActor, direction, map);
-	}
-
+	/**
+	 * Get the intrinsic weapon for Player.
+	 * @return An instance of IntrinsicWeapon.
+	 * @see IntrinsicWeapon
+	 */
 	public IntrinsicWeapon getIntrinsicWeapon(){
 		return new IntrinsicWeapon(DAMAGE, "punches", HIT_RATE);
 	}
 
-
+	/**
+	 * When the game is reset, this method will be executed.
+	 *
+	 * If the player is not conscious, meaning if he is defeated by the other actors (including enemies), then player's
+	 * runes will be dropped onto the last location just before he died. Descriptive message is printed out. Then, the
+	 * player will be moved to the location of his last visited Site of Lost Grace, so that he can be revived with full
+	 * health at that particular location. Lastly, the player's hitpoints will be reset to the maximum.
+	 *
+	 * On the other hand, if the player is still conscious, meaning if he chooses to reset the game but not defeated by
+	 * other actors, then he will not drop any runes on the ground, but just simply his hitpoints will be reset to the
+	 * maximum. Descriptive message is printed out.
+	 *
+	 * @see RunesManager#getInstance()
+	 * @see RunesManager#getPlayerRunes()
+	 * @see RunesManager#registerDroppingRunes(Runes)
+	 * @see RunesManager#clearPlayerRunes()
+	 * @see RunesManager#getDroppedRunes()
+	 * @see RunesManager#registerDroppedRunes(Runes)
+	 * @see Runes
+	 */
 	@Override
 	public void reset() {
 		Runes playerRunes = RunesManager.getInstance().getPlayerRunes();
@@ -149,60 +219,65 @@ public class Player extends Actor implements Resettable {
 			else {
 				System.out.println(this + " has no runes to drop");
 			}
-			map.moveActor(this,getVisitedSiteOfLostGrace());
+			map.moveActor(this, getVisitedSiteOfLostGrace());
 		}
 		this.resetMaxHp(getMaxHp());
 		System.out.println(this + " revives");
 	}
 
+	/**
+	 * Find and set the location of The First Step during the first round of the game. So that if the player dies and
+	 * the game resets but the player has not yet visited any Site Of Lost Grace, then the player can be revived at the
+	 * location of The First Step.
+	 *
+	 * @param map the Game Map that the player is currently on.
+	 */
 	private void getTheFirstStep(GameMap map){
 		int width = map.getXRange().max() - map.getXRange().min();
 		int height = map.getYRange().max() - map.getYRange().min();
 
-		for ( int y = 0; y < height+1; y++){
-			for ( int x = 0; x < width+1; x++){
-
+		for (int y = 0; y < height+1; y++) {
+			for (int x = 0; x < width+1; x++) {
 				if (map.at(x,y).getGround().getDisplayChar() == 'U'){
 					setVisitedSiteOfLostGrace(map.at(x,y));
-					setHasTheFirstStepLocation(true);
+					// we have set the location of the Site Of Lost Grace
+					this.hasTheFirstStepLocation = true;
 				}
 			}
 		}
 	}
 
+	/**
+	 * Getter to get the location of the player's last visited Site Of Lost Grace.
+	 * @return the location of the player's last visited Site Of Lost Grace.
+	 */
 	public Location getVisitedSiteOfLostGrace() {
 		return visitedSiteOfLostGrace;
 	}
 
+	/**
+	 * Setter to set the location of the Site Of Lost Grace that the player is currently visiting.
+	 * @param visitedSiteOfLostGraceGrace location of the Site Of Lost Grace that the player is currently visiting.
+	 */
 	public void setVisitedSiteOfLostGrace(Location visitedSiteOfLostGraceGrace) {
 		this.visitedSiteOfLostGrace = visitedSiteOfLostGraceGrace;
 	}
 
-	public GameMap getMap() {
-		return map;
-	}
-
-	public void setMap(GameMap map) {
-		this.map = map;
-	}
-
-	public boolean getHasTheFirstStepLocation() {
-		return hasTheFirstStepLocation;
-	}
-
-	public void setHasTheFirstStepLocation(boolean hasTheFirstStepLocation) {
-		this.hasTheFirstStepLocation = hasTheFirstStepLocation;
-	}
-
+	/**
+	 * Getter to get the location of the player in the previous turn of game.
+	 * @return the last location of the player.
+	 */
 	public Location getLastLocation() {
 		return lastLocation;
 	}
 
-	public void setLastLocation(Location lastLocation) {
-		this.lastLocation = lastLocation;
-	}
-
-	public boolean surroundingHasAttackableActor(Location actorLocation){
+	/**
+	 * Helper method to check if the surroundings of the player has an actor that he can attack.
+	 * @param actorLocation the location that the player is currently on.
+	 * @return true if there is an player-attackable actor in his surroundings, false otherwise.
+	 * @see Status#PROTECTED
+	 */
+	private boolean surroundingHasAttackableActor(Location actorLocation){
 		for (Exit exit : actorLocation.getExits()){
 			if (exit.getDestination().containsAnActor() && !exit.getDestination().getActor().hasCapability(Status.PROTECTED)){
 				return true;

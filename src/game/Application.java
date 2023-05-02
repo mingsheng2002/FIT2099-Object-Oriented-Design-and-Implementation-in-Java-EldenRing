@@ -26,10 +26,12 @@ import game.environments.spawninggrounds.PuddleOfWater;
  * Created by:
  * @author Adrian Kristanto
  * Modified by:
- *
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
  */
 public class Application {
-
 	public static void main(String[] args) {
 
 		World world = new World(new Display());

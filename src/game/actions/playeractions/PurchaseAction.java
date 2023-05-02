@@ -6,16 +6,45 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import game.weapons.Purchasable;
 import game.controllers.RunesManager;
 
+/**
+ * An Action for Actor to purchase certain items from the trader.
+ * Created by:
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Action
+ */
 public class PurchaseAction extends Action {
 
+  /**
+   * Actor to purchase something.
+   */
   private Actor player;
+  /**
+   * Item to be purchased.
+   */
   private Purchasable item;
 
+  /**
+   * Constructor that initialises the customer (player) to purchase the purchasable item.
+   * @param player the player who wants to purchase.
+   * @param item the item that can be purchased.
+   */
   public PurchaseAction(Actor player, Purchasable item){
     this.player = player;
     this.item = item;
   }
 
+  /**
+   * When executed, this purchasable item will be added into player's inventory and corresponding runes amount will be deducted from player's runes amount.
+   * @param actor The actor performing the purchase action.
+   * @param map The game map the actor is on.
+   * @return the result of actor purchasing the item.
+   * @see RunesManager#getInstance()
+   * @see RunesManager#getPlayerRunes()
+   * @see RunesManager#decrementPlayerRunes(int)
+   */
   @Override
   public String execute(Actor actor, GameMap map) {
 
@@ -36,6 +65,11 @@ public class PurchaseAction extends Action {
     }
   }
 
+  /**
+   * Describes which actor purchases which item.
+   * @param actor The actor performing the action.
+   * @return a description used for the menu UI.
+   */
   @Override
   public String menuDescription(Actor actor) {
     return actor + " purchases " + item + " from Trader";

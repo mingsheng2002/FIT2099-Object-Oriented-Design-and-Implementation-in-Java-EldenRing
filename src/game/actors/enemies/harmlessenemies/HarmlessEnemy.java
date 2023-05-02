@@ -6,28 +6,57 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
+import game.behaviours.FollowBehaviour;
 import game.enums.Status;
 
+/**
+ * A class representing the Harmless Enemy in the game, who causes no harm to the other actors, and is
+ * formed temporarily on the Game Map due to the death of specific Enemy in the game.
+ * Created by:
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Actor
+ */
 public abstract class HarmlessEnemy extends Actor {
 
+  /**
+   * The Actor that will be revived with full health by this Harmless Enemy with certain condition.
+   */
   private Actor actorToBeRevived;
+  /**
+   * The Game Map that the Harmless Enemy is currently on.
+   */
   private GameMap map;
 
   /**
-   * Constructor.
-   *
-   * @param name        the name of the Actor
-   * @param displayChar the character that will represent the Actor in the display
-   * @param hitPoints   the Actor's starting hit points
+   * Constructor for Harmless Enemy.
+   * @param name the name of the Harmless Enemy.
+   * @param displayChar the character that will represent the Harmless Enemy in the display
+   * @param hitPoints the Harmless Enemy's starting hit points.
+   * @param actorToBeRevived the Actor that will be revived with full health.
    */
   public HarmlessEnemy(String name, char displayChar, int hitPoints, Actor actorToBeRevived) {
     super(name, displayChar, hitPoints);
     this.actorToBeRevived = actorToBeRevived;
     if (!actorToBeRevived.getWeaponInventory().isEmpty()){
-      this.receiveWeaponFrom(actorToBeRevived);
+      receiveWeapon(actorToBeRevived, this);
     }
   }
 
+  /**
+   * Returns a new collection of the Actions that the otherActor can do to the current Harmless Enemy.
+   *
+   * @param otherActor the Actor that might be performing attack on this Harmless Enemy.
+   * @param direction  String representing the direction of the other Actor.
+   * @param map        current GameMap
+   * @return A collection of Actions.
+   * @see ActionList
+   * @see AttackAction
+   * @see Status#HOSTILE_TO_ENEMY
+   * @see Status#SPECIAL_SKILL
+   */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
     this.map = map;
@@ -46,22 +75,35 @@ public abstract class HarmlessEnemy extends Actor {
     return actions;
 }
 
-  public void reviveActor(GameMap map){
-    if (!this.getWeaponInventory().isEmpty()) {
-      actorToBeRevived.addWeaponToInventory(this.getWeaponInventory().get(0));
-    }
+  /**
+   * Revives an actor at the current location.
+   * @param map the Game Map that the Harmless Enemy is currently on.
+   */
+  protected void reviveActor(GameMap map){
+    receiveWeapon(this, actorToBeRevived);
     actorToBeRevived.increaseMaxHp(0);
     Location here = map.locationOf(this);
     map.removeActor(this);
     here.addActor(actorToBeRevived);
   }
 
-  public void receiveWeaponFrom(Actor actorToBeRevived) {
-    WeaponItem weaponItem = actorToBeRevived.getWeaponInventory().get(0);
-    this.addWeaponToInventory(weaponItem);
-    actorToBeRevived.removeWeaponFromInventory(weaponItem);
+  /**
+   * Pass weapon from the dead Enemy to the temporary Harmless Enemy.
+   * @param provider the Actor that passes weapon item.
+   * @param receiver the Actor that receives weapon item.
+   */
+  protected void receiveWeapon(Actor provider, Actor receiver) {
+    if (!provider.getWeaponInventory().isEmpty()) {
+      WeaponItem weaponItem = provider.getWeaponInventory().get(0);
+      receiver.addWeaponToInventory(weaponItem);
+      provider.removeWeaponFromInventory(weaponItem);
+    }
   }
 
+  /**
+   * Getter to get the Game Map that the Harmless Enemy is currently on.
+   * @return the Game Map that the Harmless Enemy is currently on.
+   */
   public GameMap getMap() {
     return map;
   }

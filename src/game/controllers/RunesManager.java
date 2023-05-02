@@ -74,7 +74,7 @@ public class RunesManager {
     this.playerRunes = runes;
   }
 
-  public void registerRewardOwner(RunesRewarder actor){
+  public void registerRunesRewarder(RunesRewarder actor){
     runesRewarders.add(actor);
   }
 

@@ -9,15 +9,45 @@ import edu.monash.fit2099.engine.weapons.Weapon;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
 
+/**
+ * An attack action that targets all the actors in the surroundings of the attacker.
+ * Created by:
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Action
+ */
 public class AreaAttackAction extends Action {
-
+    /**
+     * The weapon used for attack.
+     */
     private Weapon weapon;
+    /**
+     * The attack accuracy of the weapon.
+     */
     private int weaponChanceToHit;
 
+    /**
+     * Constructor that initialises the weapon used for attack.
+     * @param weapon the weapon used for attack.
+     */
     public AreaAttackAction(Weapon weapon) {
         this.weapon = weapon;
     }
 
+    /**
+     * 	When executed, the chance to hit of the weapon that the Actor used is computed to determine whether
+     * 	the actor will hit the all targets in his surroundings. If so, deal damage to the target and determine whether
+     * 	the target is killed. The chance to hit of the weapon is computed independently for every target in the surroundings.
+     * @param actor The actor performing the area attack action.
+     * @param map The game map the actor is on.
+     * @return the result of the area attack, e.g. whether the target is killed, etc.
+     * @see DeathAction#execute(Actor, GameMap)
+     * @see Status#PROTECTED
+     * @see Status#DESPAWNING
+     * @see RandomNumberGenerator#getRandomInt(int)
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
 
@@ -40,10 +70,10 @@ public class AreaAttackAction extends Action {
                         target.hurt(damage);
                         result += System.lineSeparator() + actor + " performs area attack and " + this.weapon.verb() + " " + target + " for " + damage + " damage";
                         if (!target.isConscious()) {
-                            result += new DeathAction(actor).execute(target, map);
+                            result += System.lineSeparator() + new DeathAction(actor).execute(target, map);
                         }
                     } else {
-                        result += System.lineSeparator() + actor + " performs area attack but misses " + target;
+                        result += actor + " performs area attack but misses " + target + "\n";
                     }
                 }
             }
@@ -51,8 +81,14 @@ public class AreaAttackAction extends Action {
         return result;
     }
 
+    /**
+     * Describes which target in his surroundings the actor is attacking with which weapon.
+     *
+     * @param actor The actor performing the action.
+     * @return a description used for the menu UI.
+     */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " performs Area Attack ";
+        return actor + " performs Area Attack with " + weapon;
     }
 }

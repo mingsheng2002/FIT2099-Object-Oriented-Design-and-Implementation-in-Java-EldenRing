@@ -11,6 +11,7 @@ import game.actions.playeractions.ResetAction;
 import game.controllers.RunesManager;
 import game.enums.Status;
 import game.actors.enemies.harmlessenemies.PileOfBones;
+import game.items.Runes;
 import game.utils.FancyMessage;
 
 /**
@@ -18,22 +19,46 @@ import game.utils.FancyMessage;
  * Created by:
  * @author Adrian Kristanto
  * Modified by:
- *
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Action
  */
 public class DeathAction extends Action {
+    /**
+     * The attacker who causes the actor to die.
+     */
     private Actor attacker;
 
+    /**
+     * Constructor to initialises the attacker.
+     * @param actor the attacker causing the actor to die.
+     */
     public DeathAction(Actor actor) {
         this.attacker = actor;
     }
 
     /**
-     * When the target is killed, the items & weapons carried by target
-     * will be dropped to the location in the game map where the target was
+     * If the target being killed is the player, reset the game.
+     * If the target being killed has the capability of REVIVABLE, they will turn into Pile Of Bones.
+     * If the target being killed is one of the Runes Rewarders and is defeated by player, then the player will be
+     * rewarded with certain runes.
+     * When the target is killed by the player, the items & weapons carried by target will be dropped to the location
+     * in the game map where the target was.
      *
      * @param target The actor performing the action.
-     * @param map The map the actor is on.
+     * @param map The game map the actor is on.
      * @return result of the action to be displayed on the UI
+     * @see ResetAction#execute(Actor, GameMap)
+     * @see FancyMessage#YOU_DIED
+     * @see PileOfBones
+     * @see RunesManager#getInstance()
+     * @see RunesManager#getMinMaxRunesOf(Actor)
+     * @see RunesManager#rewardRunes(Actor, Actor)
+     * @see Status#HOSTILE_TO_ENEMY
+     * @see Status#REVIVABLE
+     * @see ActionList
      */
     @Override
     public String execute(Actor target, GameMap map) {
@@ -41,7 +66,7 @@ public class DeathAction extends Action {
 
         // if player dies, reset whole game
         if(target.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            System.out.println(FancyMessage.YOU_DIED);
+            System.out.println("\n\n\n" + FancyMessage.YOU_DIED + "\n\n\n");
             return new ResetAction().execute(target, map);
         }
 
@@ -78,6 +103,11 @@ public class DeathAction extends Action {
         return result;
     }
 
+    /**
+     * Describes which actor is killed.
+     * @param actor The actor who is being killed.
+     * @return a description used for display in the menu UI to show the message.
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " is killed";

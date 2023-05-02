@@ -33,9 +33,6 @@ public class Club extends Hammer implements Purchasable, Sellable {
     }
 
     @Override
-    public void tick(Location currentLocation, Actor actor) {}
-
-    @Override
     public int getPurchasePrice() {
         return PURCHASE_PRICE;
     }
