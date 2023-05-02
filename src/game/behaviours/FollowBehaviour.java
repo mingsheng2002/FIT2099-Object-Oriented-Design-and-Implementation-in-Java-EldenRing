@@ -15,21 +15,35 @@ import edu.monash.fit2099.engine.actions.MoveActorAction;
  * Created by:
  * @author Riordan D. Alfredo
  * Modified by:
- *
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Behaviour
  */
 public class FollowBehaviour implements Behaviour {
 
+	/**
+	 * Actor to follow
+	 */
 	private final Actor target;
 
 	/**
-	 * Constructor.
-	 * 
+	 * Constructor for FollowBehaviour.
 	 * @param subject the Actor to follow
 	 */
 	public FollowBehaviour(Actor subject) {
 		this.target = subject;
 	}
 
+	/**
+	 * Check if the Actor actor should follow the Actor target
+	 * @param actor the Actor that has the Follow Behaviour
+	 * @param map the GameMap containing the Actor
+	 * @return MoveActorAction(destination, exit.getName()) if the new distance between Actor actor
+	 * and Actor target is smaller; null otherwise.
+	 * @see MoveActorAction
+	 */
 	@Override
 	public Action getAction(Actor actor, GameMap map) {
 		if(!map.contains(target) || !map.contains(actor))
@@ -54,7 +68,6 @@ public class FollowBehaviour implements Behaviour {
 
 	/**
 	 * Compute the Manhattan distance between two locations.
-	 * 
 	 * @param a the first location
 	 * @param b the first location
 	 * @return the number of steps between a and b if you only move in the four cardinal directions.

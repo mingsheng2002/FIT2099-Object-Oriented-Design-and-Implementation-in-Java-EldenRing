@@ -17,6 +17,7 @@ import game.resets.ResetManager;
  * @see Resettable
  */
 public class LoneWolf extends CanisLupus implements Resettable {
+
     /**
      * The spawn chance of Lone Wolf from its specific ground.
      */

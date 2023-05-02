@@ -17,6 +17,7 @@ import game.controllers.RunesManager;
  * @see Action
  */
 public class SellAction extends Action {
+
   /**
    * Actor to sell something.
    */

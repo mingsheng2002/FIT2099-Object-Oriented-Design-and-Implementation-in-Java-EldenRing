@@ -19,6 +19,7 @@ import game.utils.RandomNumberGenerator;
  * @see Action
  */
 public class AreaAttackAction extends Action {
+
     /**
      * The weapon used for attack.
      */

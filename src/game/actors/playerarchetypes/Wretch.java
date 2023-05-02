@@ -13,6 +13,7 @@ import game.weapons.portableweapons.Club;
  * @see Archetype
  */
 public class Wretch extends Archetype {
+
     /**
      * Starting health of Wretch archetype.
      */

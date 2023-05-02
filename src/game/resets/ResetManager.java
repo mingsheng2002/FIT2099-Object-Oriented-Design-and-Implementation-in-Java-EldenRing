@@ -22,7 +22,11 @@ public class ResetManager {
     /**
      *  Instance of ResetManager
      */
-    private static ResetManager instance =null;
+    private static ResetManager instance = null;
+    /**
+     * Flag if the game is resetting
+     */
+    private boolean isGameResetting;
 
     /**
      * Private constructor of ResetManager
@@ -37,7 +41,7 @@ public class ResetManager {
      */
     public static ResetManager getInstance(){
         if (instance == null){
-            instance  = new ResetManager();
+            instance = new ResetManager();
         }
         return instance;
     }
@@ -47,6 +51,8 @@ public class ResetManager {
      * @see Resettable#reset()
      */
     public void run() {
+        isGameResetting = true;
+
         for (Resettable resettable : new ArrayList<Resettable>(resettables)){
             resettable.reset();
         }
@@ -68,5 +74,20 @@ public class ResetManager {
      */
     public void removeResettable(Resettable resettable) {
         resettables.remove(resettable);
+    }
+
+    /**
+     * Track if the game is doing resetting.
+     * @return true if the game is currently resetting; false otherwise
+     */
+    public boolean isGameResetting() {
+        return isGameResetting;
+    }
+
+    /**
+     * Set the flag isGameResetting to false once the game is done resetting
+     */
+    public void gameHasDoneResetting(){
+        isGameResetting = false;
     }
 }

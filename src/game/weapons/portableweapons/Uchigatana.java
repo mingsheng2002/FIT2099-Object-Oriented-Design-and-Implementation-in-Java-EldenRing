@@ -101,7 +101,7 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
   }
 
   /**
-   *  Returns UnsheatheAction which is a unique skill of GreatKnife.
+   * Returns UnsheatheAction which is a unique skill of GreatKnife.
    * @param target target actor.
    * @param direction direction of attack.
    * @return an instance of UnsheatheAction.

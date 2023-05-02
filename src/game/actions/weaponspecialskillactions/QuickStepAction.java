@@ -19,6 +19,7 @@ import game.enums.Status;
  * @see AttackAction
  */
 public class QuickStepAction extends AttackAction {
+
     /**
      * Constructor that initialises the target, direction and target for the attack.
      * @param target the Actor to attack.

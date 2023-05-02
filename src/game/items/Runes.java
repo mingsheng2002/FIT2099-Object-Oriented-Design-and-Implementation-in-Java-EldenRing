@@ -56,7 +56,6 @@ public class Runes extends Item implements Resettable {
     return this.totalAmount;
   }
 
-
   /**
    * A setter to set the totalAmount of Runes to the given amount.
    * @param amount int representing the amount to set.
@@ -102,7 +101,7 @@ public class Runes extends Item implements Resettable {
     Runes droppingRunes = RunesManager.getInstance().getDroppingRunes();
 
     // player is not resting, but dying AND there is runes dropped on ground - drop the runes
-    if (!playerRunes.hasCapability(Status.RESTING) && dropppedRunes != null) {
+    if (this == playerRunes && hasDropped && !playerRunes.hasCapability(Status.RESTING) && dropppedRunes != null) {
       dropppedRunes.getDropLocation().removeItem(dropppedRunes);
       RunesManager.getInstance().removeDroppedRunes();
       RunesManager.getInstance().registerDroppedRunes(droppingRunes);
@@ -113,9 +112,11 @@ public class Runes extends Item implements Resettable {
    * This method sets the player's runes hasDropped instance variable to false when the player picks up the runes.
    * @see RunesManager#getInstance()
    * @see RunesManager#getPlayerRunes()
+   * @see RunesManager#removeDroppedRunes()
    */
   public void pickedUp() {
     RunesManager.getInstance().getPlayerRunes().hasDropped = false;
+    RunesManager.getInstance().removeDroppedRunes();
   }
 
   /**

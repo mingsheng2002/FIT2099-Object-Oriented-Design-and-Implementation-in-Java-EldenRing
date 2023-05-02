@@ -60,7 +60,6 @@ public class Scimitar extends CurvedSword implements Purchasable, Sellable {
     return PURCHASE_PRICE;
   }
 
-
   /**
    * Returns an instance of PurchaseAction when Scimitar is purchased by the player.
    * @param purchaser The actor that is purchasing the weapon.
@@ -81,7 +80,6 @@ public class Scimitar extends CurvedSword implements Purchasable, Sellable {
   public WeaponItem getPurchasableInstance() {
     return this;
   }
-
 
   /**
    * Returns the sell price of Scimitar.

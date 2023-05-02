@@ -10,20 +10,28 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 
 /**
+ * A class that allow NPC to wander around the Game Map.
  * Created by:
  * @author Riordan D. Alfredo
  * Modified by:
- *
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Behaviour
  */
 public class WanderBehaviour implements Behaviour {
-	
+
+	/**
+	 * Instance of Random to compute a random number.
+	 */
 	private final Random random = new Random();
 
 	/**
 	 * Returns a MoveAction to wander to a random location, if possible.  
 	 * If no movement is possible, returns null.
-	 * 
-	 * @param actor the Actor enacting the behaviour
+	 *
+	 * @param actor the Actor enacting the Wander Behaviour
 	 * @param map the map that actor is currently on
 	 * @return an Action, or null if no MoveAction is possible
 	 */

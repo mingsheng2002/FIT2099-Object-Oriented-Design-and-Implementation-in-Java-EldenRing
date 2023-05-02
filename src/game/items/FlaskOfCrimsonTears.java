@@ -43,7 +43,6 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
         ResetManager.getInstance().registerResettable(this);
     }
 
-
     /**
      * Returns a list of allowable actions that the player can perform on FlaskOfCrimsonTears.
      * @return a list of allowable actions

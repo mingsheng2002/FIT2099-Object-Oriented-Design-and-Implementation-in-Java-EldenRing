@@ -6,7 +6,6 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
-import game.behaviours.FollowBehaviour;
 import game.enums.Status;
 
 /**
@@ -40,9 +39,7 @@ public abstract class HarmlessEnemy extends Actor {
   public HarmlessEnemy(String name, char displayChar, int hitPoints, Actor actorToBeRevived) {
     super(name, displayChar, hitPoints);
     this.actorToBeRevived = actorToBeRevived;
-    if (!actorToBeRevived.getWeaponInventory().isEmpty()){
-      receiveWeapon(actorToBeRevived, this);
-    }
+    passWeaponItem(actorToBeRevived, this);
   }
 
   /**
@@ -74,13 +71,12 @@ public abstract class HarmlessEnemy extends Actor {
     }
     return actions;
 }
-
   /**
    * Revives an actor at the current location.
    * @param map the Game Map that the Harmless Enemy is currently on.
    */
   protected void reviveActor(GameMap map){
-    receiveWeapon(this, actorToBeRevived);
+    passWeaponItem(this, actorToBeRevived);
     actorToBeRevived.increaseMaxHp(0);
     Location here = map.locationOf(this);
     map.removeActor(this);
@@ -88,11 +84,11 @@ public abstract class HarmlessEnemy extends Actor {
   }
 
   /**
-   * Pass weapon from the dead Enemy to the temporary Harmless Enemy.
+   * Pass weapon item from the one Actor to another Actor.
    * @param provider the Actor that passes weapon item.
    * @param receiver the Actor that receives weapon item.
    */
-  protected void receiveWeapon(Actor provider, Actor receiver) {
+  protected void passWeaponItem(Actor provider, Actor receiver) {
     if (!provider.getWeaponInventory().isEmpty()) {
       WeaponItem weaponItem = provider.getWeaponInventory().get(0);
       receiver.addWeaponToInventory(weaponItem);

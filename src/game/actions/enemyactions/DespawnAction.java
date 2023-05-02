@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.enums.Status;
 
-
 /**
  * An Action for enemies to despawn from the game map.
  * Created by:

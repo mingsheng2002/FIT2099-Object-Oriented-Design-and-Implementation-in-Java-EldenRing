@@ -13,6 +13,7 @@ package game.utils;
  * @version 1.0.0
  */
 public class FancyMessage {
+
     /**
      * This method print a message (ELDEN RING) before the game start.
      */

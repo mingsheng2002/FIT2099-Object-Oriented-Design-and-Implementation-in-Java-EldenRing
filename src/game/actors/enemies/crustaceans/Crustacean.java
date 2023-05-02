@@ -17,6 +17,7 @@ import game.enums.Status;
  * @see Enemy
  */
 public abstract class Crustacean extends Enemy {
+
     /**
      * Constructor for Crustacean.
      * @param name the name of the Enemy.

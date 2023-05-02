@@ -13,6 +13,7 @@ import game.weapons.portableweapons.GreatKnife;
  * @see Archetype
  */
 public class Bandit extends Archetype {
+
     /**
      * Starting health of Bandit archetype.
      */

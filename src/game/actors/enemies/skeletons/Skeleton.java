@@ -17,6 +17,7 @@ import game.enums.Status;
  * @see Enemy
  */
 public abstract class Skeleton extends Enemy {
+
     /**
      * Constructor for Skeleton.
      * @param name the name of the Enemy.

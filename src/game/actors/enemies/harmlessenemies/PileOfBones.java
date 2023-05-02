@@ -26,9 +26,21 @@ import game.resets.ResetManager;
  */
 public class PileOfBones extends HarmlessEnemy implements Resettable, RunesRewarder {
 
+  /**
+   * Number of count the PileOfBones is hit.
+   */
   private int count = 0;
+  /**
+   * Maximum number of hit that a PileOfBones can receive before reviving into another enemy.
+   */
   private static final int MAX_HIT = 3;
+  /**
+   * Minimum amount of Runes that PileOfBones hold on behalf of the skeleton enemy that dies.
+   */
   private int minRunes;
+  /**
+   * Maximum amount of Runes that PileOfBones hold on behalf of the skeleton enemy that dies.
+   */
   private int maxRunes;
 
   /**

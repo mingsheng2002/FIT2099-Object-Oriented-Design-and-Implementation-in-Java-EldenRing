@@ -13,6 +13,7 @@ import game.weapons.portableweapons.Uchigatana;
  * @see Archetype
  */
 public class Samurai extends Archetype {
+
     /**
      * Starting health of Samurai archetype.
      */

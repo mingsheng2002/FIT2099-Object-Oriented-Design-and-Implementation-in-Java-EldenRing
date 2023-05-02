@@ -26,6 +26,7 @@ import game.utils.FancyMessage;
  * @see Action
  */
 public class DeathAction extends Action {
+
     /**
      * The attacker who causes the actor to die.
      */

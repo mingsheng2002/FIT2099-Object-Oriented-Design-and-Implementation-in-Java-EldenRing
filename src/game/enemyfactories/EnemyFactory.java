@@ -16,6 +16,9 @@ import game.utils.RandomNumberGenerator;
  */
 public abstract class EnemyFactory {
 
+    /**
+     * instance of Ground object to know what enemy should be spawn
+     */
     private Ground spawningEnemyGround;
 
     /**
