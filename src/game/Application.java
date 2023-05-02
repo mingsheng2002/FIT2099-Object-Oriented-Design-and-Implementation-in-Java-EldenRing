@@ -20,6 +20,7 @@ import game.environments.restinggrounds.TheFirstStep;
 import game.environments.spawninggrounds.Graveyard;
 import game.environments.spawninggrounds.GustOfWind;
 import game.environments.spawninggrounds.PuddleOfWater;
+import game.utils.FancyMessage;
 
 /**
  * The main class to start the game.
@@ -91,7 +92,7 @@ public class Application {
 		GameMap gameMap = new GameMap(groundFactory, map);
 		world.addGameMap(gameMap);
 
-		/*
+
 		// BEHOLD, ELDEN RING
 		for (String line : FancyMessage.ELDEN_RING.split("\n")) {
 			new Display().println(line);
@@ -101,7 +102,7 @@ public class Application {
 				exception.printStackTrace();
 			}
 		}
-		 */
+
 
 //		gameMap.at(30, 10).addActor(new LoneWolf());
 
