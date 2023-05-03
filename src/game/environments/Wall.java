@@ -17,7 +17,7 @@ import game.enums.Status;
 public class Wall extends Ground {
 
 	/**
-	 * Constructor og Wall.
+	 * Constructor for Wall.
 	 */
 	public Wall() {
 		super('#');

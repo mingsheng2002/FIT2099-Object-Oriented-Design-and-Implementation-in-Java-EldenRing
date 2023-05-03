@@ -96,8 +96,6 @@ public abstract class Enemy extends Actor implements RunesRewarder {
    * @param map        the map containing the Enemy
    * @param display    the I/O object to which messages may be written
    * @return the Action to be performed
-   * @see ResetManager#getInstance()
-   * @see ResetManager#isGameResetting()
    * @see RandomNumberGenerator#getRandomInt(int)
    * @see DespawnAction
    * @see DoNothingAction
@@ -106,25 +104,21 @@ public abstract class Enemy extends Actor implements RunesRewarder {
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
     this.map = map;
 
-    // if the game is not being reset during this round
-    if (!ResetManager.getInstance().isGameResetting()){
-      if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawnChance) {
-        return (new DespawnAction(this));
-      }
+    if (!this.hasCapability(Status.FOLLOWING) && RandomNumberGenerator.getRandomInt(100) < this.despawnChance) {
+      return (new DespawnAction(this));
+    }
 
-      for (int key : behaviours.keySet()) {
-        Behaviour behaviour = behaviours.get(key);
-        Action action = behaviour.getAction(this, map);
-        if (action != null) {
-          // If it is an Attack Action
-          if (key == 0) {
-            behaviours.remove(0);
-          }
-          return action;
+    for (int key : behaviours.keySet()) {
+      Behaviour behaviour = behaviours.get(key);
+      Action action = behaviour.getAction(this, map);
+      if (action != null) {
+        // If it is an Attack Action
+        if (key == 0) {
+          behaviours.remove(0);
         }
+        return action;
       }
     }
-    // if the game is being reset at this round, there should be no action to be performed by NPCs
     return new DoNothingAction();
   }
 

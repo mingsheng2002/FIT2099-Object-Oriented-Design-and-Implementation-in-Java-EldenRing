@@ -21,7 +21,6 @@ import game.resets.ResetManager;
  * @see Resettable
  *
  */
-
 public class Runes extends Item implements Resettable {
   /**
    * Total Amount of the runes

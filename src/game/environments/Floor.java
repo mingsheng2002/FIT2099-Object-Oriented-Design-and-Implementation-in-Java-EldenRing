@@ -18,7 +18,7 @@ import game.enums.Status;
 public class Floor extends Ground {
 
 	/**
-	 * Constructor of Floor.
+	 * Constructor for Floor.
 	 */
 	public Floor() {
 		super('_');

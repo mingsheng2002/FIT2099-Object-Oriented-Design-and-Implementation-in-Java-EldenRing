@@ -12,6 +12,7 @@ import game.controllers.RunesManager;
 import game.enums.Status;
 import game.actors.enemies.harmlessenemies.PileOfBones;
 import game.items.Runes;
+import game.resets.ResetManager;
 import game.utils.FancyMessage;
 
 /**
@@ -59,6 +60,8 @@ public class DeathAction extends Action {
      * @see RunesManager#rewardRunes(Actor, Actor)
      * @see Status#HOSTILE_TO_ENEMY
      * @see Status#REVIVABLE
+     * @see ResetManager#getInstance()
+     * @see ResetManager#isGameResetting()
      * @see ActionList
      */
     @Override
@@ -71,8 +74,8 @@ public class DeathAction extends Action {
             return new ResetAction().execute(target, map);
         }
 
-        // if the dying enemy is revivable, turns into pile of bones
-        if (target.hasCapability(Status.REVIVABLE)) {
+        // if the dying enemy is revivable AND current game round is not being reset, turns into pile of bones
+        if (target.hasCapability(Status.REVIVABLE) && !ResetManager.getInstance().isGameResetting()) {
             int[] targetMinMaxRewardRunes = RunesManager.getInstance().getMinMaxRunesOf(target);
             PileOfBones pileOfBones = new PileOfBones(target, targetMinMaxRewardRunes[0], targetMinMaxRewardRunes[1]);
             Location here = map.locationOf(target);

@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.actions.DeathAction;
 import game.actors.enemies.RunesRewarder;
 import game.controllers.RunesManager;
 import game.enums.Status;
@@ -67,18 +68,27 @@ public class PileOfBones extends HarmlessEnemy implements Resettable, RunesRewar
    *
    * However, if this Pile Of Bones is hit by other actors within three turns, then it will execute the normal Death Action.
    *
+   * Likewise, if the current round of the game is being reset, then Pile Of Bones in this round will be removed from game map.
+   *
    * @param actions    collection of possible Actions for Pile Of Bones
    * @param lastAction The Action Pile Of Bones took last turn. Can do interesting things in conjunction with Action.getNextAction()
    * @param map        the map containing the Pile Of Bones
    * @param display    the I/O object to which messages may be written
    * @return the Action to be performed, either DoNothingAction (if not getting hit in 3 rounds) or DeathAction (once getting hit).
    * @see game.actions.DeathAction
+   * @see DoNothingAction
+   * @see ResetManager#getInstance()
+   * @see ResetManager#isGameResetting()
    */
   @Override
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
     count += 1;
-    if(count == MAX_HIT){
+    if (ResetManager.getInstance().isGameResetting()) {
+      map.removeActor(this);
+    }
+    else if (count == MAX_HIT){
       super.reviveActor(map);
+      return new DeathAction(this);
     }
     return new DoNothingAction();
   }
