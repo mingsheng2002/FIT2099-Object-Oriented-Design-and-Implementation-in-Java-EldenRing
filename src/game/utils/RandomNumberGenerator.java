@@ -26,7 +26,7 @@ public class RandomNumberGenerator {
     }
 
     /**
-     * Returns an integer between lowerBound(inclusive) and the upperBound(exclusive).
+     * Returns an integer between lowerBound(inclusive) and the upperBound(inclusive).
      * @param lowerBound int that representing the lower bound
      * @param upperBound int that representing the upper bound
      * @return randomly generated int between lower bound (inclusive) and upper bound(exclusive).
