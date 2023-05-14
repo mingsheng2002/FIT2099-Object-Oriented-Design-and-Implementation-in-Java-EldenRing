@@ -19,21 +19,15 @@ import game.controllers.RunesManager;
 public class SellAction extends Action {
 
   /**
-   * Actor to sell something.
-   */
-  private Actor player;
-  /**
    * Item to be sold.
    */
   private Sellable item;
 
   /**
-   * Constructor that initialises the customer (player) to sell the sellable item.
-   * @param player the player who wants to sell.
+   * Constructor for SellAction.
    * @param item the item that can be sold.
    */
-  public SellAction(Actor player, Sellable item){
-    this.player = player;
+  public SellAction(Sellable item){
     this.item = item;
   }
 
@@ -49,19 +43,19 @@ public class SellAction extends Action {
   public String execute(Actor actor, GameMap map) {
     // remove the item from player's inventory
     int i = 0;
-    int totalWeapon = player.getWeaponInventory().size();
+    int totalWeapon = actor.getWeaponInventory().size();
     boolean found = false;
     while (!found && i < totalWeapon) {
-      WeaponItem weaponItem = player.getWeaponInventory().get(i);
+      WeaponItem weaponItem = actor.getWeaponInventory().get(i);
       if (weaponItem.toString().equals(item.toString())) {
-        player.removeWeaponFromInventory(weaponItem);
+        actor.removeWeaponFromInventory(weaponItem);
         found = true;
       }
       i++;
     }
     RunesManager.getInstance().incrementPlayerRunes(item.getSellPrice());
 
-    return menuDescription(player);
+    return menuDescription(actor);
   }
 
   /**
@@ -71,6 +65,6 @@ public class SellAction extends Action {
    */
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " sells " + item + " to Trader";
+    return actor + " sells " + item + " to Trader for " + item.getSellPrice() + " runes";
   }
 }

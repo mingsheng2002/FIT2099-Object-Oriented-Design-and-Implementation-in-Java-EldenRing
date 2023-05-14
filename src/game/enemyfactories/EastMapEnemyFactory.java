@@ -5,6 +5,8 @@ import game.actors.enemies.Enemy;
 import game.actors.enemies.canislupus.GiantDog;
 import game.actors.enemies.crustaceans.GiantCrayfish;
 import game.actors.enemies.skeletons.SkeletalBandit;
+import game.actors.enemies.stormveilcastleinhabitants.Dog;
+import game.actors.enemies.stormveilcastleinhabitants.GodrickSoldier;
 import game.enums.Status;
 
 /**
@@ -36,6 +38,8 @@ public class EastMapEnemyFactory extends EnemyFactory {
      * @see Status#SPAWN_SKELETON
      * @see Status#SPAWN_CANIS_LUPUS
      * @see Status#SPAWN_CRUSTACEAN
+     * @see Status#SPAWN_STORMVEIL_CASTLE_DOG
+     * @see Status#SPAWN_STORMVEIL_CASTLE_SOLDIER
      * @see EastMapEnemyFactory#getSpawningEnemyGround()
      */
     @Override
@@ -49,6 +53,12 @@ public class EastMapEnemyFactory extends EnemyFactory {
         }
         else if(this.getSpawningEnemyGround().hasCapability(Status.SPAWN_CRUSTACEAN)){
             spawnEnemy = new GiantCrayfish();
+        }
+        else if (this.getSpawningEnemyGround().hasCapability(Status.SPAWN_STORMVEIL_CASTLE_DOG)){
+            spawnEnemy =  new Dog();
+        }
+        else if (this.getSpawningEnemyGround().hasCapability(Status.SPAWN_STORMVEIL_CASTLE_SOLDIER)){
+            spawnEnemy = new GodrickSoldier();
         }
         return spawnEnemy;
     }

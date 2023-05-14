@@ -24,10 +24,6 @@ public enum Status {
      */
     FOLLOWING,
     /**
-     * Provided for player's runes object to indicate that the player is currently resting, so their runes cannot be dropped.
-     */
-    RESTING,
-    /**
      * Provided for certain weapon items that allow actors to perform area attack.
      */
     AREA_ATTACK,
@@ -43,6 +39,10 @@ public enum Status {
      * Provided for Skeleton type enemies, indicating their commonalities and characteristics such as cannot attack their same type.
      */
     FRIENDLY_TO_SKELETON,
+    /**
+     * Provided for the inhabitant enemies of Stormveil Castle, indicating their commonalities and characteristics such as cannot attack their same type.
+     */
+    FRIENDLY_TO_STORMVEIL_CASTLE_INHABITANT,
     /**
      * Provided for certain weapon items that allow actors to perform specific special skills (Quickstep and Unsheathe actions in this case).
      */
@@ -67,5 +67,14 @@ public enum Status {
     /**
      * Provided for the enemy-spawnable ground that can spawn enemies of type Skeleton.
      */
-    SPAWN_SKELETON
+    SPAWN_SKELETON,
+    /**
+     * Provided for the enemy-spawnable ground that can spawn Stormveil Castle dog.
+     */
+    SPAWN_STORMVEIL_CASTLE_DOG,
+    /**
+     * Provided for the enemy-spawnable ground that can spawn Stormveil Castile soldier.
+     */
+    SPAWN_STORMVEIL_CASTLE_SOLDIER
+
 }

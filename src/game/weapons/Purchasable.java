@@ -1,7 +1,6 @@
 package game.weapons;
 
 import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 /**
@@ -29,11 +28,10 @@ public interface Purchasable {
 
   /**
    * Initialize a PurchaseAction
-   * @param purchaser Actor that purchase weapon item
    * @param purchasable Weapon item that is being purchased by Actor purchaser
    * @return a PurchaseAction
    */
-  Action getPurchaseAction(Actor purchaser, Purchasable purchasable);
+  Action getPurchaseAction(Purchasable purchasable);
 
   /**
    * Get an instance of the weapon item itself

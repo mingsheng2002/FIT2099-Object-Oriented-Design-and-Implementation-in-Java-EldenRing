@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.controllers.RunesManager;
 import game.enums.Status;
+import game.resets.ResetManager;
 
 /**
  * An Action for Actor to rest at the Site of Lost Grace.
@@ -25,17 +26,19 @@ public class RestAction extends Action {
      * @return the result of actor resting on the Site Of Lost Grace
      * @see RestAction#execute(Actor, GameMap)
      * @see RunesManager#getPlayerRunes()
-     * @see Status#RESTING
+     * @see ResetManager#getInstance()
+     * @see ResetManager#playerIsResting()
+     * @see ResetManager#playerDoneResting()
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        // player resting, not dying - runes cannot be dropped
-        RunesManager.getInstance().getPlayerRunes().addCapability(Status.RESTING);
+        // player resting, not dying
+        ResetManager.getInstance().playerIsResting();
 
         new ResetAction().execute(actor, map);
 
-        // remove the RESTING after everything has been reset
-        RunesManager.getInstance().getPlayerRunes().removeCapability(Status.RESTING);
+        // player done resting
+        ResetManager.getInstance().playerDoneResting();
 
         return menuDescription(actor);
     }

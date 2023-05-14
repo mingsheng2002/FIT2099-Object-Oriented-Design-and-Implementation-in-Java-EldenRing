@@ -1,7 +1,6 @@
 package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actors.Actor;
 import game.actions.playeractions.SellAction;
 import game.enums.Status;
 import game.weapons.Sellable;
@@ -53,14 +52,13 @@ public class Grossmesser extends CurvedSword implements Sellable {
 
   /**
    * Returns an instance of SellAction when the Grossmesser is sold by the player.
-   * @param customer The actor that wants to sell the weapon.
    * @param sellable The weapon that is being sold.
    * @return an instance of SellAction.
    * @see SellAction
    */
   @Override
-  public Action getSellAction(Actor customer, Sellable sellable) {
-    return new SellAction(customer, sellable);
+  public Action getSellAction(Sellable sellable) {
+    return new SellAction(sellable);
   }
 
 }

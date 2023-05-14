@@ -49,6 +49,7 @@ public class BossRoom extends GameMap {
    * Returns string representation of the BossRoom
    * @return the name of the BossRoom
    */
+  @Override
   public String toString() {
     return name;
   }

@@ -92,15 +92,17 @@ public class Runes extends Item implements Resettable {
    * @see RunesManager#removeDroppedRunes()
    * @see Location#removeItem(Item)
    * @see RunesManager#registerDroppedRunes(Runes)
-   * @see Status#RESTING
+   * @see ResetManager#getInstance()
+   * @see ResetManager#getPlayerIsResting()
    */
   public void reset() {
     Runes dropppedRunes = RunesManager.getInstance().getDroppedRunes();
     Runes playerRunes = RunesManager.getInstance().getPlayerRunes();
     Runes droppingRunes = RunesManager.getInstance().getDroppingRunes();
+    boolean isPlayerResting = ResetManager.getInstance().getPlayerIsResting();
 
     // player is not resting, but dying AND there is runes dropped on ground - drop the runes
-    if (this == playerRunes && hasDropped && !playerRunes.hasCapability(Status.RESTING) && dropppedRunes != null) {
+    if (this == playerRunes && hasDropped && !isPlayerResting && dropppedRunes != null) {
       dropppedRunes.getDropLocation().removeItem(dropppedRunes);
       RunesManager.getInstance().removeDroppedRunes();
       RunesManager.getInstance().registerDroppedRunes(droppingRunes);

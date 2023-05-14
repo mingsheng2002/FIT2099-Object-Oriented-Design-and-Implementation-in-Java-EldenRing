@@ -12,9 +12,6 @@ import game.weapons.Sellable;
 import game.enums.Status;
 import game.weapons.portableweapons.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class representing the Merchant Kale which is a type of Trader.
  * Created by:
@@ -30,14 +27,6 @@ public class MerchantKale extends Trader{
    * Starting hit point of MerchantKale
    */
   private static final int HIT_POINT = 100;
-  /**
-   * A list of purchasable items
-   */
-  private List<Purchasable> purchasables = new ArrayList<>();
-  /**
-   * A list of sellable items
-   */
-  private List<Sellable> sellables = new ArrayList<>();
 
   /**
    * Constructor for MechantKale.
@@ -48,11 +37,13 @@ public class MerchantKale extends Trader{
     this.addNewPurchasable(new Uchigatana());
     this.addNewPurchasable(new Club());
     this.addNewPurchasable(new Scimitar());
+    this.addNewPurchasable(new HeavyCrossbow());
     this.addNewSellable(new Grossmesser());
     this.addNewSellable(new GreatKnife());
     this.addNewSellable(new Uchigatana());
     this.addNewSellable(new Club());
     this.addNewSellable(new Scimitar());
+    this.addNewSellable(new HeavyCrossbow());
   }
 
   /**
@@ -76,8 +67,8 @@ public class MerchantKale extends Trader{
    * @return a list of actions
    * @see ActionList
    * @see Status#HOSTILE_TO_ENEMY
-   * @see Purchasable#getPurchaseAction(Actor, Purchasable)
-   * @see Sellable#getSellAction(Actor, Sellable)
+   * @see Purchasable#getPurchaseAction(Purchasable)
+   * @see Sellable#getSellAction(Sellable)
    * @see WeaponItem
    * @see Action
    */
@@ -87,18 +78,18 @@ public class MerchantKale extends Trader{
 
     if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
       // Check what can be purchased by player (what trader can sell)
-      for (Purchasable purchaseItem : purchasables) {
-        actions.add(purchaseItem.getPurchaseAction(otherActor, purchaseItem));
+      for (Purchasable purchaseItem : getPurchasables()) {
+        actions.add(purchaseItem.getPurchaseAction(purchaseItem));
       }
 
       // Check what can be sold by player
       for (WeaponItem item : otherActor.getWeaponInventory()) {
         int i = 0;
-        int totalSellables = sellables.size();
+        int totalSellables = getSellables().size();
         boolean found = false;
         while (!found && i < totalSellables) {
-          if (sellables.get(i).toString().equals(item.toString())) {
-            actions.add(sellables.get(i).getSellAction(otherActor, sellables.get(i)));
+          if (getSellables().get(i).toString().equals(item.toString())) {
+            actions.add(getSellables().get(i).getSellAction(getSellables().get(i)));
             found = true;
           }
           i++;
@@ -108,22 +99,4 @@ public class MerchantKale extends Trader{
     return actions;
   }
 
-  /**
-   * This method add purchasable item into purchasables list.
-   * @param purchasable the purchasable item to add
-   * @see Purchasable
-   */
-  @Override
-  public void addNewPurchasable(Purchasable purchasable) {
-    purchasables.add(purchasable);
-  }
-
-  /**
-   * This method add sellable item into sellables list.
-   * @param sellable the sellable item to add
-   * @see Sellable
-   */
-  public void addNewSellable(Sellable sellable){
-    sellables.add(sellable);
-  }
 }

@@ -4,6 +4,7 @@ import game.actors.playerarchetypes.*;
 import game.enemyfactories.EnemyFactory;
 import game.resets.Resettable;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -28,12 +29,21 @@ public class ArchetypeManager {
     private ArchetypeManager(){}
 
     /**
-     * Factory method use to instantiate ArchetypeManager if instance is null.
+     * An ArrayList of valid selections that represent the available options for the archetype starting class
+     */
+    private static ArrayList<Integer> validSelections;
+
+    /**
+     * Factory method use to instantiate ArchetypeManager if instance is null and add valid integer for the archetype starting class.
      * @return instance an instance of ArchetypeManager
      */
     public static ArchetypeManager getInstance(){
         if (instance ==null){
             instance =  new ArchetypeManager();
+            validSelections = new ArrayList<>();
+            validSelections.add(1);
+            validSelections.add(2);
+            validSelections.add(3);
         }
         return instance;
     }
@@ -68,7 +78,7 @@ public class ArchetypeManager {
             choice = Integer.parseInt(sel.nextLine());
             System.out.println("Your choice: " + choice);
 
-            if (!(choice > 0 && choice < 4)) {
+            if (!validSelections.contains(choice)) {
                 throw new InputMismatchException();
             }
         }
@@ -90,14 +100,13 @@ public class ArchetypeManager {
      */
     public Archetype chooseArchetype(int choice){
         Archetype archetype = null;
-        int selection = choice;
 
         // Keep looping until a valid selection is made
-        while (selection != 1 && selection != 2 && selection != 3) {
-            selection = menuItem();
+        while (! validSelections.contains(choice)) {
+            choice = menuItem();
         }
 
-        switch (selection) {
+        switch (choice) {
             case 1:
                 archetype = new Samurai();
                 break;

@@ -24,9 +24,13 @@ public class ResetManager {
      */
     private static ResetManager instance = null;
     /**
-     * Flag if the game is resetting
+     * Flag indicating whether the game is resetting
      */
     private boolean isGameResetting;
+    /**
+     *Flag indicating whether the player is resting
+     */
+    private static boolean isPlayerResting;
 
     /**
      * Private constructor of ResetManager
@@ -85,9 +89,25 @@ public class ResetManager {
     }
 
     /**
-     * Set the flag isGameResetting to false once the game is done resetting
+     * Set the flag isGameResetting to false once the game is done resetting.
      */
     public void gameHasDoneResetting(){
         isGameResetting = false;
     }
+
+    /**
+     * Set the flag isPlayerResting to true once the player is resting.
+     */
+    public void playerIsResting(){ResetManager.isPlayerResting = true;}
+
+    /**
+     * Set the flag isPlayerResting to false once the player is done resting.
+     */
+    public void playerDoneResting(){ResetManager.isPlayerResting = false;}
+
+    /**
+     * Getter that return the flag isPlayerResting.
+     * @return true if the player is resting ,false otherwise
+     */
+    public boolean getPlayerIsResting(){return isPlayerResting;}
 }

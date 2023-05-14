@@ -18,21 +18,15 @@ import game.controllers.RunesManager;
 public class PurchaseAction extends Action {
 
   /**
-   * Actor to purchase something.
-   */
-  private Actor player;
-  /**
    * Item to be purchased.
    */
   private Purchasable item;
 
   /**
-   * Constructor that initialises the customer (player) to purchase the purchasable item.
-   * @param player the player who wants to purchase.
+   * Constructor for PurchaseAction.
    * @param item the item that can be purchased.
    */
-  public PurchaseAction(Actor player, Purchasable item){
-    this.player = player;
+  public PurchaseAction(Purchasable item){
     this.item = item;
   }
 
@@ -53,15 +47,15 @@ public class PurchaseAction extends Action {
 
     // check if player has enough runes to purchase
     if (playerRunes < itemPrice){
-      return player + " has not enough runes to purchase " + item;
+      return actor + " has not enough runes to purchase " + item;
     }
 
     // add the purchase item into player's inventory
     // deduct player's runes
     else {
-      player.addWeaponToInventory(item.getPurchasableInstance());
+      actor.addWeaponToInventory(item.getPurchasableInstance());
       RunesManager.getInstance().decrementPlayerRunes(itemPrice);
-      return menuDescription(player);
+      return menuDescription(actor);
     }
   }
 
@@ -72,6 +66,6 @@ public class PurchaseAction extends Action {
    */
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " purchases " + item + " from Trader";
+    return actor + " purchases " + item + " from Trader for "+ item.getPurchasePrice() + " runes";
   }
 }

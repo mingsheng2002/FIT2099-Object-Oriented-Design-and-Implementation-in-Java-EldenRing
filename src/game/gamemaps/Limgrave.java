@@ -61,6 +61,7 @@ public class Limgrave extends GameMap {
    * Returns string representation of the Limgrave
    * @return the name of the Limgrave
    */
+  @Override
   public String toString() {
     return name;
   }

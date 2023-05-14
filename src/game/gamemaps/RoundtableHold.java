@@ -48,6 +48,7 @@ public class RoundtableHold extends GameMap {
    * Returns string representation of the RoundtableHold
    * @return the name of the RoundtableHold
    */
+  @Override
   public String toString() {
     return name;
   }

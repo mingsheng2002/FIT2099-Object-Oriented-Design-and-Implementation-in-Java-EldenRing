@@ -5,6 +5,9 @@ import game.enums.Status;
 import game.weapons.Purchasable;
 import game.weapons.Sellable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * An abstract trader class
  * Created by:
@@ -15,6 +18,15 @@ import game.weapons.Sellable;
  * @see Actor
  */
 public abstract class Trader extends Actor {
+
+  /**
+   * A list of purchasable items
+   */
+  private List<Purchasable> purchasables = new ArrayList<>();
+  /**
+   * A list of sellable items
+   */
+  private List<Sellable> sellables = new ArrayList<>();
 
   /**
    * Constructor for Trader.
@@ -30,14 +42,36 @@ public abstract class Trader extends Actor {
   }
 
   /**
-   * An abstract method that add new purchasable item.
+   * This method add purchasable item into purchasables list.
    * @param purchasable the purchasable item to add
+   * @see Purchasable
    */
-  public abstract void addNewPurchasable(Purchasable purchasable);
+  public void addNewPurchasable(Purchasable purchasable) {
+    purchasables.add(purchasable);
+  }
 
   /**
-   * An abstract method that add new sellable item.
+   * This method add sellable item into sellables list.
    * @param sellable the sellable item to add
+   * @see Sellable
    */
-  public abstract void addNewSellable(Sellable sellable);
+  public void addNewSellable(Sellable sellable){
+    sellables.add(sellable);
+  }
+
+  /**
+   * Getter that return a list of purchasable items.
+   * @return a list of purchasable items
+   */
+  public List<Purchasable> getPurchasables() {
+    return purchasables;
+  }
+
+  /**
+   * Getter that return a list of sellable items.
+   * @return a list of sellable items
+   */
+  public List<Sellable> getSellables() {
+    return sellables;
+  }
 }

@@ -1,7 +1,6 @@
 package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
@@ -62,14 +61,13 @@ public class Scimitar extends CurvedSword implements Purchasable, Sellable {
 
   /**
    * Returns an instance of PurchaseAction when Scimitar is purchased by the player.
-   * @param purchaser The actor that is purchasing the weapon.
    * @param purchasable The weapon that is being purchased.
    * @return an instance of PurchaseAction.
    * @see PurchaseAction
    */
   @Override
-  public Action getPurchaseAction(Actor purchaser, Purchasable purchasable) {
-    return new PurchaseAction(purchaser, purchasable);
+  public Action getPurchaseAction(Purchasable purchasable) {
+    return new PurchaseAction(purchasable);
   }
 
   /**
@@ -92,14 +90,13 @@ public class Scimitar extends CurvedSword implements Purchasable, Sellable {
 
   /**
    * Returns an instance of SellAction when the Scimitar is sold by the player.
-   * @param customer The actor that wants to sell the weapon.
    * @param sellable The weapon that is being sold.
    * @return an instance of SellAction.
    * @see SellAction
    */
   @Override
-  public Action getSellAction(Actor customer, Sellable sellable) {
-    return new SellAction(customer, sellable);
+  public Action getSellAction(Sellable sellable) {
+    return new SellAction(sellable);
   }
 
 }
