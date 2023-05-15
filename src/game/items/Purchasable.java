@@ -1,7 +1,7 @@
-package game.weapons;
+package game.items;
 
 import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
+import edu.monash.fit2099.engine.actors.Actor;
 
 /**
  * A Purchasable interface represents a weapon item that a player can buy from the trader. It gives promises to every
@@ -33,9 +33,10 @@ public interface Purchasable {
    */
   Action getPurchaseAction(Purchasable purchasable);
 
-  /**
-   * Get an instance of the weapon item itself
-   * @return an instance of WeaponItem of itself
-   */
-  WeaponItem getPurchasableInstance();
+//  /**
+//   * Get an instance of the weapon item itself
+//   * @return an instance of WeaponItem of itself
+//   */
+//  WeaponItem getPurchasableInstance();
+  void addPurchasableToInventory(Actor actor);
 }

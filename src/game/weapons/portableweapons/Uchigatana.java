@@ -2,13 +2,14 @@ package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
 import game.actions.weaponspecialskillactions.UnsheatheAction;
 import game.enums.Status;
-import game.weapons.Purchasable;
-import game.weapons.Sellable;
+import game.utils.SurroundingChecker;
+import game.items.Purchasable;
+import game.items.Sellable;
 import game.weapons.weapontypes.Katana;
 /**
  * A weapon that is carried by Samurai.
@@ -40,6 +41,10 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
    * Sell price of Uchigatana
    */
   private static final int SELL_PRICE = 500;
+  /**
+   * Sell action provided by Uchigatana
+   */
+  private SellAction sellAction;
 
   /**
    * Constructor for Uchigatana.
@@ -47,6 +52,7 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
    */
   public Uchigatana() {
     super("Uchigatana", ')', DAMAGE, "hits", HIT_RATE);
+    this.sellAction = new SellAction(this);
     this.addCapability(Status.SPECIAL_SKILL);
   }
 
@@ -70,13 +76,9 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
     return new PurchaseAction(purchasable);
   }
 
-  /**
-   * Returns current instance of Uchigatana.
-   * @return an instance of Uchigatana.
-   */
   @Override
-  public WeaponItem getPurchasableInstance() {
-    return this;
+  public void addPurchasableToInventory(Actor actor) {
+    actor.addWeaponToInventory(this);
   }
 
   /**
@@ -88,14 +90,9 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
     return SELL_PRICE;
   }
 
-  /**
-   * Returns an instance of SellAction when the Uchigatana is sold by the player.
-   * @param sellable The weapon that is being sold.
-   * @return an instance of SellAction.
-   * @see SellAction
-   */
-  public Action getSellAction(Sellable sellable) {
-    return new SellAction(sellable);
+  @Override
+  public void removeSellableFromInventory(Actor actor) {
+    actor.removeWeaponFromInventory(this);
   }
 
   /**
@@ -108,5 +105,20 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
   @Override
   public Action getSkill(Actor target, String direction) {
     return new UnsheatheAction(target, direction,this);
+  }
+
+  /**
+   *
+   * @param currentLocation The location of the actor carrying this Item.
+   * @param actor The actor carrying this Item.
+   */
+  @Override
+  public void tick(Location currentLocation, Actor actor) {
+    this.removeAction(sellAction);
+    if (this.hasCapability(Status.READY_TO_BE_SOLD) && SurroundingChecker.surroundingHasActorWithCapability(currentLocation, Status.PROVIDE_SELL_SERVICE)) {
+      this.addAction(sellAction);
+      System.out.println("------------------------------------remove cap------------------------------------------------");
+      this.removeCapability(Status.READY_TO_BE_SOLD);
+    }
   }
 }

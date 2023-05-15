@@ -5,6 +5,7 @@ import game.actors.playerarchetypes.Player;
 import game.actors.enemies.crustaceans.GiantCrab;
 import game.actors.enemies.skeletons.HeavySkeletalSwordsman;
 import game.actors.enemies.canislupus.LoneWolf;
+import game.actors.traders.FingerReaderEnia;
 import game.actors.traders.MerchantKale;
 import game.controllers.ArchetypeManager;
 import game.environments.*;
@@ -16,6 +17,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.World;
 import game.environments.restinggrounds.TheFirstStep;
+import game.items.GoldenRunes;
+import game.items.RemembranceOfTheGrafted;
 import game.utils.FancyMessage;
 
 /**
@@ -31,15 +34,15 @@ import game.utils.FancyMessage;
 public class Application {
 	public static void main(String[] args) {
 
-		// BEHOLD, ELDEN RING
-		for (String line : FancyMessage.ELDEN_RING.split("\n")) {
-			new Display().println(line);
-			try {
-				Thread.sleep(200);
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
-		}
+//		// BEHOLD, ELDEN RING
+//		for (String line : FancyMessage.ELDEN_RING.split("\n")) {
+//			new Display().println(line);
+//			try {
+//				Thread.sleep(200);
+//			} catch (Exception exception) {
+//				exception.printStackTrace();
+//			}
+//		}
 
 		World world = new World(new Display());
 
@@ -77,11 +80,11 @@ public class Application {
 		Limgrave limgraveMap = new Limgrave(groundFactory, limgrave);
 		world.addGameMap(limgraveMap);
 
-		limgraveMap.at(51, 12).addActor(new LoneWolf());
-		limgraveMap.at(52, 13).addActor(new HeavySkeletalSwordsman());
-		limgraveMap.at(45, 13).addActor(new HeavySkeletalSwordsman());
-		limgraveMap.at(53, 13).addActor(new GiantCrab());
-		limgraveMap.at(54, 13).addActor(new LoneWolf());
+//		limgraveMap.at(51, 12).addActor(new LoneWolf());
+//		limgraveMap.at(52, 13).addActor(new HeavySkeletalSwordsman());
+//		limgraveMap.at(45, 13).addActor(new HeavySkeletalSwordsman());
+//		limgraveMap.at(53, 13).addActor(new GiantCrab());
+//		limgraveMap.at(54, 13).addActor(new LoneWolf());
 		limgraveMap.at(41, 11).addActor(new MerchantKale());
 		limgraveMap.at(43, 9).setGround(new TheFirstStep());
 
@@ -129,8 +132,8 @@ public class Application {
 				"#________________#",
 				"#________________#",
 				"########___#######");
-		RoundtableHold roundtableHoleMap = new RoundtableHold(groundFactory, roundtableHold);
-		world.addGameMap(roundtableHoleMap);
+		RoundtableHold roundtableHoldMap = new RoundtableHold(groundFactory, roundtableHold);
+		world.addGameMap(roundtableHoldMap);
 
 
 		// REMOVE SUMMON IN THIS GAMEMAP FOR REQUIREMENT 1,2
@@ -153,21 +156,30 @@ public class Application {
 		limgraveMap.getDoorToStormveilCastle().setGround(
 				new GoldenFogDoor(stormveilCastleMap, stormveilCastleMap.getDoorToLimgrave().x(), stormveilCastleMap.getDoorToLimgrave().y()));
 		limgraveMap.getDoorToRoundtableHold().setGround(
-				new GoldenFogDoor(roundtableHoleMap, roundtableHoleMap.getDoorToLimgrave().x(), roundtableHoleMap.getDoorToLimgrave().y()));
+				new GoldenFogDoor(roundtableHoldMap, roundtableHoldMap.getDoorToLimgrave().x(), roundtableHoldMap.getDoorToLimgrave().y()));
 		stormveilCastleMap.getDoorToLimgrave().setGround(
 				new GoldenFogDoor(limgraveMap, limgraveMap.getDoorToStormveilCastle().x(), limgraveMap.getDoorToStormveilCastle().y()));
 		stormveilCastleMap.getDoorToBossRoom().setGround(
 				new GoldenFogDoor(bossRoomMap, bossRoomMap.getArrivalLocation().x(), bossRoomMap.getArrivalLocation().y()));
-		roundtableHoleMap.getDoorToLimgrave().setGround(
+		roundtableHoldMap.getDoorToLimgrave().setGround(
 				new GoldenFogDoor(limgraveMap, limgraveMap.getDoorToRoundtableHold().x(), limgraveMap.getDoorToRoundtableHold().y()));
 
 
 		// Create a player
 		Archetype archetype = ArchetypeManager.getInstance().run();
 		Player player = new Player("Tarnished", '@', archetype);
+
 		MerchantKale merchantKale = new MerchantKale();
+		roundtableHoldMap.at(8, 5).addActor(new FingerReaderEnia());
+
 		stormveilCastleMap.at(6,4).addActor(merchantKale);
-		world.addPlayer(player, stormveilCastleMap.at(5, 4));
+		//world.addPlayer(player, stormveilCastleMap.at(5, 4));
+		world.addPlayer(player, limgraveMap.at(45, 12));
+
+		limgraveMap.at(46,13).addItem(new GoldenRunes());
+		limgraveMap.at(46,14).addItem(new GoldenRunes());
+		limgraveMap.at(46,15).addItem(new GoldenRunes());
+		limgraveMap.at(46, 10).addItem(new RemembranceOfTheGrafted());
 
 		world.run();
 	}

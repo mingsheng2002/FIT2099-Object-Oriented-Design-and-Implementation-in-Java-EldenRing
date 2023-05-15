@@ -17,7 +17,7 @@ import java.util.List;
 public class StormveilCastle extends GameMap {
 
   /**
-   * The name of this Gamemap
+   * The name of this game map
    */
   private String name;
   /**

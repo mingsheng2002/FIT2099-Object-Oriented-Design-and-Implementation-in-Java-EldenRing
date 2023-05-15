@@ -3,8 +3,7 @@ package game.actions.playeractions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.weapons.Sellable;
+import game.items.Sellable;
 import game.controllers.RunesManager;
 
 /**
@@ -42,18 +41,9 @@ public class SellAction extends Action {
   @Override
   public String execute(Actor actor, GameMap map) {
     // remove the item from player's inventory
-    int i = 0;
-    int totalWeapon = actor.getWeaponInventory().size();
-    boolean found = false;
-    while (!found && i < totalWeapon) {
-      WeaponItem weaponItem = actor.getWeaponInventory().get(i);
-      if (weaponItem.toString().equals(item.toString())) {
-        actor.removeWeaponFromInventory(weaponItem);
-        found = true;
-      }
-      i++;
-    }
-    RunesManager.getInstance().incrementPlayerRunes(item.getSellPrice());
+    item.removeSellableFromInventory(actor);
+
+    RunesManager.getInstance().incrementPlayerRunes(this.item.getSellPrice());
 
     return menuDescription(actor);
   }

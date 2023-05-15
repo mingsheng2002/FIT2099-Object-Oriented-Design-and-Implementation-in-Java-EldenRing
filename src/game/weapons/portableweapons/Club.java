@@ -3,11 +3,12 @@ package game.weapons.portableweapons;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
-import game.weapons.Purchasable;
-import game.weapons.Sellable;
+import game.enums.Status;
+import game.utils.SurroundingChecker;
+import game.items.Purchasable;
+import game.items.Sellable;
 import game.weapons.weapontypes.Hammer;
 
 /**
@@ -42,16 +43,18 @@ public class Club extends Hammer implements Purchasable, Sellable {
      * Sell price of Club
      */
     private static final int SELL_PRICE = 100;
+    /**
+     * Sell action provided by Club
+     */
+    private SellAction sellAction;
 
     /**
      * Constructor for Club.
      */
     public Club() {
         super("Club", '!', DAMAGE, "bonks", HIT_RATE);
+        this.sellAction = new SellAction(this);
     }
-
-    @Override
-    public void tick(Location currentLocation, Actor actor) {}
 
     /**
      * Returns the purchase price of Club.
@@ -82,23 +85,27 @@ public class Club extends Hammer implements Purchasable, Sellable {
         return SELL_PRICE;
     }
 
-    /**
-     * Returns an instance of SellAction when the Club is sold by the player.
-     * @param sellable The weapon that is being sold.
-     * @return an instance of SellAction.
-     * @see SellAction
-     */
     @Override
-    public Action getSellAction(Sellable sellable) {
-        return new SellAction(sellable);
+    public void removeSellableFromInventory(Actor actor) {
+        actor.removeWeaponFromInventory(this);
+    }
+
+    @Override
+    public void addPurchasableToInventory(Actor actor) {
+        actor.addWeaponToInventory(this);
     }
 
     /**
-     * Returns an current instance of Club.
-     * @return an instance of Club.
+     *
+     * @param currentLocation The location of the actor carrying this Item.
+     * @param actor The actor carrying this Item.
      */
     @Override
-    public WeaponItem getPurchasableInstance() {
-        return this;
+    public void tick(Location currentLocation, Actor actor) {
+        this.removeAction(sellAction);
+        if (this.hasCapability(Status.READY_TO_BE_SOLD) && SurroundingChecker.surroundingHasActorWithCapability(currentLocation, Status.PROVIDE_SELL_SERVICE)) {
+            this.addAction(sellAction);
+            this.removeCapability(Status.READY_TO_BE_SOLD);
+        }
     }
 }

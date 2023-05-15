@@ -3,7 +3,7 @@ package game.actions.playeractions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.weapons.Purchasable;
+import game.items.Purchasable;
 import game.controllers.RunesManager;
 
 /**
@@ -53,7 +53,7 @@ public class PurchaseAction extends Action {
     // add the purchase item into player's inventory
     // deduct player's runes
     else {
-      actor.addWeaponToInventory(item.getPurchasableInstance());
+      item.addPurchasableToInventory(actor);
       RunesManager.getInstance().decrementPlayerRunes(itemPrice);
       return menuDescription(actor);
     }

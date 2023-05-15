@@ -1,11 +1,14 @@
 package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
+import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
-import game.weapons.Purchasable;
-import game.weapons.Sellable;
+import game.enums.Status;
+import game.utils.SurroundingChecker;
+import game.items.Purchasable;
+import game.items.Sellable;
 import game.weapons.weapontypes.Crossbow;
 
 /**
@@ -38,13 +41,17 @@ public class HeavyCrossbow extends Crossbow implements Purchasable, Sellable {
      * Sell price of HeavyCrossbow
      */
     private static final int SELL_PRICE = 100;
+    /**
+     * Sell action provided by HeavyCrossbow
+     */
+    private SellAction sellAction;
 
     /**
      * Constructor for HeavyCrossbow
      */
     public HeavyCrossbow(){
         super("Heavy Crossbow", '}', DAMAGE, "shoot", HIT_RATE);
-        //this.addCapability(Status.AREA_ATTACK);
+        this.sellAction = new SellAction(this);
     }
 
     /**
@@ -67,13 +74,9 @@ public class HeavyCrossbow extends Crossbow implements Purchasable, Sellable {
         return new PurchaseAction( purchasable);
     }
 
-    /**
-     * Returns current instance of HeavyCrossbow.
-     * @return an instance of HeavyCrossbow.
-     */
     @Override
-    public WeaponItem getPurchasableInstance() {
-        return this;
+    public void addPurchasableToInventory(Actor actor) {
+        actor.addWeaponToInventory(this);
     }
 
     /**
@@ -85,14 +88,22 @@ public class HeavyCrossbow extends Crossbow implements Purchasable, Sellable {
         return SELL_PRICE;
     }
 
+    @Override
+    public void removeSellableFromInventory(Actor actor) {
+        actor.removeWeaponFromInventory(this);
+    }
+
     /**
-     * Returns an instance of SellAction when the HeavyCrossbow is sold by the player.
-     * @param sellable The weapon that is being sold.
-     * @return an instance of SellAction.
-     * @see SellAction
+     *
+     * @param currentLocation The location of the actor carrying this Item.
+     * @param actor The actor carrying this Item.
      */
     @Override
-    public Action getSellAction(Sellable sellable) {
-        return new SellAction(sellable);
+    public void tick(Location currentLocation, Actor actor) {
+        this.removeAction(sellAction);
+        if (this.hasCapability(Status.READY_TO_BE_SOLD) && SurroundingChecker.surroundingHasActorWithCapability(currentLocation, Status.PROVIDE_SELL_SERVICE)) {
+            this.addAction(sellAction);
+            this.removeCapability(Status.READY_TO_BE_SOLD);
+        }
     }
 }

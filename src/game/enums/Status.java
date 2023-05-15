@@ -56,6 +56,11 @@ public enum Status {
      * Provided for actors that are to be protected permanently or temporarily from attacks.
      */
     PROTECTED,
+    PROVIDE_PURCHASE_SERVICE,
+    PROVIDE_SELL_SERVICE,
+    PROVIDE_EXCHANGE_SERVICE,
+    READY_TO_BE_SOLD,
+    READY_TO_BE_EXCHANGED,
     /**
      * Provided for the enemy-spawnable ground that can spawn enemies of type Canis Lupus.
      */

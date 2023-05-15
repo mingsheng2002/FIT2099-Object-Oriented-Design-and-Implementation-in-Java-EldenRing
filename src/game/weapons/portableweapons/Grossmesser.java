@@ -1,9 +1,11 @@
 package game.weapons.portableweapons;
 
-import edu.monash.fit2099.engine.actions.Action;
+import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.SellAction;
 import game.enums.Status;
-import game.weapons.Sellable;
+import game.utils.SurroundingChecker;
+import game.items.Sellable;
 import game.weapons.weapontypes.CurvedSword;
 
 /**
@@ -31,6 +33,10 @@ public class Grossmesser extends CurvedSword implements Sellable {
    * Sell price of Grossmesser
    */
   private static final int SELL_PRICE = 100;
+  /**
+   * Sell action provided by Grossmesser
+   */
+  private SellAction sellAction;
 
   /**
    * Constructor of Grossmesser.
@@ -38,6 +44,7 @@ public class Grossmesser extends CurvedSword implements Sellable {
    */
   public Grossmesser() {
     super("Grossmesser", '?', DAMAGE, "hits", HIT_RATE);
+    this.sellAction = new SellAction(this);
     this.addCapability(Status.AREA_ATTACK);
   }
 
@@ -50,15 +57,22 @@ public class Grossmesser extends CurvedSword implements Sellable {
     return SELL_PRICE;
   }
 
-  /**
-   * Returns an instance of SellAction when the Grossmesser is sold by the player.
-   * @param sellable The weapon that is being sold.
-   * @return an instance of SellAction.
-   * @see SellAction
-   */
   @Override
-  public Action getSellAction(Sellable sellable) {
-    return new SellAction(sellable);
+  public void removeSellableFromInventory(Actor actor) {
+    actor.removeWeaponFromInventory(this);
   }
 
+  /**
+   *
+   * @param currentLocation The location of the actor carrying this Item.
+   * @param actor The actor carrying this Item.
+   */
+  @Override
+  public void tick(Location currentLocation, Actor actor) {
+    this.removeAction(sellAction);
+    if (this.hasCapability(Status.READY_TO_BE_SOLD) && SurroundingChecker.surroundingHasActorWithCapability(currentLocation, Status.PROVIDE_SELL_SERVICE)) {
+      this.addAction(sellAction);
+      this.removeCapability(Status.READY_TO_BE_SOLD);
+    }
+  }
 }

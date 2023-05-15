@@ -2,13 +2,11 @@ package game.actors.traders;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.weapons.Purchasable;
-import game.weapons.Sellable;
+import game.items.Purchasable;
+import game.items.Sellable;
 import game.enums.Status;
 import game.weapons.portableweapons.*;
 
@@ -33,6 +31,8 @@ public class MerchantKale extends Trader{
    */
   public MerchantKale() {
     super("Merchant Kale", 'K', HIT_POINT);
+    this.addCapability(Status.PROVIDE_PURCHASE_SERVICE);
+    this.addCapability(Status.PROVIDE_SELL_SERVICE);
     this.addNewPurchasable(new GreatKnife());
     this.addNewPurchasable(new Uchigatana());
     this.addNewPurchasable(new Club());
@@ -44,19 +44,6 @@ public class MerchantKale extends Trader{
     this.addNewSellable(new Club());
     this.addNewSellable(new Scimitar());
     this.addNewSellable(new HeavyCrossbow());
-  }
-
-  /**
-   * This method return DoNothingAction that MerchantKale can perform at each turn.
-   * @param actions    collection of possible Actions for this Actor
-   * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
-   * @param map        the map containing the Actor
-   * @param display    the I/O object to which messages may be written
-   * @return
-   */
-  @Override
-  public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-    return new DoNothingAction();
   }
 
   /**
@@ -77,25 +64,9 @@ public class MerchantKale extends Trader{
     ActionList actions = new ActionList();
 
     if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
-      // Check what can be purchased by player (what trader can sell)
-      for (Purchasable purchaseItem : getPurchasables()) {
-        actions.add(purchaseItem.getPurchaseAction(purchaseItem));
-      }
-
-      // Check what can be sold by player
-      for (WeaponItem item : otherActor.getWeaponInventory()) {
-        int i = 0;
-        int totalSellables = getSellables().size();
-        boolean found = false;
-        while (!found && i < totalSellables) {
-          if (getSellables().get(i).toString().equals(item.toString())) {
-            actions.add(getSellables().get(i).getSellAction(getSellables().get(i)));
-            found = true;
-          }
-          i++;
-        }
-      }
+      actions.add(this.provideActorPurchaseService(otherActor));
     }
+
     return actions;
   }
 

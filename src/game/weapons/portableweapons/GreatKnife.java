@@ -2,13 +2,14 @@ package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
 import game.actions.weaponspecialskillactions.QuickStepAction;
 import game.enums.Status;
-import game.weapons.Purchasable;
-import game.weapons.Sellable;
+import game.utils.SurroundingChecker;
+import game.items.Purchasable;
+import game.items.Sellable;
 import game.weapons.weapontypes.Dagger;
 
 /**
@@ -41,6 +42,10 @@ public class GreatKnife extends Dagger implements Purchasable, Sellable {
    * Sell price of GreatKnife
    */
   private static final int SELL_PRICE = 350;
+  /**
+   * Sell action provided by GreatKnife
+   */
+  private SellAction sellAction;
 
   /**
    * Constructor for GreatKnife.
@@ -48,6 +53,7 @@ public class GreatKnife extends Dagger implements Purchasable, Sellable {
    */
   public GreatKnife() {
     super("Great Knife", '/', DAMAGE, "hits", HIT_RATE);
+    this.sellAction = new SellAction(this);
     this.addCapability(Status.SPECIAL_SKILL);
   }
 
@@ -80,17 +86,10 @@ public class GreatKnife extends Dagger implements Purchasable, Sellable {
     return SELL_PRICE;
   }
 
-  /**
-   * Returns an instance of SellAction when the GreatKnife is sold by the player.
-   * @param sellable The weapon that is being sold.
-   * @return an instance of SellAction.
-   * @see SellAction
-   */
   @Override
-  public Action getSellAction(Sellable sellable) {
-    return new SellAction(sellable);
+  public void removeSellableFromInventory(Actor actor) {
+    actor.removeWeaponFromInventory(this);
   }
-
 
   /**
    *  Returns QuickStepAction which is a unique skill of GreatKnife.
@@ -104,12 +103,22 @@ public class GreatKnife extends Dagger implements Purchasable, Sellable {
     return new QuickStepAction(target, direction,this);
   }
 
+  @Override
+  public void addPurchasableToInventory(Actor actor) {
+    actor.addWeaponToInventory(this);
+  }
+
   /**
-   * Returns current instance of GreatKnife.
-   * @return an instance of GreatKnife.
+   *
+   * @param currentLocation The location of the actor carrying this Item.
+   * @param actor The actor carrying this Item.
    */
   @Override
-  public WeaponItem getPurchasableInstance() {
-    return this;
+  public void tick(Location currentLocation, Actor actor) {
+    this.removeAction(sellAction);
+    if (this.hasCapability(Status.READY_TO_BE_SOLD) && SurroundingChecker.surroundingHasActorWithCapability(currentLocation, Status.PROVIDE_SELL_SERVICE)) {
+      this.addAction(sellAction);
+      this.removeCapability(Status.READY_TO_BE_SOLD);
+    }
   }
 }
