@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2023-05-03">
-<meta name="description" content="declaration: package: game.actors.nonplayercharacters.traders.enemies, class: Enemy">
+<meta name="description" content="declaration: package: game.actors.enemies, class: Enemy">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../script-dir/jquery-ui.min.css" title="Style">
@@ -84,27 +84,27 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">game.actors.nonplayercharacters.traders.enemies</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">game.actors.enemies</a></div>
 <h1 title="Class Enemy" class="title">Class Enemy</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../../edu/monash/fit2099/engine/actors/Actor.html" title="class in edu.monash.fit2099.engine.actors">edu.monash.fit2099.engine.actors.Actor</a>
-<div class="inheritance">game.actors.nonplayercharacters.traders.enemies.Enemy</div>
+<div class="inheritance">game.actors.enemies.Enemy</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../../edu/monash/fit2099/engine/capabilities/Capable.html" title="interface in edu.monash.fit2099.engine.capabilities">Capable</a></code>, <code><a href="../../../edu/monash/fit2099/engine/displays/Printable.html" title="interface in edu.monash.fit2099.engine.displays">Printable</a></code>, <code><a href="RunesRewarder.html" title="interface in game.actors.nonplayercharacters.traders.enemies">RunesRewarder</a></code></dd>
+<dd><code><a href="../../../edu/monash/fit2099/engine/capabilities/Capable.html" title="interface in edu.monash.fit2099.engine.capabilities">Capable</a></code>, <code><a href="../../../edu/monash/fit2099/engine/displays/Printable.html" title="interface in edu.monash.fit2099.engine.displays">Printable</a></code>, <code><a href="RunesRewarder.html" title="interface in game.actors.enemies">RunesRewarder</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="canislupus/CanisLupus.html" title="class in game.actors.nonplayercharacters.traders.enemies.canislupus">CanisLupus</a></code>, <code><a href="crustaceans/Crustacean.html" title="class in game.actors.nonplayercharacters.traders.enemies.crustaceans">Crustacean</a></code>, <code><a href="skeletons/Skeleton.html" title="class in game.actors.nonplayercharacters.traders.enemies.skeletons">Skeleton</a></code></dd>
+<dd><code><a href="canislupus/CanisLupus.html" title="class in game.actors.enemies.canislupus">CanisLupus</a></code>, <code><a href="crustaceans/Crustacean.html" title="class in game.actors.enemies.crustaceans">Crustacean</a></code>, <code><a href="skeletons/Skeleton.html" title="class in game.actors.enemies.skeletons">Skeleton</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Enemy</span>
 <span class="extends-implements">extends <a href="../../../edu/monash/fit2099/engine/actors/Actor.html" title="class in edu.monash.fit2099.engine.actors">Actor</a>
-implements <a href="RunesRewarder.html" title="interface in game.actors.nonplayercharacters.traders.enemies">RunesRewarder</a></span></div>
+implements <a href="RunesRewarder.html" title="interface in game.actors.enemies">RunesRewarder</a></span></div>
 <div class="block">A class representing the Enemy in the game.
  Created by:</div>
 <dl class="notes">
@@ -116,7 +116,7 @@ implements <a href="RunesRewarder.html" title="interface in game.actors.nonplaye
 <dd>
 <ul class="see-list">
 <li><a href="../../../edu/monash/fit2099/engine/actors/Actor.html" title="class in edu.monash.fit2099.engine.actors"><code>Actor</code></a></li>
-<li><a href="RunesRewarder.html" title="interface in game.actors.nonplayercharacters.traders.enemies"><code>RunesRewarder</code></a></li>
+<li><a href="RunesRewarder.html" title="interface in game.actors.enemies"><code>RunesRewarder</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -255,7 +255,7 @@ implements <a href="RunesRewarder.html" title="interface in game.actors.nonplaye
 <ul class="see-list-long">
 <li><a href="../../behaviours/WanderBehaviour.html" title="class in game.behaviours"><code>WanderBehaviour</code></a></li>
 <li><a href="../../controllers/RunesManager.html#getInstance()"><code>RunesManager.getInstance()</code></a></li>
-<li><a href="../../controllers/RunesManager.html#registerRunesRewarder(RunesRewarder)"><code>RunesManager.registerRunesRewarder(RunesRewarder)</code></a></li>
+<li><a href="../../controllers/RunesManager.html#registerRunesRewarder(game.actors.enemies.RunesRewarder)"><code>RunesManager.registerRunesRewarder(RunesRewarder)</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -376,7 +376,7 @@ implements <a href="RunesRewarder.html" title="interface in game.actors.nonplaye
 <div class="block">Getter to get the minimum droppable runes of the Enemy.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RunesRewarder.html#getMinRewardRunes()">getMinRewardRunes</a></code>&nbsp;in interface&nbsp;<code><a href="RunesRewarder.html" title="interface in game.actors.nonplayercharacters.traders.enemies">RunesRewarder</a></code></dd>
+<dd><code><a href="RunesRewarder.html#getMinRewardRunes()">getMinRewardRunes</a></code>&nbsp;in interface&nbsp;<code><a href="RunesRewarder.html" title="interface in game.actors.enemies">RunesRewarder</a></code></dd>
 <dt>Returns:</dt>
 <dd>amount of minimum droppable runes of the Enemy.</dd>
 </dl>
@@ -389,7 +389,7 @@ implements <a href="RunesRewarder.html" title="interface in game.actors.nonplaye
 <div class="block">Getter to get the maximum droppable runes of the Enemy.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RunesRewarder.html#getMaxRewardRunes()">getMaxRewardRunes</a></code>&nbsp;in interface&nbsp;<code><a href="RunesRewarder.html" title="interface in game.actors.nonplayercharacters.traders.enemies">RunesRewarder</a></code></dd>
+<dd><code><a href="RunesRewarder.html#getMaxRewardRunes()">getMaxRewardRunes</a></code>&nbsp;in interface&nbsp;<code><a href="RunesRewarder.html" title="interface in game.actors.enemies">RunesRewarder</a></code></dd>
 <dt>Returns:</dt>
 <dd>amount of maximum droppable runes of the Enemy.</dd>
 </dl>
