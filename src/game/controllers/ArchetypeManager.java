@@ -1,7 +1,6 @@
 package game.controllers;
 
-import game.actors.playerarchetypes.*;
-import game.enemyfactories.EnemyFactory;
+import game.actors.archetypes.*;
 import game.resets.Resettable;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class ArchetypeManager {
             validSelections.add(1);
             validSelections.add(2);
             validSelections.add(3);
+            validSelections.add(4);
         }
         return instance;
     }
@@ -73,6 +73,7 @@ public class ArchetypeManager {
             System.out.println("1) Samurai");
             System.out.println("2) Bandit");
             System.out.println("3) Wretch");
+            System.out.println("4) Astrologer");
             System.out.print("Choose your starting class: ");
 
             choice = Integer.parseInt(sel.nextLine());
@@ -83,7 +84,7 @@ public class ArchetypeManager {
             }
         }
         catch (Exception e) {
-            System.out.println("Enter either 1, 2 or 3 to start the game");
+            System.out.println("Enter either 1, 2, 3 or 4 to start the game");
         }
         return choice;
     }
@@ -115,6 +116,9 @@ public class ArchetypeManager {
                 break;
             case 3:
                 archetype = new Wretch();
+                break;
+            case 4:
+                archetype = new Astrologer();
                 break;
         }
         return archetype;

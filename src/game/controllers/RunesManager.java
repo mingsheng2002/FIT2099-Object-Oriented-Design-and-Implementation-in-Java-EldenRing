@@ -1,7 +1,7 @@
 package game.controllers;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import game.actors.enemies.RunesRewarder;
+import game.actors.nonplayercharacters.enemies.RunesRewarder;
 import game.items.Runes;
 import game.utils.RandomNumberGenerator;
 import java.util.ArrayList;
