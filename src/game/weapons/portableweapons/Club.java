@@ -50,6 +50,7 @@ public class Club extends Hammer implements Purchasable, Sellable {
 
     /**
      * Constructor for Club.
+     * @see SellAction
      */
     public Club() {
         super("Club", '!', DAMAGE, "bonks", HIT_RATE);

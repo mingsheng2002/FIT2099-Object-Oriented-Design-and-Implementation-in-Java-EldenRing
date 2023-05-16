@@ -87,6 +87,7 @@ public class World {
 			for (Actor actor : actorLocations) {
 				if (stillRunning())
 					processActorTurn(actor);
+				System.out.println("actor process now: "+ actor);
 			}
 
 			// Tick over all the maps. For the map stuff.

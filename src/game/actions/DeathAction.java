@@ -10,8 +10,7 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.ResetAction;
 import game.controllers.RunesManager;
 import game.enums.Status;
-import game.actors.enemies.harmlessenemies.PileOfBones;
-import game.items.Runes;
+import game.actors.nonplayercharacters.enemies.harmlessenemies.PileOfBones;
 import game.resets.ResetManager;
 import game.utils.FancyMessage;
 
