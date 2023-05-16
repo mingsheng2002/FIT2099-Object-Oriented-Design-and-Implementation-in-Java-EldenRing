@@ -1,12 +1,12 @@
 package game.enemyfactories;
 
 import edu.monash.fit2099.engine.positions.Ground;
-import game.actors.nonplayercharacters.enemies.Enemy;
-import game.actors.nonplayercharacters.enemies.canislupus.LoneWolf;
-import game.actors.nonplayercharacters.enemies.crustaceans.GiantCrab;
-import game.actors.nonplayercharacters.enemies.skeletons.HeavySkeletalSwordsman;
-import game.actors.nonplayercharacters.enemies.stormveilcastleinhabitants.Dog;
-import game.actors.nonplayercharacters.enemies.stormveilcastleinhabitants.GodrickSoldier;
+import game.actors.enemies.Enemy;
+import game.actors.enemies.canislupus.LoneWolf;
+import game.actors.enemies.crustaceans.GiantCrab;
+import game.actors.enemies.skeletons.HeavySkeletalSwordsman;
+import game.actors.enemies.stormveilcastleinhabitants.Dog;
+import game.actors.enemies.stormveilcastleinhabitants.GodrickSoldier;
 import game.enums.Status;
 
 

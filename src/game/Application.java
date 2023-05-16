@@ -1,9 +1,12 @@
 package game;
 
-import game.actors.archetypes.Archetype;
-import game.actors.Player;
-import game.actors.nonplayercharacters.traders.FingerReaderEnia;
-import game.actors.nonplayercharacters.traders.MerchantKale;
+import game.actors.playerarchetypes.Archetype;
+import game.actors.playerarchetypes.Player;
+import game.actors.enemies.crustaceans.GiantCrab;
+import game.actors.enemies.skeletons.HeavySkeletalSwordsman;
+import game.actors.enemies.canislupus.LoneWolf;
+import game.actors.traders.FingerReaderEnia;
+import game.actors.traders.MerchantKale;
 import game.controllers.ArchetypeManager;
 import game.environments.*;
 import game.environments.spawninggrounds.*;
@@ -16,6 +19,7 @@ import edu.monash.fit2099.engine.positions.World;
 import game.environments.restinggrounds.TheFirstStep;
 import game.items.GoldenRunes;
 import game.items.RemembranceOfTheGrafted;
+import game.utils.FancyMessage;
 
 /**
  * The main class to start the game.
@@ -43,7 +47,7 @@ public class Application {
 		World world = new World(new Display());
 
 		FancyGroundFactory groundFactory = new FancyGroundFactory(
-				new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater(), new Cliff(), new Cage(), new Barrack(),new TheFirstStep(), new Summon());
+				new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater(), new Cliff(), new Cage(), new Barrack(),new TheFirstStep());
 		//new Cage(), new Barrack(), new Cliff(), new Summon());
 
 
@@ -59,9 +63,9 @@ public class Application {
 				"...........................................................................",
 				"...........................................................................",
 				"........++++......................###___###................................",
-				"........+++++++...................________#..............nn&&..............",
+				"........+++++++...................________#................................",
 				"..........+++.....................#________...U...+........................",
-				"............+++...................#_______#......=.........................",
+				"............+++...................#_______#................................",
 				".............+....................###___###................................",
 				"............++......................#___#..................................",
 				"..............+............................................................",
@@ -91,15 +95,15 @@ public class Application {
 				"...........................................................................",
 				"...........................................................................",
 				"##############################################...##########################",
-				".........=..................#................#.................=...........",
+				"............................#................#.............................",
 				"........BBBBBB..............#................#.............................",
 				"...........................................................................",
 				"............................#................#.............................",
 				"............................#................#.............................",
 				"#####################..#############...############.####..#########...#####",
 				"...............#++++++++++++#................#++++++++++++#................",
-				"...............#++++++++++++...<.........<...#++++++++++++#................",
-				"...............#++++++++++++.........=........++++++++++++#................",
+				"...............#++++++++++++...<<<<<<<...<...#++++++++++++#................",
+				"...............#++++++++++++..................++++++++++++#................",
 				"...............#++++++++++++#................#++++++++++++#................",
 				"#####...##########.....#############...#############..#############...#####",
 				".._______..................................................................",
@@ -109,7 +113,7 @@ public class Application {
 				"#####....##...###..#####...##########___###############......##.....####...",
 				"+++++++++++++++++++++++++++#...................#+++++++++++++++++++++++++++",
 				"+++++++++++++++++++++++++++....................#+++++++++++++++++++++++++++",
-				"+++++++++++++++++++++++++++#..............=.....+++++++++++++++++++++++++++",
+				"+++++++++++++++++++++++++++#....................+++++++++++++++++++++++++++",
 				"+++++++++++++++++++++++++++#...................#+++++++++++++++++++++++++++");
 		StormveilCastle stormveilCastleMap = new StormveilCastle(groundFactory, stormveilCastle);
 		world.addGameMap(stormveilCastleMap);
@@ -120,7 +124,7 @@ public class Application {
 				"##################",
 				"#________________#",
 				"#________________#",
-				"#____=___________#",
+				"#________________#",
 				"#________________#",
 				"#________________#",
 				"#________________#",
@@ -132,11 +136,12 @@ public class Application {
 		world.addGameMap(roundtableHoldMap);
 
 
+		// REMOVE SUMMON IN THIS GAMEMAP FOR REQUIREMENT 1,2
 		// Create a boss room
 		List<String> bossRoom = Arrays.asList(
 				"+++++++++++++++++++++++++",
 				".........................",
-				"....=....................",
+				".........................",
 				".........................",
 				".........................",
 				".........................",
@@ -169,7 +174,7 @@ public class Application {
 
 		stormveilCastleMap.at(6,4).addActor(merchantKale);
 		//world.addPlayer(player, stormveilCastleMap.at(5, 4));
-		world.addPlayer(player, stormveilCastleMap.at(45, 12));
+		world.addPlayer(player, limgraveMap.at(45, 12));
 
 		limgraveMap.at(46,13).addItem(new GoldenRunes());
 		limgraveMap.at(46,14).addItem(new GoldenRunes());

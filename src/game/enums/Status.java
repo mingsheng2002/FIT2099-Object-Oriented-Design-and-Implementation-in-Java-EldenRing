@@ -44,14 +44,6 @@ public enum Status {
      */
     FRIENDLY_TO_STORMVEIL_CASTLE_INHABITANT,
     /**
-     * TBC
-     */
-    FRIENDLY_TO_PLAYER,
-    /**
-     * TBC
-     */
-    FRIENDLY_TO_INVADER,
-    /**
      * Provided for certain weapon items that allow actors to perform specific special skills (Quickstep and Unsheathe actions in this case).
      */
     SPECIAL_SKILL,
