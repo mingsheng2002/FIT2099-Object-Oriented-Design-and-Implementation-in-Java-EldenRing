@@ -8,10 +8,6 @@ import java.util.ArrayList;
 
 public interface Exchangeable {
 
-    ArrayList<Item> getItemsToBeExchanged();
-
-    ArrayList<WeaponItem> getWeaponItemsToBeExchanged();
-
     int getExchangeRewardedRunes();
 
     void removeExchangeableFromInventory(Actor actor);

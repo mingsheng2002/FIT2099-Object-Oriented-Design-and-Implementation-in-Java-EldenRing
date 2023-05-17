@@ -59,7 +59,7 @@ public class QuickStepAction extends AttackAction {
     }
 
     /**
-     * Helper method to get a valid exit in the surroundings that contains no other actors.
+     * Helper method to get a valid exit in the surroundings that contains no other actors and the actor can enter this ground.
      * @param actor the actor to be moved.
      * @param map the game map that the actor is currently on.
      * @return a location in the surroundings of actor that contains no other actors
@@ -67,11 +67,11 @@ public class QuickStepAction extends AttackAction {
     private Location getValidExit(Actor actor, GameMap map) {
         Location here = map.locationOf(actor);
         for (Exit exit : here.getExits()) {
-            if (!exit.getDestination().containsAnActor()) {
+            if (!exit.getDestination().containsAnActor() && exit.getDestination().canActorEnter(actor)) {
                 return exit.getDestination();
             }
         }
-        // If every location in surrounding contains an actor, stand still
+        // If every location in surrounding contains an actor or cannot be entered, stand still
         return here;
     }
 }

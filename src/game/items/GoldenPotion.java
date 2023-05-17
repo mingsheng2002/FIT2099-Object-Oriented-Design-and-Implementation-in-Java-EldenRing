@@ -3,11 +3,11 @@ package game.items;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.DropAction;
 import edu.monash.fit2099.engine.items.Item;
-import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.ConsumeAction;
 import game.actions.playeractions.SummonAction;
+import game.actors.nonplayercharacters.summonables.*;
 import game.controllers.RunesManager;
 import game.enums.Status;
 import game.utils.RandomNumberGenerator;
@@ -94,7 +94,10 @@ public class GoldenPotion extends Item implements Consumable {
       case 7:
         // Summon a guest from another realm
         System.out.println("This potion will summon a guest from another realm");
-        String result = new SummonAction(here).execute(actor, here.map());
+        List<Summonable> summonables = new ArrayList<>();
+        summonables.add(new Ally());
+        summonables.add(new Invader());
+        String result = new SummonAction(here, summonables).execute(actor, here.map());
         System.out.println(result);
         break;
 

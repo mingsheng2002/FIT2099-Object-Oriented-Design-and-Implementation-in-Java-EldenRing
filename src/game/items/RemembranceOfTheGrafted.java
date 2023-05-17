@@ -33,6 +33,14 @@ public class RemembranceOfTheGrafted extends Item implements Sellable, Exchangea
         initialiseExchangeActions();
     }
 
+    public ArrayList<Item> getItemsToBeExchanged() {
+        return this.itemsToBeExchanged;
+    }
+
+    public ArrayList<WeaponItem> getWeaponItemsToBeExchanged() {
+        return this.weaponsToBeExchanged;
+    }
+
     @Override
     public int getSellPrice() {
         return SELL_PRICE;
@@ -41,16 +49,6 @@ public class RemembranceOfTheGrafted extends Item implements Sellable, Exchangea
     @Override
     public void removeSellableFromInventory(Actor actor) {
         actor.removeItemFromInventory(this);
-    }
-
-    @Override
-    public ArrayList<Item> getItemsToBeExchanged() {
-        return this.itemsToBeExchanged;
-    }
-
-    @Override
-    public ArrayList<WeaponItem> getWeaponItemsToBeExchanged() {
-        return this.weaponsToBeExchanged;
     }
 
     @Override

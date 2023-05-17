@@ -109,9 +109,6 @@ public class Player extends Actor implements Resettable {
 	 * @param map        the map containing the Actor
 	 * @param display    the I/O object to which messages may be written
 	 * @return the Action to be performed
-	 * @see ResetManager#getInstance()
-	 * @see ResetManager#isGameResetting()
-	 * @see ResetManager#gameHasDoneResetting()
 	 * @see Status#PROTECTED
 	 * @see Status#AREA_ATTACK
 	 * @see AreaAttackAction
@@ -119,11 +116,6 @@ public class Player extends Actor implements Resettable {
 	@Override
 	public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
 		this.map = map;
-
-		// tell the other actors that the game has done resetting in the last round
-		if (ResetManager.getInstance().isGameResetting()){
-			ResetManager.getInstance().gameHasDoneResetting();
-		}
 
 		// PROTECTED if Quickstep Action is executed by Player, remove this capability at start of every round
 		if (this.hasCapability(Status.PROTECTED)){

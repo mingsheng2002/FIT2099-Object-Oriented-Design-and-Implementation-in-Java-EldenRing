@@ -1,4 +1,4 @@
-package game.environments;
+package game.environments.summoninggrounds;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
@@ -6,25 +6,22 @@ import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.RestAction;
 import game.actions.playeractions.SummonAction;
+import game.actors.nonplayercharacters.summonables.Summonable;
 import game.enums.Status;
 
-/**
- * TBC
- * A type of ground that the player will fall off and get killed instantly.
- * Created by:
- * @author Che'er Min Yi
- * @author Chong Ming Sheng
- * @author Lam Xin Yuan
- * @version 1.0.0
- * @see Ground
- */
-public class Summon extends Ground {
+import java.util.ArrayList;
+import java.util.List;
 
+public abstract class SummoningGround extends Ground {
+
+    private List<Summonable> summonables = new ArrayList<>();
     /**
-     * Constructor for Summon.
+     * Constructor.
+     *
+     * @param displayChar character to display for this type of terrain
      */
-    public Summon() {
-        super('=');
+    public SummoningGround(char displayChar) {
+        super(displayChar);
     }
 
     /**
@@ -39,8 +36,17 @@ public class Summon extends Ground {
     public ActionList allowableActions(Actor actor, Location location, String direction) {
         ActionList actions = new ActionList();
         if (actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
-            actions.add(new SummonAction(location));
+            actions.add(new SummonAction(location, summonables));
         }
         return actions;
+    }
+
+    @Override
+    public boolean canActorEnter(Actor actor) {
+        return actor.hasCapability(Status.HOSTILE_TO_ENEMY);
+    }
+
+    public List<Summonable> getSummonables() {
+        return summonables;
     }
 }

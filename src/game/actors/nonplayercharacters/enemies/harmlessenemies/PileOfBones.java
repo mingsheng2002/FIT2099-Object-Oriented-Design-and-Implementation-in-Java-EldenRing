@@ -82,6 +82,7 @@ public class PileOfBones extends HarmlessEnemy implements Resettable, RunesRewar
    */
   @Override
   public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+    setMap(map);
     count += 1;
     if (ResetManager.getInstance().isGameResetting()) {
       map.removeActor(this);

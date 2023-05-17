@@ -2,6 +2,7 @@ package game.controllers;
 
 import game.actors.archetypes.*;
 import game.resets.Resettable;
+import game.utils.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -122,5 +123,11 @@ public class ArchetypeManager {
                 break;
         }
         return archetype;
+    }
+
+    public Archetype chooseArchetypeAtRandom() {
+        int rand = RandomNumberGenerator.getRandomInt(validSelections.size());
+        int randChoice = validSelections.get(rand);
+        return chooseArchetype(randChoice);
     }
 }

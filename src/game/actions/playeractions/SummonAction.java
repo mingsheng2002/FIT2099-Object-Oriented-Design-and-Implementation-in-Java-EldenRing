@@ -4,48 +4,36 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.archetypes.Archetype;
-import game.actors.nonplayercharacters.Ally;
-import game.actors.nonplayercharacters.enemies.Invader;
-import game.controllers.ArchetypeManager;
+import game.actors.nonplayercharacters.summonables.Summonable;
+import game.resets.ResetManager;
 import game.utils.RandomNumberGenerator;
+
+import java.util.List;
 
 public class SummonAction extends Action {
 
-    private Location summonLocation;
+    private List<Summonable> summonables;
+    private Location summonGroundLocation;
+    private Location summonSpot;
 
-    public SummonAction(Location summonLocation){
-        this.summonLocation = summonLocation;
+    public SummonAction(Location summonGroundLocation, List<Summonable> summonables){
+        this.summonGroundLocation = summonGroundLocation;
+        this.summonables = summonables;
     }
 
     @Override
     public String execute(Actor actor, GameMap map) {
         String result = "";
-        boolean hasFoundExit = false;
-        int num  =  RandomNumberGenerator.getRandomInt(1,4);
-        Archetype archetype = ArchetypeManager.getInstance().chooseArchetype(num);
-        Actor summonActor;
-
-        if (RandomNumberGenerator.getRandomInt(100) < 50){
-            summonActor =  new Ally(archetype);
-        }else{
-            summonActor =  new Invader(archetype);
-        }
-
-        int i = 0;
-        while (i< summonLocation.getExits().size() && !hasFoundExit){
-            Location exitLocation = summonLocation.getExits().get(i).getDestination();
-            if (!exitLocation.containsAnActor()){
-                exitLocation.addActor(summonActor);
-                hasFoundExit = true;
+        if (!ResetManager.getInstance().isGameResetting()) {
+            Summonable summonable = getSummonActor();
+            summonSpot = summonable.getSummonSpot(summonGroundLocation);
+            if (summonSpot == null) {
+                result += actor + " failed to summon a guest from another realm";
             }
-            i++;
-        }
-        if (hasFoundExit){
-            result += summonActor + " has arrived. Prepare for battle";
-        }
-        else{
-            result += "No guest is summoned";
+            else {
+                summonable.summoned(map, summonSpot);
+                result += "A hostile guest (" + summonable + ") has arrived. Prepare for battle!";
+            }
         }
         return result;
     }
@@ -53,5 +41,21 @@ public class SummonAction extends Action {
     @Override
     public String menuDescription(Actor actor) {
         return actor + " summons a guest from another realm";
+    }
+
+    private Summonable getSummonActor() {
+        Summonable aSummonable = null;
+        int randChance = RandomNumberGenerator.getRandomInt(100);
+        int lowerBound = 0;
+        int upperBound = -1;
+        for (Summonable summonable : summonables) {
+            lowerBound = upperBound + 1;
+            upperBound += summonable.getSummonChance();
+            if (randChance >= lowerBound && randChance < upperBound) {
+                aSummonable = summonable;
+                break;
+            }
+        }
+        return aSummonable;
     }
 }

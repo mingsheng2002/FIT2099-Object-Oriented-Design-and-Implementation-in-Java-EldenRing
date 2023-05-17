@@ -55,11 +55,14 @@ public class ResetManager {
      * @see Resettable#reset()
      */
     public void run() {
+        // player is resetting the game
         isGameResetting = true;
 
         for (Resettable resettable : new ArrayList<Resettable>(resettables)){
             resettable.reset();
         }
+        // player done resetting the game
+        isGameResetting = false;
     }
 
     /**

@@ -53,7 +53,6 @@ public abstract class HarmlessEnemy extends NonPlayerCharacter {
    */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
-    setMap(map);
     ActionList actions = new ActionList();
     if (otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
       actions.add(new AttackAction(this, direction));

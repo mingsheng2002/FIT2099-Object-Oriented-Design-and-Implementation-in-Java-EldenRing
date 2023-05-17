@@ -1,8 +1,6 @@
-package game.items;
+package game.weapons;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 /**
  * A Sellable interface represents a weapon item that a player can sell to the trader. It gives promises to every
@@ -25,6 +23,12 @@ public interface Sellable {
    * @return the selling price of the weapon item
    */
   int getSellPrice();
+
+//  /**
+//   * Get an instance of the weapon item itself
+//   * @return an instance of WeaponItem of itself
+//   */
+//  WeaponItem getSellableInstance();
 
   void removeSellableFromInventory(Actor actor);
 

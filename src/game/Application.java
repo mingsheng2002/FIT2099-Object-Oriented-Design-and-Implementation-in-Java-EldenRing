@@ -7,6 +7,7 @@ import game.actors.nonplayercharacters.traders.MerchantKale;
 import game.controllers.ArchetypeManager;
 import game.environments.*;
 import game.environments.spawninggrounds.*;
+import game.environments.summoninggrounds.SummonSign;
 import game.gamemaps.*;
 import game.items.GoldenPotion;
 import java.util.Arrays;
@@ -45,7 +46,7 @@ public class Application {
 
 		FancyGroundFactory groundFactory = new FancyGroundFactory(
 				new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater(),
-				new Cliff(), new Cage(), new Barrack(),new TheFirstStep(), new Summon());
+				new Cliff(), new Cage(), new Barrack(),new TheFirstStep(), new SummonSign());
 
 
 		// Create a Limgrave Map

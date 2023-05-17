@@ -1,19 +1,23 @@
-package game.actors.nonplayercharacters.enemies;
+package game.actors.nonplayercharacters.summonables;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actors.archetypes.Archetype;
+import game.actors.nonplayercharacters.enemies.Enemy;
 import game.behaviours.AttackBehaviour;
+import game.controllers.ArchetypeManager;
 import game.enums.Status;
 import game.resets.ResetManager;
 import game.resets.Resettable;
 
-public class Invader extends Enemy implements Resettable {
+public class Invader extends Enemy implements Resettable, Summonable {
     /**
      * The spawn chance of Invader from its specific ground.
      */
-    private static final int SPAWN_CHANCE = 50;
+    private static final int SPAWN_CHANCE = 0;
     /**
      * The chance of Invader despawning from the game map.
      */
@@ -26,14 +30,16 @@ public class Invader extends Enemy implements Resettable {
      * Maximum amount of runes dropped by Invader if defeated by player.
      */
     private static final int MAX_RUNES_AWARD = 5578;
+    private final static int SUMMON_CHANCE = 50;
     private Archetype archetype;
 
     /**
      * Constructor for Invader.
      */
-    public Invader(Archetype archetype) {
-        super("Invader",'ඞ', archetype.getHitPoints(), SPAWN_CHANCE, DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
-        this.archetype = archetype;
+    public Invader() {
+        super("Invader",'ඞ', 0, SPAWN_CHANCE, DESPAWN_CHANCE, MIN_RUNES_AWARD, MAX_RUNES_AWARD);
+        this.archetype = ArchetypeManager.getInstance().chooseArchetypeAtRandom();
+        this.hitPoints = archetype.getHitPoints();
         this.addWeaponToInventory(archetype.getWeaponItem());
         this.addCapability(Status.FRIENDLY_TO_INVADER);
         ResetManager.getInstance().registerResettable(this);
@@ -61,5 +67,25 @@ public class Invader extends Enemy implements Resettable {
         }
     }
 
+    @Override
+    public int getSummonChance() {
+        return SUMMON_CHANCE;
+    }
+
+    @Override
+    public void summoned(GameMap map, Location location) {
+        map.addActor(this, location);
+        this.setMap(map);
+    }
+
+    @Override
+    public Location getSummonSpot(Location summonSignLocation) {
+        for (Exit exit : summonSignLocation.getExits()) {
+            if (!exit.getDestination().containsAnActor() && exit.getDestination().canActorEnter(this)) {
+                return exit.getDestination();
+            }
+        }
+        return null;
+    }
 }
 
