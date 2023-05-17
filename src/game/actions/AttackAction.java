@@ -93,6 +93,10 @@ public class AttackAction extends Action {
 				weapon = actor.getIntrinsicWeapon();
 			}
 
+			if (actor.hasCapability(Status.DOUBLE_ATTACK_DAMAGE)){
+				doubleAttackDamage = true;
+			}
+
 			// not meeting the chance
 			if (RandomNumberGenerator.getRandomInt(100) >= weapon.chanceToHit()) {
 				return actor + " misses " + target;

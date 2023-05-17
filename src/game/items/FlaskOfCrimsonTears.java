@@ -3,6 +3,8 @@ package game.items;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Location;
+import game.enums.Status;
 import game.resets.Resettable;
 import game.actions.playeractions.ConsumeAction;
 import game.resets.ResetManager;
@@ -26,7 +28,9 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
     /**
      * Maximum usage of FlaskOfCrimsonTears
      */
-    private static final int MAX_USAGE = 2 ;
+    private static final int MAX_USAGE = 2;
+
+    private static int tempMaxUsage = MAX_USAGE;
     /**
      * Number of uses of FlaskOfCrimsonTears
      */
@@ -52,10 +56,24 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
     public List<Action> getAllowableActions() {
         List<Action> actions = new ArrayList<>();
         // if flask usage is not Max yet add consumeAction
-        if (getNumOfUsage() < MAX_USAGE) {
+        if (getNumOfUsage() < tempMaxUsage) {
             actions.add(new ConsumeAction(this));
         }
         return actions;
+    }
+
+    @Override
+    public void tick(Location currentLocation, Actor actor) {
+        if (actor.hasCapability(Status.INCREASE_CRIMSON_TEARS)){
+            tempMaxUsage++;
+            actor.removeCapability(Status.INCREASE_CRIMSON_TEARS);
+        }
+        else if (actor.hasCapability(Status.DECREASE_CRIMSON_TEARS)){
+            if(tempMaxUsage > 0){
+                tempMaxUsage--;
+            }
+            actor.removeCapability(Status.DECREASE_CRIMSON_TEARS);
+        }
     }
 
     /**
@@ -71,7 +89,7 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
      * @return int that representing the number of usage left.
      */
     public int getNumOfUsageLeft(){
-        return MAX_USAGE - getNumOfUsage();
+        return tempMaxUsage - getNumOfUsage();
     }
 
     /**
@@ -80,7 +98,8 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
     @Override
     public void reset() {
         this.numOfUsage = 0;
-        System.out.println("Number of uses the " + this + " has left: " + getNumOfUsageLeft());
+        this.tempMaxUsage = MAX_USAGE;
+        System.out.println("Number of uses the " + this + " has been reset and left: " + MAX_USAGE);
     }
 
     /**

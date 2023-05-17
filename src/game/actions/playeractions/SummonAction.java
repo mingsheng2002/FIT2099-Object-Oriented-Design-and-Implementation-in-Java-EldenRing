@@ -24,8 +24,6 @@ public class SummonAction extends Action {
         boolean hasFoundExit = false;
         int num  =  RandomNumberGenerator.getRandomInt(1,4);
         Archetype archetype = ArchetypeManager.getInstance().chooseArchetype(num);
-        System.out.println("here");
-        System.out.println(archetype);
         Actor summonActor;
 
         if (RandomNumberGenerator.getRandomInt(100) < 50){
@@ -44,14 +42,11 @@ public class SummonAction extends Action {
             i++;
         }
         if (hasFoundExit){
-            result +="A "+ summonActor + " has arrived. Prepare for battle ";
+            result += summonActor + " has arrived. Prepare for battle";
         }
         else{
-            result += "No guest is summon";
+            result += "No guest is summoned";
         }
-
-        System.out.println("spawn actor display character");
-        System.out.println(summonActor.getDisplayChar());
         return result;
     }
 

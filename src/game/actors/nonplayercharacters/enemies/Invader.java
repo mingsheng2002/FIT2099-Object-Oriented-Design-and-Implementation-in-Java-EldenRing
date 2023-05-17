@@ -56,8 +56,6 @@ public class Invader extends Enemy implements Resettable {
     @Override
     public void reset() {
         // if player is not resting(dies and resetting) and in current map there is Ally, remove Ally
-        System.out.println("here");
-        System.out.println(getMap());
         if (!ResetManager.getInstance().getPlayerIsResting() && this.getMap() != null) {
             getMap().removeActor(this);
         }

@@ -1,6 +1,5 @@
 package game;
 
-
 import game.actors.Player;
 import game.actors.archetypes.Archetype;
 import game.actors.nonplayercharacters.traders.FingerReaderEnia;
@@ -9,6 +8,7 @@ import game.controllers.ArchetypeManager;
 import game.environments.*;
 import game.environments.spawninggrounds.*;
 import game.gamemaps.*;
+import game.items.GoldenPotion;
 import java.util.Arrays;
 import java.util.List;
 import edu.monash.fit2099.engine.displays.Display;
@@ -44,8 +44,8 @@ public class Application {
 		World world = new World(new Display());
 
 		FancyGroundFactory groundFactory = new FancyGroundFactory(
-				new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater(), new Cliff(), new Cage(), new Barrack(),new TheFirstStep(), new Summon());
-		//new Cage(), new Barrack(), new Cliff(), new Summon());
+				new Dirt(), new Wall(), new Floor(), new Graveyard(), new GustOfWind(), new PuddleOfWater(),
+				new Cliff(), new Cage(), new Barrack(),new TheFirstStep(), new Summon());
 
 
 		// Create a Limgrave Map
@@ -84,6 +84,11 @@ public class Application {
 //		limgraveMap.at(54, 13).addActor(new LoneWolf());
 		limgraveMap.at(41, 11).addActor(new MerchantKale());
 		limgraveMap.at(43, 9).setGround(new TheFirstStep());
+		limgraveMap.at(46,13).addItem(new GoldenRunes());
+		limgraveMap.at(46,14).addItem(new GoldenRunes());
+		limgraveMap.at(46,15).addItem(new GoldenRunes());
+		limgraveMap.at(50, 15).addItem(new GoldenPotion());
+		limgraveMap.at(51, 15).addItem(new GoldenPotion());
 
 
 		// Create a Stormveil Castle Map
@@ -114,6 +119,12 @@ public class Application {
 				"+++++++++++++++++++++++++++#...................#+++++++++++++++++++++++++++");
 		StormveilCastle stormveilCastleMap = new StormveilCastle(groundFactory, stormveilCastle);
 		world.addGameMap(stormveilCastleMap);
+		stormveilCastleMap.at(53,6).addItem(new GoldenRunes());
+		stormveilCastleMap.at(52,7).addItem(new GoldenRunes());
+		stormveilCastleMap.at(51,7).addItem(new GoldenRunes());
+		stormveilCastleMap.at(7, 11).addItem(new GoldenPotion());
+		stormveilCastleMap.at(68, 11).addItem(new GoldenPotion());
+		stormveilCastleMap.at(68, 13).addItem(new GoldenPotion());
 
 
 		// Create a Roundtable Hold Map
@@ -131,7 +142,8 @@ public class Application {
 				"########___#######");
 		RoundtableHold roundtableHoldMap = new RoundtableHold(groundFactory, roundtableHold);
 		world.addGameMap(roundtableHoldMap);
-
+		roundtableHoldMap.at(6,6).addItem(new GoldenPotion());
+		roundtableHoldMap.at(7,7).addItem(new GoldenPotion());
 
 		// Create a boss room
 		List<String> bossRoom = Arrays.asList(

@@ -231,8 +231,13 @@ public class Player extends Actor implements Resettable {
 			}
 			map.removeActor(this);
 			map.moveActor(this, getVisitedSiteOfLostGrace());
+
+			// When the player dies, remove the double attack damage capability that Player got from Golden Potion by chance
+			if(this.hasCapability(Status.DOUBLE_ATTACK_DAMAGE)){
+				this.removeCapability(Status.DOUBLE_ATTACK_DAMAGE);
+			}
 		}
-		this.resetMaxHp(getMaxHp());
+		this.resetMaxHp(this.archetype.getHitPoints());
 		System.out.println(this + " revives with full health");
 	}
 

@@ -88,6 +88,9 @@ public enum Status {
     /**
      * Provided for the enemy-spawnable ground that can spawn Stormveil Castile soldier.
      */
-    SPAWN_STORMVEIL_CASTLE_SOLDIER
+    SPAWN_STORMVEIL_CASTLE_SOLDIER,
+    DOUBLE_ATTACK_DAMAGE,
+    INCREASE_CRIMSON_TEARS,
+    DECREASE_CRIMSON_TEARS
 
 }
