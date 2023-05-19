@@ -12,7 +12,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actors.nonplayercharacters.NonPlayerCharacter;
 import game.enums.Status;
-import game.items.Exchangeable;
+import game.items.remembrances.Exchangeable;
 import game.items.Purchasable;
 import game.items.Sellable;
 

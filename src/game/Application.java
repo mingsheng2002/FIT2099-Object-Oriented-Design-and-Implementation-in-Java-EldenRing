@@ -17,7 +17,7 @@ import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.World;
 import game.environments.restinggrounds.TheFirstStep;
 import game.items.GoldenRunes;
-import game.items.RemembranceOfTheGrafted;
+import game.items.remembrances.RemembranceOfTheGrafted;
 
 /**
  * The main class to start the game.
@@ -143,6 +143,7 @@ public class Application {
 				"########___#######");
 		RoundtableHold roundtableHoldMap = new RoundtableHold(groundFactory, roundtableHold);
 		world.addGameMap(roundtableHoldMap);
+		roundtableHoldMap.at(8, 5).addActor(new FingerReaderEnia());
 		roundtableHoldMap.at(6,6).addItem(new GoldenPotion());
 		roundtableHoldMap.at(7,7).addItem(new GoldenPotion());
 
@@ -178,12 +179,9 @@ public class Application {
 		Archetype archetype = ArchetypeManager.getInstance().run();
 		Player player = new Player("Tarnished", '@',archetype);
 
-		MerchantKale merchantKale = new MerchantKale();
-		roundtableHoldMap.at(8, 5).addActor(new FingerReaderEnia());
-
-		stormveilCastleMap.at(6,4).addActor(merchantKale);
 		//world.addPlayer(player, stormveilCastleMap.at(5, 4));
-		world.addPlayer(player, stormveilCastleMap.at(45, 12));
+		//world.addPlayer(player, stormveilCastleMap.at(45, 12));
+		world.addPlayer(player, limgraveMap.at(45, 12));
 
 		limgraveMap.at(46,13).addItem(new GoldenRunes());
 		limgraveMap.at(46,14).addItem(new GoldenRunes());

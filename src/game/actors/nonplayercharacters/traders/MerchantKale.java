@@ -6,8 +6,8 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.items.Purchasable;
-import game.items.Sellable;
 import game.enums.Status;
+import game.items.remembrances.RemembranceOfTheGrafted;
 import game.weapons.portableweapons.*;
 
 /**
@@ -44,6 +44,9 @@ public class MerchantKale extends Trader{
     this.addNewSellable(new Club());
     this.addNewSellable(new Scimitar());
     this.addNewSellable(new HeavyCrossbow());
+    this.addNewSellable(new AxeOfGodrick());
+    this.addNewSellable(new GraftedDragon());
+    this.addNewSellable(new RemembranceOfTheGrafted());
   }
 
   /**

@@ -5,8 +5,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.controllers.RunesManager;
-import game.items.Exchangeable;
+import game.items.remembrances.Exchangeable;
 
 public class ExchangeAction extends Action {
 
@@ -35,7 +34,6 @@ public class ExchangeAction extends Action {
         else if (itemToBeExchanged != null) {
             actor.addItemToInventory(itemToBeExchanged);
         }
-        RunesManager.getInstance().incrementPlayerRunes(exchangeable.getExchangeRewardedRunes());
         return menuDescription(actor);
     }
 

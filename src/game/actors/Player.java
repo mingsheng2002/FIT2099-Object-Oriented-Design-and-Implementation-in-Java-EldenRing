@@ -12,6 +12,7 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AreaAttackAction;
 import game.actors.archetypes.Archetype;
+import game.items.remembrances.RemembranceOfTheGrafted;
 import game.resets.ResetManager;
 import game.controllers.RunesManager;
 import game.items.FlaskOfCrimsonTears;
@@ -49,7 +50,7 @@ public class Player extends Actor implements Resettable {
 	/**
 	 * Money currency object held by the player.
 	 */
-	private Runes runes = new Runes();
+	private Runes runes;
 	/**
 	 * Special item that can heal player's hitpoints, with a maximum usage of 2.
 	 */
@@ -89,12 +90,16 @@ public class Player extends Actor implements Resettable {
 		this.archetype = archetype;
 		this.addWeaponToInventory(archetype.getWeaponItem());
 		this.addCapability(Status.HOSTILE_TO_ENEMY);
-		// register player's runes
-		RunesManager.getInstance().registerPlayerRunes(runes);
+		// add remembrance directly to player
+		this.addItemToInventory(new RemembranceOfTheGrafted());
+		// add Runes
+		runes = new Runes();
 		this.addItemToInventory(runes);
 		// add Flask of Crimson Tears
 		flaskOfCrimsonTears = new FlaskOfCrimsonTears();
 		this.addItemToInventory(flaskOfCrimsonTears);
+		// register player's runes
+		RunesManager.getInstance().registerPlayerRunes(runes);
 		// register to resettable
 		ResetManager.getInstance().registerResettable(this);
 	}
