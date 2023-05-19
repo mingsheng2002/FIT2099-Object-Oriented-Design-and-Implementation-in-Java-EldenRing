@@ -1,6 +1,7 @@
 package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.items.DropAction;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.SellAction;
@@ -54,5 +55,11 @@ public class GraftedDragon extends WeaponItem implements Sellable {
             this.addAction(sellAction);
             this.removeCapability(Status.READY_TO_BE_SOLD);
         }
+    }
+
+    @Override
+    public DropAction getDropAction(Actor actor) {
+        this.removeAction(sellAction);
+        return super.getDropAction(actor);
     }
 }

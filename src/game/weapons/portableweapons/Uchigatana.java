@@ -2,6 +2,7 @@ package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.items.DropAction;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
@@ -11,6 +12,7 @@ import game.utils.SurroundingChecker;
 import game.items.Purchasable;
 import game.items.Sellable;
 import game.weapons.weapontypes.Katana;
+
 /**
  * A weapon that is carried by Samurai.
  * It deals 115 damage with 80% attack accuracy.
@@ -117,8 +119,13 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
     this.removeAction(sellAction);
     if (this.hasCapability(Status.READY_TO_BE_SOLD) && SurroundingChecker.surroundingHasActorWithCapability(currentLocation, Status.PROVIDE_SELL_SERVICE)) {
       this.addAction(sellAction);
-      System.out.println("------------------------------------remove cap------------------------------------------------");
       this.removeCapability(Status.READY_TO_BE_SOLD);
     }
+  }
+
+  @Override
+  public DropAction getDropAction(Actor actor) {
+    this.removeAction(sellAction);
+    return super.getDropAction(actor);
   }
 }

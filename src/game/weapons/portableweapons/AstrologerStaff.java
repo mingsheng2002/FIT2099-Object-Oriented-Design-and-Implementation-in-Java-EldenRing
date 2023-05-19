@@ -2,6 +2,7 @@ package game.weapons.portableweapons;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.items.DropAction;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.PurchaseAction;
 import game.actions.playeractions.SellAction;
@@ -9,7 +10,6 @@ import game.enums.Status;
 import game.items.Purchasable;
 import game.items.Sellable;
 import game.utils.SurroundingChecker;
-import game.weapons.weapontypes.Dagger;
 import game.weapons.weapontypes.Staff;
 
 /**
@@ -116,5 +116,11 @@ public class AstrologerStaff extends Staff implements Purchasable, Sellable {
             this.addAction(sellAction);
             this.removeCapability(Status.READY_TO_BE_SOLD);
         }
+    }
+
+    @Override
+    public DropAction getDropAction(Actor actor) {
+        this.removeAction(sellAction);
+        return super.getDropAction(actor);
     }
 }
