@@ -15,7 +15,6 @@ public abstract class Hammer extends WeaponItem {
 
     /**
      * Constructor for Hammer.
-     *
      * @param name        name of the item
      * @param displayChar character to use for display when item is on the ground
      * @param damage      amount of damage this weapon does

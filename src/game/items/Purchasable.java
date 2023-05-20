@@ -33,10 +33,9 @@ public interface Purchasable {
    */
   Action getPurchaseAction(Purchasable purchasable);
 
-//  /**
-//   * Get an instance of the weapon item itself
-//   * @return an instance of WeaponItem of itself
-//   */
-//  WeaponItem getPurchasableInstance();
+  /**
+   * Add the purchasable item to the inventory of the actor.
+   * @param actor the actor to add the purchasable item to
+   */
   void addPurchasableToInventory(Actor actor);
 }

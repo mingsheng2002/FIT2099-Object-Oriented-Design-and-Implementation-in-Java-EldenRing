@@ -19,6 +19,8 @@ public class GoldenPotion extends Item implements Consumable {
 
   ConsumeAction consumeAction;
   Location here;
+  List<Summonable> summonables;
+
 
   /***
    * Constructor.
@@ -26,6 +28,9 @@ public class GoldenPotion extends Item implements Consumable {
   public GoldenPotion() {
     super("Golden Portion", '"', true);
     consumeAction = new ConsumeAction(this);
+    summonables = new ArrayList<>();
+    summonables.add(new Ally());
+    summonables.add(new Invader());
   }
 
   @Override
@@ -95,9 +100,6 @@ public class GoldenPotion extends Item implements Consumable {
       case 7:
         // Summon a guest from another realm
         System.out.println("This potion will summon a guest from another realm");
-        List<Summonable> summonables = new ArrayList<>();
-        summonables.add(new Ally());
-        summonables.add(new Invader());
         String result = new SummonAction(here, summonables).execute(actor, here.map());
         System.out.println(result);
         break;

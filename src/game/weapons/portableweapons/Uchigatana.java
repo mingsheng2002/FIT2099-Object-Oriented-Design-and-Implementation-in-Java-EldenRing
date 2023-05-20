@@ -51,6 +51,7 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
   /**
    * Constructor for Uchigatana.
    * @see Status#SPECIAL_SKILL
+   * @see SellAction
    */
   public Uchigatana() {
     super("Uchigatana", ')', DAMAGE, "hits", HIT_RATE);
@@ -78,6 +79,10 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
     return new PurchaseAction(purchasable);
   }
 
+  /**
+   * Adds the Uchigatana to the actor's inventory.
+   * @param actor actor that the Uchigatana will be added to
+   */
   @Override
   public void addPurchasableToInventory(Actor actor) {
     actor.addWeaponToInventory(this);
@@ -92,13 +97,17 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
     return SELL_PRICE;
   }
 
+  /**
+   * Removes the current Uchigatana from actor's inventory.
+   * @param actor actor that the Uchigatana will be removed from
+   */
   @Override
   public void removeSellableFromInventory(Actor actor) {
     actor.removeWeaponFromInventory(this);
   }
 
   /**
-   * Returns UnsheatheAction which is a unique skill of GreatKnife.
+   * Returns UnsheatheAction which is a unique skill of Uchigatana.
    * @param target target actor.
    * @param direction direction of attack.
    * @return an instance of UnsheatheAction.
@@ -110,9 +119,14 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
   }
 
   /**
-   *
-   * @param currentLocation The location of the actor carrying this Item.
-   * @param actor The actor carrying this Item.
+   * Performs an action on each tick of the game loop.
+   * Checks if the Uchigatana is ready to be sold and if there is an actor nearby with the capability to provide a sell service.
+   * Adds a sell action to the HeavyCrossbow if the conditions are met and removes the "READY_TO_BE_SOLD" capability.
+   * @param currentLocation the location of the actor carrying this item
+   * @param actor           the actor carrying this item
+   * @see Status#READY_TO_BE_SOLD
+   * @see Status#PROVIDE_SELL_SERVICE
+   * @see SurroundingChecker#surroundingHasActorWithCapability(Location, Status)
    */
   @Override
   public void tick(Location currentLocation, Actor actor) {
@@ -123,6 +137,12 @@ public class Uchigatana extends Katana implements Purchasable, Sellable {
     }
   }
 
+  /**
+   * Removes SellAction from weapon allowableActions.Create and return an action to drop this WeaponItem.
+   * If this WeaponItem is not portable, returns null.
+   * @param actor actor that performs drop action
+   * @return a new DropWeaponAction if this WeaponItem is portable, null otherwise.
+   */
   @Override
   public DropAction getDropAction(Actor actor) {
     this.removeAction(sellAction);

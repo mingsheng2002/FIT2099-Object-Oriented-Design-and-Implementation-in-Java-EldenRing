@@ -8,14 +8,13 @@ import game.actors.nonplayercharacters.summonables.Ally;
 import game.actors.nonplayercharacters.summonables.Invader;
 
 /**
- * TBC
- * A type of ground that the player will fall off and get killed instantly.
+ * A type of Summoning ground that can summon Summonables.
  * Created by:
  * @author Che'er Min Yi
  * @author Chong Ming Sheng
  * @author Lam Xin Yuan
  * @version 1.0.0
- * @see Ground
+ * @see SummoningGround
  */
 public class SummonSign extends SummoningGround {
 
@@ -26,6 +25,16 @@ public class SummonSign extends SummoningGround {
         super('=');
     }
 
+    /**
+     * Returns a new collection of actions that contain the SummonAction and adds summonables.
+     * @param actor The actor acting.
+     * @param location The current location.
+     * @param direction The direction of the ground from the actor.
+     * @return A collection of actions.
+     * @see Ally
+     * @see Invader
+     * @see SummoningGround#allowableActions(Actor, Location, String)
+     */
     @Override
     public ActionList allowableActions(Actor actor, Location location, String direction) {
         getSummonables().clear();

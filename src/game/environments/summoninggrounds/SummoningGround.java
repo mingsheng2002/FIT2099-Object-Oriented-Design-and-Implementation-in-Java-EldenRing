@@ -12,12 +12,24 @@ import game.enums.Status;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An abstract class that is extended by the grounds that can summon Summonables.
+ * Created by:
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Ground
+ */
 public abstract class SummoningGround extends Ground {
 
-    private List<Summonable> summonables = new ArrayList<>();
     /**
-     * Constructor.
-     *
+     * A list of summonables
+     */
+    private List<Summonable> summonables = new ArrayList<>();
+
+    /**
+     * Constructor for SummoningGround.
      * @param displayChar character to display for this type of terrain
      */
     public SummoningGround(char displayChar) {
@@ -25,12 +37,14 @@ public abstract class SummoningGround extends Ground {
     }
 
     /**
-     * Returns a new collection of the Actions that contain the SummonAction.
+     * Returns a new collection of the Actions that contain the SummonAction if the actor is player.
      * @param actor the Actor acting
      * @param location the current Location
      * @param direction the direction of the Ground from the Actor
-     * @return A collection of Actions.
-     * @see RestAction
+     * @return A collection of Actions
+     * @see SummonAction
+     * @see Status#HOSTILE_TO_ENEMY
+     * @see ActionList
      */
     @Override
     public ActionList allowableActions(Actor actor, Location location, String direction) {
@@ -41,11 +55,21 @@ public abstract class SummoningGround extends Ground {
         return actions;
     }
 
+    /**
+     * Checks if an actor can enter the summoning ground.
+     * @param actor The actor to check.
+     * @return True if the actor is hostile to enemies, false otherwise.
+     * @see Status#HOSTILE_TO_ENEMY
+     */
     @Override
     public boolean canActorEnter(Actor actor) {
         return actor.hasCapability(Status.HOSTILE_TO_ENEMY);
     }
 
+    /**
+     * Getter to get a list of summonables
+     * @return a list of summonables
+     */
     public List<Summonable> getSummonables() {
         return summonables;
     }

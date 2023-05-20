@@ -1,11 +1,8 @@
 package game.actors.nonplayercharacters.traders;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.items.Purchasable;
 import game.enums.Status;
 import game.items.remembrances.RemembranceOfTheGrafted;
 import game.weapons.portableweapons.*;
@@ -28,6 +25,8 @@ public class MerchantKale extends Trader{
 
   /**
    * Constructor for MechantKale.
+   * @see Status#PROVIDE_SELL_SERVICE
+   * @see Status#PROVIDE_PURCHASE_SERVICE
    */
   public MerchantKale() {
     super("Merchant Kale", 'K', HIT_POINT);
@@ -57,9 +56,6 @@ public class MerchantKale extends Trader{
    * @return a list of actions
    * @see ActionList
    * @see Status#HOSTILE_TO_ENEMY
-   * @see Purchasable#getPurchaseAction(Purchasable)
-   * @see WeaponItem
-   * @see Action
    */
   @Override
   public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {

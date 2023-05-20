@@ -14,8 +14,7 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 public abstract class Staff extends WeaponItem {
 
     /**
-     * Constructor.
-     *
+     * Constructor for Staff.
      * @param name        name of the item
      * @param displayChar character to use for display when item is on the ground
      * @param damage      amount of damage this weapon does

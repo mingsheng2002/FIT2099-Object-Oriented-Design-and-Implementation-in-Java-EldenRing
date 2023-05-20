@@ -4,13 +4,27 @@ import game.enums.Status;
 import game.items.remembrances.RemembranceOfTheGrafted;
 import game.weapons.portableweapons.*;
 
+/**
+ * Class representing the Finger Reader Enia which is a type of Trader.
+ * Created by:
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Trader
+ */
 public class FingerReaderEnia extends Trader {
 
     /**
-     * Starting hit point of
+     * Starting hit point of FingerReaderEnia
      */
     private static final int HIT_POINT = 100;
 
+    /**
+     * Constructor for FingerReaderEnia.
+     * @see Status#PROVIDE_SELL_SERVICE
+     * @see Status#PROVIDE_PURCHASE_SERVICE
+     */
     public FingerReaderEnia() {
         super("Finger Reader Enia", 'E', HIT_POINT);
         this.addCapability(Status.PROVIDE_SELL_SERVICE);

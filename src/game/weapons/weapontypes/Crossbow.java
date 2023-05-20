@@ -14,7 +14,7 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 public abstract class Crossbow extends WeaponItem {
 
     /**
-     * Constructor for Crossbow
+     * Constructor for Crossbow.
      *
      * @param name        name of the item
      * @param displayChar character to use for display when item is on the ground

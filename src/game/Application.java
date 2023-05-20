@@ -86,8 +86,15 @@ public class Application {
 		limgraveMap.at(41, 11).addActor(new MerchantKale());
 		limgraveMap.at(43, 9).setGround(new TheFirstStep());
 		limgraveMap.at(46,13).addItem(new GoldenRunes());
-		limgraveMap.at(46,14).addItem(new GoldenRunes());
-		limgraveMap.at(46,15).addItem(new GoldenRunes());
+		limgraveMap.at(5,5).addItem(new GoldenRunes());
+		limgraveMap.at(45,5).addItem(new GoldenRunes());
+		limgraveMap.at(32,20).addItem(new GoldenRunes());
+		limgraveMap.at(10,23).addItem(new GoldenRunes());
+		limgraveMap.at(23,17).addItem(new GoldenRunes());
+		limgraveMap.at(28,2).addItem(new GoldenRunes());
+		limgraveMap.at(6,15).addItem(new GoldenRunes());
+		limgraveMap.at(4,1).addItem(new GoldenRunes());
+		limgraveMap.at(50,23).addItem(new GoldenRunes());
 		limgraveMap.at(50, 15).addItem(new GoldenPotion());
 		limgraveMap.at(51, 15).addItem(new GoldenPotion());
 
@@ -120,9 +127,16 @@ public class Application {
 				"+++++++++++++++++++++++++++#...................#+++++++++++++++++++++++++++");
 		StormveilCastle stormveilCastleMap = new StormveilCastle(groundFactory, stormveilCastle);
 		world.addGameMap(stormveilCastleMap);
-		stormveilCastleMap.at(53,6).addItem(new GoldenRunes());
+		stormveilCastleMap.at(23,6).addItem(new GoldenRunes());
 		stormveilCastleMap.at(52,7).addItem(new GoldenRunes());
-		stormveilCastleMap.at(51,7).addItem(new GoldenRunes());
+		stormveilCastleMap.at(60,12).addItem(new GoldenRunes());
+		stormveilCastleMap.at(40,12).addItem(new GoldenRunes());
+		stormveilCastleMap.at(1,12).addItem(new GoldenRunes());
+		stormveilCastleMap.at(15,15).addItem(new GoldenRunes());
+		stormveilCastleMap.at(25,1).addItem(new GoldenRunes());
+		stormveilCastleMap.at(35,20).addItem(new GoldenRunes());
+		stormveilCastleMap.at(30,0).addItem(new GoldenRunes());
+		stormveilCastleMap.at(68,15).addItem(new GoldenRunes());
 		stormveilCastleMap.at(7, 11).addItem(new GoldenPotion());
 		stormveilCastleMap.at(68, 11).addItem(new GoldenPotion());
 		stormveilCastleMap.at(68, 13).addItem(new GoldenPotion());
@@ -181,11 +195,9 @@ public class Application {
 
 		//world.addPlayer(player, stormveilCastleMap.at(5, 4));
 		//world.addPlayer(player, stormveilCastleMap.at(45, 12));
-		world.addPlayer(player, limgraveMap.at(45, 12));
+		world.addPlayer(player, stormveilCastleMap.at(45, 12));
 
-		limgraveMap.at(46,13).addItem(new GoldenRunes());
-		limgraveMap.at(46,14).addItem(new GoldenRunes());
-		limgraveMap.at(46,15).addItem(new GoldenRunes());
+
 		limgraveMap.at(46, 10).addItem(new RemembranceOfTheGrafted());
 
 		world.run();

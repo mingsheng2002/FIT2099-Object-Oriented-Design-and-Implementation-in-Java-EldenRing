@@ -86,8 +86,8 @@ public class AstrologerStaff extends Staff implements Purchasable, Sellable {
     }
 
     /**
-     * TBC
-     * @param actor
+     * Removes the current Astrologer's Staff from actor's inventory.
+     * @param actor actor that the Astrologer's Staff will be removed from
      */
     @Override
     public void removeSellableFromInventory(Actor actor) {
@@ -95,8 +95,8 @@ public class AstrologerStaff extends Staff implements Purchasable, Sellable {
     }
 
     /**
-     * TBC
-     * @param actor
+     * Adds the Astrologer's Staff to the actor's inventory.
+     * @param actor actor that the Atrologer's Staff will be added to
      */
     @Override
     public void addPurchasableToInventory(Actor actor) {
@@ -105,9 +105,14 @@ public class AstrologerStaff extends Staff implements Purchasable, Sellable {
     }
 
     /**
-     *TBC
-     * @param currentLocation The location of the actor carrying this Item.
-     * @param actor The actor carrying this Item.
+     * Performs an action on each tick of the game loop.
+     * Checks if the Astrologer's Staff is ready to be sold and if there is an actor nearby with the capability to provide a sell service.
+     * Adds a sell action to the Astrologer's Staff if the conditions are met and removes the "READY_TO_BE_SOLD" capability.
+     *
+     * @param currentLocation the location of the actor carrying this item
+     * @param actor           the actor carrying this item
+     * @see Status#READY_TO_BE_SOLD
+     * @see Status#PROVIDE_SELL_SERVICE
      */
     @Override
     public void tick(Location currentLocation, Actor actor) {

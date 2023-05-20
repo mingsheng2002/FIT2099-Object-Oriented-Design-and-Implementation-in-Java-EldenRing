@@ -125,6 +125,11 @@ public class ArchetypeManager {
         return archetype;
     }
 
+    /**
+     * Chooses an archetype at random from the valid selections and returns the chosen archetype.
+     * @return The randomly chosen archetype.
+     * @see RandomNumberGenerator#getRandomInt(int)
+     */
     public Archetype chooseArchetypeAtRandom() {
         int rand = RandomNumberGenerator.getRandomInt(validSelections.size());
         int randChoice = validSelections.get(rand);

@@ -12,7 +12,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actors.nonplayercharacters.NonPlayerCharacter;
 import game.enums.Status;
-import game.items.remembrances.Exchangeable;
+import game.items.Exchangeable;
 import game.items.Purchasable;
 import game.items.Sellable;
 
@@ -43,10 +43,8 @@ public abstract class Trader extends NonPlayerCharacter {
    */
   private List<Exchangeable> exchangeables = new ArrayList<>();
 
-
   /**
    * Constructor for Trader.
-   *
    * @param name        the name of the Actor
    * @param displayChar the character that will represent the Actor in the display
    * @param hitPoints   the Actor's starting hit points

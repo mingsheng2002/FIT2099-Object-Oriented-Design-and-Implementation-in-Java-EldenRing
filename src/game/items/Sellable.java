@@ -26,6 +26,10 @@ public interface Sellable {
    */
   int getSellPrice();
 
+  /**
+   * Remove the sellable item from the inventory of the actor.
+   * @param actor the actor to remove the sellable item from
+   */
   void removeSellableFromInventory(Actor actor);
 
 }
