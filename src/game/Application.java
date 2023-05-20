@@ -91,9 +91,17 @@ public class Application {
 		limgraveMap.at(6,15).addItem(new GoldenRunes());
 		limgraveMap.at(4,1).addItem(new GoldenRunes());
 		limgraveMap.at(50,23).addItem(new GoldenRunes());
-		// add GoldenPotion on 2 random locations on the Limgrave game map
+		// add GoldenPotion on 10 random locations on the Limgrave game map
 		limgraveMap.at(50, 15).addItem(new GoldenPotion());
 		limgraveMap.at(51, 15).addItem(new GoldenPotion());
+		limgraveMap.at(47, 13).addItem(new GoldenPotion());
+		limgraveMap.at(6, 6).addItem(new GoldenPotion());
+		limgraveMap.at(46, 6).addItem(new GoldenPotion());
+		limgraveMap.at(33, 20).addItem(new GoldenPotion());
+		limgraveMap.at(11, 23).addItem(new GoldenPotion());
+		limgraveMap.at(23, 17).addItem(new GoldenPotion());
+		limgraveMap.at(29, 2).addItem(new GoldenPotion());
+		limgraveMap.at(7, 15).addItem(new GoldenPotion());
 
 
 		// Create a Stormveil Castle Map
@@ -135,10 +143,17 @@ public class Application {
 		stormveilCastleMap.at(35,20).addItem(new GoldenRunes());
 		stormveilCastleMap.at(30,0).addItem(new GoldenRunes());
 		stormveilCastleMap.at(68,15).addItem(new GoldenRunes());
-		// add GoldenPotion on 3 random locations on the Stormveil Castle game map
+		// add GoldenPotion on 10 random locations on the Stormveil Castle game map
 		stormveilCastleMap.at(7, 11).addItem(new GoldenPotion());
 		stormveilCastleMap.at(68, 11).addItem(new GoldenPotion());
-		stormveilCastleMap.at(68, 13).addItem(new GoldenPotion());
+		stormveilCastleMap.at(24, 6).addItem(new GoldenPotion());
+		stormveilCastleMap.at(53, 7).addItem(new GoldenPotion());
+		stormveilCastleMap.at(61, 12).addItem(new GoldenPotion());
+		stormveilCastleMap.at(41, 12).addItem(new GoldenPotion());
+		stormveilCastleMap.at(2, 12).addItem(new GoldenPotion());
+		stormveilCastleMap.at(16, 15).addItem(new GoldenPotion());
+		stormveilCastleMap.at(26, 1).addItem(new GoldenPotion());
+		stormveilCastleMap.at(31, 0).addItem(new GoldenPotion());
 
 
 		// Create a Roundtable Hold Map
@@ -158,8 +173,11 @@ public class Application {
 		world.addGameMap(roundtableHoldMap);
 		// add FingerReaderEnia on the Roundtable Hold game map
 		roundtableHoldMap.at(8, 5).addActor(new FingerReaderEnia());
-		// add GoldenPotion on 2 random locations on the Roundtable Hold game map
+		// add GoldenPotion on 7 random locations on the Roundtable Hold game map
 		roundtableHoldMap.at(6,6).addItem(new GoldenPotion());
+		roundtableHoldMap.at(1,1).addItem(new GoldenPotion());
+		roundtableHoldMap.at(9,9).addItem(new GoldenPotion());
+		roundtableHoldMap.at(5,5).addItem(new GoldenPotion());
 		roundtableHoldMap.at(7,7).addItem(new GoldenPotion());
 
 		// Create a boss room
@@ -174,6 +192,8 @@ public class Application {
 				".........................",
 				"+++++++++++++++++++++++++");
 		BossRoom bossRoomMap = new BossRoom(groundFactory, bossRoom);
+		// add GoldenPotion on 7 random locations on the Boss Room game map
+		bossRoomMap.at(7,7).addItem(new GoldenPotion());
 		world.addGameMap(bossRoomMap);
 
 

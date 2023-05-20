@@ -50,7 +50,6 @@ public class GoldenPotion extends Item implements Consumable {
    */
   List<Summonable> summonables;
 
-
   /**
    * Constructor for GoldenPotion.
    * @see ConsumeAction
@@ -58,7 +57,7 @@ public class GoldenPotion extends Item implements Consumable {
    * @see Invader
    */
   public GoldenPotion() {
-    super("Golden Portion", '"', true);
+    super("Golden Potion", '"', true);
     consumeAction = new ConsumeAction(this);
     summonables = new ArrayList<>();
     summonables.add(new Ally());
