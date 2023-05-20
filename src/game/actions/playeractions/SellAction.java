@@ -31,7 +31,8 @@ public class SellAction extends Action {
   }
 
   /**
-   * When executed, this sellable item will be removed from player's inventory and corresponding runes amount will be added to player's runes amount.
+   * When executed, this sellable item will be removed from player's inventory and
+   * corresponding runes amount will be added to player's runes amount.
    * @param actor The actor performing the sell action.
    * @param map The game map the actor is on.
    * @return the result of actor selling the item.

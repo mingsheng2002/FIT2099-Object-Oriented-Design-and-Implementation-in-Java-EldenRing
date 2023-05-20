@@ -123,6 +123,12 @@ public class AstrologerStaff extends Staff implements Purchasable, Sellable {
         }
     }
 
+    /**
+     * Removes SellAction from weapon allowableActions.Create and return an action to drop this WeaponItem.
+     * If this WeaponItem is not portable, returns null.
+     * @param actor actor that performs drop action
+     * @return a new DropWeaponAction if this WeaponItem is portable, null otherwise.
+     */
     @Override
     public DropAction getDropAction(Actor actor) {
         this.removeAction(sellAction);

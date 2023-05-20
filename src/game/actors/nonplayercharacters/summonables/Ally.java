@@ -149,14 +149,14 @@ public class Ally extends NonPlayerCharacter implements Resettable, Summonable {
 
     /**
      * Returns the location where the Ally can be summoned.
-     * @param summonSignLocation the location of the summon sign
+     * @param summonGroundLocation the location of the summon sign
      * @return the location where the Ally can be summoned, null when there is no available location
      * that Ally can be summoned
      * @see Exit
      */
     @Override
-    public Location getSummonSpot(Location summonSignLocation) {
-        for (Exit exit : summonSignLocation.getExits()) {
+    public Location getSummonSpot(Location summonGroundLocation) {
+        for (Exit exit : summonGroundLocation.getExits()) {
             if (!exit.getDestination().containsAnActor() && exit.getDestination().canActorEnter(this)) {
                 return exit.getDestination();
             }

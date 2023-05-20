@@ -1,6 +1,5 @@
 package game.actors.nonplayercharacters.enemies.stormveilcastleinhabitants;
 
-
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.resets.ResetManager;
 import game.resets.Resettable;

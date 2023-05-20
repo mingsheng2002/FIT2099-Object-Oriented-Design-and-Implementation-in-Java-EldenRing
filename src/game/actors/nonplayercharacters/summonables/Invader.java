@@ -25,6 +25,7 @@ import game.resets.Resettable;
  * @see Summonable
  */
 public class Invader extends Enemy implements Resettable, Summonable {
+
     /**
      * The spawn chance of Invader from its specific ground.
      */
@@ -129,14 +130,14 @@ public class Invader extends Enemy implements Resettable, Summonable {
 
     /**
      * Returns the location where the Invader can be summoned.
-     * @param summonSignLocation the location of the summon sign
+     * @param summonGroundLocation the location of the summon sign
      * @return the location where the Invader can be summoned, null when there is no available location
      * that Invader can be summoned
      * @see Exit
      */
     @Override
-    public Location getSummonSpot(Location summonSignLocation) {
-        for (Exit exit : summonSignLocation.getExits()) {
+    public Location getSummonSpot(Location summonGroundLocation) {
+        for (Exit exit : summonGroundLocation.getExits()) {
             if (!exit.getDestination().containsAnActor() && exit.getDestination().canActorEnter(this)) {
                 return exit.getDestination();
             }

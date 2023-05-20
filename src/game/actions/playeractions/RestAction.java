@@ -3,8 +3,6 @@ package game.actions.playeractions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.controllers.RunesManager;
-import game.enums.Status;
 import game.resets.ResetManager;
 
 /**
@@ -20,12 +18,11 @@ public class RestAction extends Action {
 
     /**
      * When executed, the player's runes will be added capability of RESTING before resetting the game. After resetting,
-     * the capability of RESTING will be remvoved from the player's runes.
+     * the capability of RESTING will be removed from the player's runes.
      * @param actor The actor performing the reset action.
      * @param map The game map the actor is on.
      * @return the result of actor resting on the Site Of Lost Grace
      * @see RestAction#execute(Actor, GameMap)
-     * @see RunesManager#getPlayerRunes()
      * @see ResetManager#getInstance()
      * @see ResetManager#playerIsResting()
      * @see ResetManager#playerDoneResting()

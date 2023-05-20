@@ -1,10 +1,8 @@
 package game.actors.nonplayercharacters.enemies.stormveilcastleinhabitants;
 
-
 import game.resets.ResetManager;
 import game.resets.Resettable;
 import game.weapons.portableweapons.HeavyCrossbow;
-
 
 /**
  * A Stormveil Castle inhabitant enemy called Godrick Soldier.

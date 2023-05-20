@@ -31,7 +31,8 @@ public class PurchaseAction extends Action {
   }
 
   /**
-   * When executed, this purchasable item will be added into player's inventory and corresponding runes amount will be deducted from player's runes amount.
+   * When executed, this purchasable item will be added into player's inventory and corresponding
+   * runes amount will be deducted from player's runes amount.
    * @param actor The actor performing the purchase action.
    * @param map The game map the actor is on.
    * @return the result of actor purchasing the item.
@@ -66,6 +67,6 @@ public class PurchaseAction extends Action {
    */
   @Override
   public String menuDescription(Actor actor) {
-    return actor + " purchases " + item + " from Trader for "+ item.getPurchasePrice() + " runes";
+    return actor + " purchases " + item + " from Trader for " + item.getPurchasePrice() + " runes";
   }
 }

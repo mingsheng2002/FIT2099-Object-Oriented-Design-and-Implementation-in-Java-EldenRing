@@ -3,7 +3,6 @@ package game.actors.nonplayercharacters;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviours.Behaviour;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public abstract class NonPlayerCharacter extends Actor {
      */
     private int npcHitPoints;
     /**
-     * TBC
+     * An instance of GameMap
      */
     private GameMap map = null;
 
@@ -47,7 +46,6 @@ public abstract class NonPlayerCharacter extends Actor {
     /**
      * Getter to get the HashMap of behaviours.
      * @return a HashMap of behaviour
-     * TBC
      */
     public Map<Integer, Behaviour> getBehaviours() {
         return behaviours;
@@ -61,6 +59,10 @@ public abstract class NonPlayerCharacter extends Actor {
         return map;
     }
 
+    /**
+     * Setter to set the instance variable of map.
+     * @param map the map that the NPC currently at
+     */
     public void setMap(GameMap map) {
         this.map = map;
     }

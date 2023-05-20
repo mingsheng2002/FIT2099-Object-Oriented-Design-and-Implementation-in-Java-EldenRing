@@ -16,6 +16,7 @@ package game.actors.nonplayercharacters.enemies;
  * @version 1.0.0
  */
 public interface RunesRewarder {
+
   /**
    * Retrieve the minimum runes amount that can be rewarded to the player from the runes source.
    * @return minimum runes amount that can be rewarded to the player.

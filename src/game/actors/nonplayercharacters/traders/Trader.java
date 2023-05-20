@@ -15,12 +15,11 @@ import game.enums.Status;
 import game.items.Exchangeable;
 import game.items.Purchasable;
 import game.items.Sellable;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An abstract trader class
+ * An abstract Trader class
  * Created by:
  * @author Che'er Min Yi
  * @author Chong Ming Sheng
@@ -56,12 +55,16 @@ public abstract class Trader extends NonPlayerCharacter {
   }
 
   /**
-   * This method return DoNothingAction that Trader can perform at each turn.
+   * At each turn, if there's an actor at the surroundings, loop through the sellable and exchangeable list
+   * and check if the actor has the item and weapon item. If the sellable and exchangeable item is available,
+   * add a status for them to get ready with Sell Action and Exchangeable Action in actor's playTurn()
    * @param actions    collection of possible Actions for this Actor
    * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
    * @param map        the map containing the Actor
    * @param display    the I/O object to which messages may be written
    * @return an action that does nothing
+   * @see Status#READY_TO_BE_SOLD
+   * @see Status#READY_TO_BE_EXCHANGED
    * @see DoNothingAction
    */
   @Override
@@ -103,10 +106,15 @@ public abstract class Trader extends NonPlayerCharacter {
         }
       }
     }
-
     return new DoNothingAction();
   }
 
+  /**
+   * This method gives the player a purchase action
+   * @param otherActor The actor that will receive the purchase action
+   * @return a list of actions
+   * @see Status#HOSTILE_TO_ENEMY
+   */
   public ActionList provideActorPurchaseService(Actor otherActor) {
     ActionList actions = new ActionList();
     if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)) {
@@ -162,13 +170,19 @@ public abstract class Trader extends NonPlayerCharacter {
   }
 
   /**
-   *
-   * @return
+   * Getter that return a list of exchangeable items.
+   * @return a list of exchangeable items
    */
   public List<Exchangeable> getExchangeables() {
     return exchangeables;
   }
 
+  /**
+   * Loop the surroundings of the location and check if there's any actor.
+   * @param location the location to check
+   * @return the instance of player at some surroundings of the location if exist, else null
+   * @see Status#HOSTILE_TO_ENEMY
+   */
   private Actor getPlayerInSurrounding(Location location) {
     Actor player = null;
     for (Exit exit : location.getExits()) {

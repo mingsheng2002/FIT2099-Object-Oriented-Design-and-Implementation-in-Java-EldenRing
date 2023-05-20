@@ -53,7 +53,7 @@ public class MerchantKale extends Trader{
    * @param otherActor the Actor that might be performing attack
    * @param direction  String representing the direction of the other Actor
    * @param map        current GameMap
-   * @return a list of actions
+   * @return           a list of actions
    * @see ActionList
    * @see Status#HOSTILE_TO_ENEMY
    */
