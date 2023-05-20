@@ -1,8 +1,10 @@
 package game.items;
 
+import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.DropAction;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.ConsumeAction;
@@ -15,15 +17,45 @@ import game.utils.RandomNumberGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Introduced a “GoldenPotion” into the game, which allows the player to pick it up and consume it whenever he/she wants.
+ * Once “GoldenPotion” is consumed, one out of different effects may be caused to the player which consist of both buffs
+ * and debuffs, depending on the luck of the player. However, once the game is reset, all the instances of “GoldenPotion”
+ * that have not been picked up by the player will not be removed from the game maps (“GoldenPotion” is not resettable)
+ * and these buffs or debuffs will be removed from the player. Meaning, the game will be continuing as usual and the
+ * player will now be free from any buffs or debuffs caused by this “GoldenPotion”.
+ * Created by:
+ * @author Che'er Min Yi
+ * @author Chong Ming Sheng
+ * @author Lam Xin Yuan
+ * @version 1.0.0
+ * @see Item
+ * @see Consumable
+ * @see ConsumeAction
+ * @see Location
+ * @see Summonable
+ */
 public class GoldenPotion extends Item implements Consumable {
 
+  /**
+   * A consume action provided by GoldenPotion to the actor holding this item
+   */
   ConsumeAction consumeAction;
+  /**
+   * Location of the actor carrying the GoldenPotion
+   */
   Location here;
+  /**
+   * A list of summonable actors whom GoldenPotion can summon in the actor's surroundings
+   */
   List<Summonable> summonables;
 
 
-  /***
-   * Constructor.
+  /**
+   * Constructor for GoldenPotion.
+   * @see ConsumeAction
+   * @see Ally
+   * @see Invader
    */
   public GoldenPotion() {
     super("Golden Portion", '"', true);
@@ -33,6 +65,15 @@ public class GoldenPotion extends Item implements Consumable {
     summonables.add(new Invader());
   }
 
+  /**
+   * Add an instance of ConsumeAction into the allowable actions of this item, so that the player can choose to consume
+   * the GoldenPotion if the player's item inventory contains this item.
+   * @param currentLocation The location of the actor carrying GoldenPotion.
+   * @param actor The actor carrying this GoldenPotion.
+   * @see Actor#hasCapability(Enum) 
+   * @see Item#addAction(Action) 
+   * @see Status#HOSTILE_TO_ENEMY 
+   */
   @Override
   public void tick(Location currentLocation, Actor actor) {
     here = currentLocation;
@@ -41,12 +82,48 @@ public class GoldenPotion extends Item implements Consumable {
     }
   }
 
+  /**
+   * Remove the instance of ConsumeAction added into the GoldenPotion's allowable actions previously if the player has
+   * an option to drop this item.
+   * @param actor The actor carrying this GoldenPotion.
+   * @return a new DropItemAction if this Item is portable, null otherwise
+   * @see Item#removeAction(Action) 
+   * @see Item#getDropAction(Actor) 
+   */
   @Override
   public DropAction getDropAction(Actor actor) {
     this.removeAction(consumeAction);
     return super.getDropAction(actor);
   }
 
+  /**
+   * This method will perform a random effect among all the pre-defined effects caused to the actor once it is consumed.
+   * The effects contain both buffs (brings positive effects) and debuffs (brings negative effects).
+   * @param actor the actor that consume the GoldenPotion.
+   * @see RandomNumberGenerator#getRandomInt(int, int) 
+   * @see RandomNumberGenerator#getRandomInt(int)  
+   * @see Status#HOSTILE_TO_ENEMY
+   * @see Status#AREA_ATTACK
+   * @see Status#SPECIAL_SKILL
+   * @see Status#DOUBLE_ATTACK_DAMAGE
+   * @see Status#INCREASE_CRIMSON_TEARS
+   * @see Status#DECREASE_CRIMSON_TEARS
+   * @see Actor#resetMaxHp(int)
+   * @see Actor#hurt(int)
+   * @see Actor#getWeaponInventory()
+   * @see Actor#removeWeaponFromInventory(WeaponItem)
+   * @see Actor#addCapability(Enum) 
+   * @see WeaponItem#hasCapability(Enum) 
+   * @see WeaponItem#removeCapability(Enum) 
+   * @see RunesManager#getInstance()
+   * @see RunesManager#getPlayerRunes()
+   * @see RunesManager#incrementPlayerRunes(int)
+   * @see RunesManager#clearPlayerRunes()
+   * @see Runes#getTotalAmount()
+   * @see RemembranceOfTheGrafted
+   * @see SummonAction
+   * @see SummonAction#execute(Actor, GameMap)
+   */
   @Override
   public void consumedBy(Actor actor) {
     int x = RandomNumberGenerator.getRandomInt(1,12);

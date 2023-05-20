@@ -4,11 +4,9 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actions.playeractions.RestAction;
 import game.actions.playeractions.SummonAction;
 import game.actors.nonplayercharacters.summonables.Summonable;
 import game.enums.Status;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,17 +51,6 @@ public abstract class SummoningGround extends Ground {
             actions.add(new SummonAction(location, summonables));
         }
         return actions;
-    }
-
-    /**
-     * Checks if an actor can enter the summoning ground.
-     * @param actor The actor to check.
-     * @return True if the actor is hostile to enemies, false otherwise.
-     * @see Status#HOSTILE_TO_ENEMY
-     */
-    @Override
-    public boolean canActorEnter(Actor actor) {
-        return actor.hasCapability(Status.HOSTILE_TO_ENEMY);
     }
 
     /**

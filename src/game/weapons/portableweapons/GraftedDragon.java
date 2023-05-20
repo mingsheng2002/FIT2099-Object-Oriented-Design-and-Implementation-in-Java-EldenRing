@@ -6,10 +6,8 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.SellAction;
 import game.enums.Status;
-import game.items.Purchasable;
 import game.utils.SurroundingChecker;
 import game.items.Sellable;
-import game.weapons.weapontypes.Crossbow;
 
 /**
  * A weapon that is carried by Godrick the Grafted.

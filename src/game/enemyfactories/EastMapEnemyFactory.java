@@ -35,6 +35,8 @@ public class EastMapEnemyFactory extends EnemyFactory {
      * @see SkeletalBandit
      * @see GiantDog
      * @see GiantCrayfish
+     * @see Dog
+     * @see GodrickSoldier
      * @see Status#SPAWN_SKELETON
      * @see Status#SPAWN_CANIS_LUPUS
      * @see Status#SPAWN_CRUSTACEAN

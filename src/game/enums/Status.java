@@ -40,15 +40,15 @@ public enum Status {
      */
     FRIENDLY_TO_SKELETON,
     /**
-     * Provided for the inhabitant enemies of Stormveil Castle, indicating their commonalities and characteristics such as cannot attack their same type.
+     * Provided for Stormveil Castle Inhabitant type enemies, indicating their commonalities and characteristics such as cannot attack their same type.
      */
     FRIENDLY_TO_STORMVEIL_CASTLE_INHABITANT,
     /**
-     * TBC
+     * Provided for actors that do not attack the Player, and help the Player to defeat enemies, indicating their commonalities and characteristics.
      */
     FRIENDLY_TO_PLAYER,
     /**
-     * TBC
+     * Provided for Invader type enemies, indicating their commonalities and characteristics such as cannot attack their same type.
      */
     FRIENDLY_TO_INVADER,
     /**

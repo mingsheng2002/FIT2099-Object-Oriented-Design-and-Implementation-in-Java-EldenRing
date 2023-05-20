@@ -1,15 +1,13 @@
 package game.controllers;
 
 import game.actors.archetypes.*;
-import game.resets.Resettable;
 import game.utils.RandomNumberGenerator;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * A Archetype manager class that allows users to select the archetype starting class.
+ * An Archetype manager class that allows users to select the archetype starting class.
  * Created by:
  * @author Che'er Min Yi
  * @author Chong Ming Sheng

@@ -17,7 +17,7 @@ import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.World;
 import game.environments.restinggrounds.TheFirstStep;
 import game.items.GoldenRunes;
-import game.items.remembrances.RemembranceOfTheGrafted;
+import game.utils.FancyMessage;
 
 /**
  * The main class to start the game.
@@ -32,15 +32,15 @@ import game.items.remembrances.RemembranceOfTheGrafted;
 public class Application {
 	public static void main(String[] args) {
 
-//		// BEHOLD, ELDEN RING
-//		for (String line : FancyMessage.ELDEN_RING.split("\n")) {
-//			new Display().println(line);
-//			try {
-//				Thread.sleep(200);
-//			} catch (Exception exception) {
-//				exception.printStackTrace();
-//			}
-//		}
+		// BEHOLD, ELDEN RING
+		for (String line : FancyMessage.ELDEN_RING.split("\n")) {
+			new Display().println(line);
+			try {
+				Thread.sleep(200);
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
 
 		World world = new World(new Display());
 
@@ -77,14 +77,10 @@ public class Application {
 				"_____________#.............++..............................................");
 		Limgrave limgraveMap = new Limgrave(groundFactory, limgrave);
 		world.addGameMap(limgraveMap);
-
-//		limgraveMap.at(51, 12).addActor(new LoneWolf());
-//		limgraveMap.at(52, 13).addActor(new HeavySkeletalSwordsman());
-//		limgraveMap.at(45, 13).addActor(new HeavySkeletalSwordsman());
-//		limgraveMap.at(53, 13).addActor(new GiantCrab());
-//		limgraveMap.at(54, 13).addActor(new LoneWolf());
+		// add Merchant Kale on the Limgrave game map
 		limgraveMap.at(41, 11).addActor(new MerchantKale());
 		limgraveMap.at(43, 9).setGround(new TheFirstStep());
+		// add GoldenRunes to 10 random locations on the Limgrave game map
 		limgraveMap.at(46,13).addItem(new GoldenRunes());
 		limgraveMap.at(5,5).addItem(new GoldenRunes());
 		limgraveMap.at(45,5).addItem(new GoldenRunes());
@@ -95,6 +91,7 @@ public class Application {
 		limgraveMap.at(6,15).addItem(new GoldenRunes());
 		limgraveMap.at(4,1).addItem(new GoldenRunes());
 		limgraveMap.at(50,23).addItem(new GoldenRunes());
+		// add GoldenPotion on 2 random locations on the Limgrave game map
 		limgraveMap.at(50, 15).addItem(new GoldenPotion());
 		limgraveMap.at(51, 15).addItem(new GoldenPotion());
 
@@ -127,6 +124,7 @@ public class Application {
 				"+++++++++++++++++++++++++++#...................#+++++++++++++++++++++++++++");
 		StormveilCastle stormveilCastleMap = new StormveilCastle(groundFactory, stormveilCastle);
 		world.addGameMap(stormveilCastleMap);
+		// add GoldenRunes on 10 random locations on the Stormveil Castle game map
 		stormveilCastleMap.at(23,6).addItem(new GoldenRunes());
 		stormveilCastleMap.at(52,7).addItem(new GoldenRunes());
 		stormveilCastleMap.at(60,12).addItem(new GoldenRunes());
@@ -137,6 +135,7 @@ public class Application {
 		stormveilCastleMap.at(35,20).addItem(new GoldenRunes());
 		stormveilCastleMap.at(30,0).addItem(new GoldenRunes());
 		stormveilCastleMap.at(68,15).addItem(new GoldenRunes());
+		// add GoldenPotion on 3 random locations on the Stormveil Castle game map
 		stormveilCastleMap.at(7, 11).addItem(new GoldenPotion());
 		stormveilCastleMap.at(68, 11).addItem(new GoldenPotion());
 		stormveilCastleMap.at(68, 13).addItem(new GoldenPotion());
@@ -157,7 +156,9 @@ public class Application {
 				"########___#######");
 		RoundtableHold roundtableHoldMap = new RoundtableHold(groundFactory, roundtableHold);
 		world.addGameMap(roundtableHoldMap);
+		// add FingerReaderEnia on the Roundtable Hold game map
 		roundtableHoldMap.at(8, 5).addActor(new FingerReaderEnia());
+		// add GoldenPotion on 2 random locations on the Roundtable Hold game map
 		roundtableHoldMap.at(6,6).addItem(new GoldenPotion());
 		roundtableHoldMap.at(7,7).addItem(new GoldenPotion());
 
@@ -192,13 +193,7 @@ public class Application {
 		// Create a player
 		Archetype archetype = ArchetypeManager.getInstance().run();
 		Player player = new Player("Tarnished", '@',archetype);
-
-		//world.addPlayer(player, stormveilCastleMap.at(5, 4));
-		//world.addPlayer(player, stormveilCastleMap.at(45, 12));
-		world.addPlayer(player, stormveilCastleMap.at(45, 12));
-
-
-		limgraveMap.at(46, 10).addItem(new RemembranceOfTheGrafted());
+		world.addPlayer(player, limgraveMap.at(45, 12));
 
 		world.run();
 	}

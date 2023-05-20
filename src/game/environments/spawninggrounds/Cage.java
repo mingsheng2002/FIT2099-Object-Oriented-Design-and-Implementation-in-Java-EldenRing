@@ -3,7 +3,7 @@ package game.environments.spawninggrounds;
 import game.enums.Status;
 
 /**
- * A type of ground that can spawn Stormveil Castle Dog.
+ * A type of ground that can spawn Dog in Stormveil Castle.
  * Created by:
  * @author Che'er Min Yi
  * @author Chong Ming Sheng

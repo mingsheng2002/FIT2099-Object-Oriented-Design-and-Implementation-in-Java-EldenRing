@@ -2,6 +2,7 @@ package game.weapons.unportableweapons;
 
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.enums.Status;
+
 /**
  * An intrinsic  weapon of GiantCrab.
  * It deals 208 damage with 90% attack accuracy.

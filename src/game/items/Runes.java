@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.items.PickUpAction;
 import edu.monash.fit2099.engine.positions.Location;
 import game.controllers.RunesManager;
-import game.enums.Status;
 import game.resets.Resettable;
 import game.actions.playeractions.PickUpRunesAction;
 import game.resets.ResetManager;
@@ -22,8 +21,9 @@ import game.resets.ResetManager;
  *
  */
 public class Runes extends Item implements Resettable {
+
   /**
-   * Total Amount of the runes
+   * Total amount of the runes
    */
   private int totalAmount = 0;
   /**

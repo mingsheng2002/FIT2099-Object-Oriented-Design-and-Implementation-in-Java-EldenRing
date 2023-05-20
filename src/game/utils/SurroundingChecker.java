@@ -1,10 +1,9 @@
 package game.utils;
 
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Location;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.enums.Status;
-import game.items.Sellable;
 
 /**
  * The SurroundingChecker class provides utility methods to check the presence of actors with specific capabilities
@@ -22,6 +21,11 @@ public class SurroundingChecker {
      * @param currentLocation the current location
      * @param capability the capability to check for
      * @return true if there is an actor with the specified capability in the surrounding locations, false otherwise
+     * @see Exit
+     * @see Location#getExits() 
+     * @see Exit#getDestination() 
+     * @see Location#containsAnActor() 
+     * @see Actor#hasCapability(Enum) 
      */
     public static boolean surroundingHasActorWithCapability(Location currentLocation, Status capability) {
         boolean flag = false;

@@ -2,7 +2,6 @@ package game.behaviours;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Exit;

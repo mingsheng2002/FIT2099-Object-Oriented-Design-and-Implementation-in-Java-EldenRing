@@ -1,8 +1,6 @@
 package game.items;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 /**
  * A Sellable interface represents a weapon item that a player can sell to the trader. It gives promises to every

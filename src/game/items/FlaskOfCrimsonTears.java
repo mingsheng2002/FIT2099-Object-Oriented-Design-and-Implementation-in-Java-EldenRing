@@ -8,7 +8,6 @@ import game.enums.Status;
 import game.resets.Resettable;
 import game.actions.playeractions.ConsumeAction;
 import game.resets.ResetManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,9 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
      * Maximum usage of FlaskOfCrimsonTears
      */
     private static final int MAX_USAGE = 2;
-
+    /**
+     * Temporary maximum usage of FlaskOfCrimsonTears, could be changed at a later time due to the buffs obtained from GoldenPotion
+     */
     private static int tempMaxUsage = MAX_USAGE;
     /**
      * Number of uses of FlaskOfCrimsonTears
@@ -48,7 +49,7 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
     }
 
     /**
-     * Returns a list of allowable actions that the player can perform on FlaskOfCrimsonTears.
+     * Add Consume Action into the allowable actions of FlaskOfCrimsonTears if the player's usage has not yet reached the maximum usage.
      * @return a list of allowable actions
      * @see ConsumeAction
      * @see Action
@@ -62,6 +63,14 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
         return actions;
     }
 
+    /**
+     * Perform the buffs and debuffs effects related to the FlaskOfCrimsonTears obtained from the consumption of GoldenPotion.
+     * If the actor has specific capability, then the temporary maximum usage of FlaskOfCrimsonTears will be adjusted accordingly.
+     * @param currentLocation The location of the actor carrying FlaskOfCrimsonTears.
+     * @param actor The actor carrying FlaskOfCrimsonTears.
+     * @see Status#INCREASE_CRIMSON_TEARS
+     * @see Status#DECREASE_CRIMSON_TEARS
+     */
     @Override
     public void tick(Location currentLocation, Actor actor) {
         if (actor.hasCapability(Status.INCREASE_CRIMSON_TEARS)){
@@ -93,7 +102,8 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
     }
 
     /**
-     *  A reset method that reset number of uses of FlaskOfCrimsonTears to zero.
+     * A reset method that reset number of uses of FlaskOfCrimsonTears to zero, and reset the maximum usage to the
+     * original maximum usage as specified in the specification.
      */
     @Override
     public void reset() {
@@ -104,7 +114,7 @@ public class FlaskOfCrimsonTears extends Item implements Consumable, Resettable 
 
     /**
      * This method increase the actor's hit point by 250 when the actor consume FlaskOfCrimsonTears
-     * and increase the number of usage of FlaskOfCrimsonTears by 1 .
+     * and increase the number of usage of FlaskOfCrimsonTears by 1.
      * @param actor The actor that consume FlaskOfCrimsonTears.
      * @see Actor#heal(int)
      */

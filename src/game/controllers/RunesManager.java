@@ -178,7 +178,7 @@ public class RunesManager {
   }
 
   /**
-   * Initialize instance of droppingRunes with Runes runes.
+   * Initialize instance of droppingRunes.
    * @param runes droppingRunes Runes object.
    */
   public void registerDroppingRunes(Runes runes) {
@@ -186,7 +186,7 @@ public class RunesManager {
   }
 
   /**
-   * Obtaib droppingRunes.
+   * Obtain droppingRunes.
    * @return Runes object of droppingRunes.
    */
   public Runes getDroppingRunes() {

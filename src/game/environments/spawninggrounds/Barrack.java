@@ -3,7 +3,7 @@ package game.environments.spawninggrounds;
 import game.enums.Status;
 
 /**
- * A type of ground that can spawn Stormveil Castle Godrick Soldier.
+ * A type of ground that can spawn Godrick Soldier in Stormveil Castle.
  * Created by:
  * @author Che'er Min Yi
  * @author Chong Ming Sheng

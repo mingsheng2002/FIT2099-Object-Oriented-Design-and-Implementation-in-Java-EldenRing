@@ -26,7 +26,7 @@ public abstract class NonPlayerCharacter extends Actor {
      */
     private int npcHitPoints;
     /**
-     * An instance of GameMap
+     * An instance of GameMap where the NPC is currently on
      */
     private GameMap map = null;
 

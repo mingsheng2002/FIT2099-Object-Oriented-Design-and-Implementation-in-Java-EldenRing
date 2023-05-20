@@ -7,7 +7,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.actions.playeractions.ConsumeAction;
 import game.controllers.RunesManager;
 import game.enums.Status;
-import game.resets.Resettable;
 import game.utils.RandomNumberGenerator;
 
 /**

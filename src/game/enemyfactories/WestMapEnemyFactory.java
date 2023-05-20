@@ -9,7 +9,6 @@ import game.actors.nonplayercharacters.enemies.stormveilcastleinhabitants.Dog;
 import game.actors.nonplayercharacters.enemies.stormveilcastleinhabitants.GodrickSoldier;
 import game.enums.Status;
 
-
 /**
  * A class spawn enemies on West side of the map.
  * Created by:
@@ -36,6 +35,8 @@ public class WestMapEnemyFactory extends EnemyFactory {
      * @see HeavySkeletalSwordsman
      * @see LoneWolf
      * @see GiantCrab
+     * @see Dog
+     * @see GodrickSoldier
      * @see Status#SPAWN_SKELETON
      * @see Status#SPAWN_CANIS_LUPUS
      * @see Status#SPAWN_CRUSTACEAN

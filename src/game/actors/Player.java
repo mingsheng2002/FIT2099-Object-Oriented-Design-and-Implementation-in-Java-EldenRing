@@ -84,6 +84,7 @@ public class Player extends Actor implements Resettable {
 	 * @see FlaskOfCrimsonTears
 	 * @see ResetManager#getInstance()
 	 * @see ResetManager#registerResettable(Resettable)
+	 * @see RemembranceOfTheGrafted
 	 */
 	public Player(String name, char displayChar, Archetype archetype) {
 		super(name, displayChar, archetype.getHitPoints());

@@ -5,7 +5,7 @@ import edu.monash.fit2099.engine.positions.Location;
 
 /**
  * A Summonable interface represents an actor that can be summoned from another realm. It gives promises to every
- * actors that can be summoned from another realm such that their classes implementing this interface should have also
+ * actor that can be summoned from another realm such that their classes implementing this interface should have also
  * implemented these methods listed below.
  *
  * This interface is crucial when summoning an actor from another realm to calculate the summon chance, the get the summon

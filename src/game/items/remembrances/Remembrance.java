@@ -8,9 +8,7 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.playeractions.ExchangeAction;
 import game.enums.Status;
 import game.items.Exchangeable;
-import game.items.Sellable;
 import game.utils.SurroundingChecker;
-
 import java.util.ArrayList;
 
 /**
@@ -132,9 +130,10 @@ public abstract class Remembrance extends Item implements Exchangeable {
     }
 
     /**
-     *  Clears the ExchangeActions and drop the Remembrance.
+     *  Clears the ExchangeActions and before allowing the actor to drop the Remembrance.
      * @param actor The actor dropping this Item
      * @return The DropAction for dropping this Item.
+     * @see Item#getDropAction(Actor) 
      */
     @Override
     public DropAction getDropAction(Actor actor) {
